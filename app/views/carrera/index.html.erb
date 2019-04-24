@@ -1,0 +1,19 @@
+<h1>Carrera#index</h1>
+<p>Find me in app/views/carrera/index.html.erb</p>
+<h2>CARRERAS EN CONTROL ACADEMICO</h2>
+<table style="width:100%">
+    <tr>
+        <th>Id Carrera</th>
+        <th>Nombre</th> 
+        <th>Créditos</th>
+        <th>Acreditada</th>
+    </tr>
+    <% @carreras.each do |carrera| %>
+        <tr>
+            <th><%= carrera.Id_Carrera %></th>
+            <th><%= carrera.Nombre %></th> 
+            <th><%= carrera.Creditos %></th>
+            <th><%= carrera.Acreditada %></th>
+        </tr>
+    <%end%>
+</table>

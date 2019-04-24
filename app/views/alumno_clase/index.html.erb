@@ -1,0 +1,18 @@
+<h1>Alumno - Clase#index</h1>
+<p>Find me in app/views/alumno_clase/index.html.erb</p>
+<table style="width:100%">
+    <tr>
+        <th>Id Alumno</th>
+        <th>Id Clase</th> 
+        <th>Oportunidad</th>
+        <th>Promedio</th>
+    </tr>
+    <% @alumno_clase.each do |alumno| %>
+        <tr>
+            <th><%= alumno.Id_Clase %></th> 
+            <th><%= alumno.Id_Alumno %></th> 
+            <th><%= alumno.Oportunidad %></th> 
+            <th><%= alumno.Promedio %></th>
+        </tr>
+    <%end%>
+</table>

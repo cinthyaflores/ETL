@@ -1,0 +1,25 @@
+octopus:
+  environments:
+    - development
+
+  development:
+    controlA:
+      adapter: mysql2
+      database: controlAcademico
+      username: root
+      password: 
+
+    extra:
+      host: 127.0.0.1
+      port: 5432
+      adapter: postgresql
+      username: postgres #SI NO LE PONGO USUARIO Y CONTRASEÑA NO SE HACE LA CONEXION!
+      password: "admin"
+      database: Extraescolares
+
+    data:
+      adapter: mysql2
+      database: DatawareHouse_f
+      username: root
+      password: 
+
