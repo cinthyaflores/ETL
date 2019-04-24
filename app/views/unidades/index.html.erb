@@ -1,0 +1,17 @@
+<h1>Unidades#index</h1>
+<p>Find me in app/views/unidades/index.html.erb</p>
+<table style="width:100%">
+    <tr>
+        <th>Id Unidad</th>
+        <th>Id Materia</th> 
+        <th>Nombre</th>
+    </tr>
+    <% @unidades.each do |unidad| %>
+        <tr>
+            <th><%= unidad.Id_Unidad %></th>
+            <th><%= unidad.Id_Materia %></th> 
+            <th><%= unidad.Nombre %></th>
+        </tr>
+    <%end%>
+</table>
+
