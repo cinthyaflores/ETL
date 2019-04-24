@@ -1,0 +1,19 @@
+<h1>Materia#index</h1>
+<p>Find me in app/views/materia/index.html.erb</p>
+<h2>MATERIAS EN CONTROL ACADEMICO</h2>
+<table style="width:100%">
+    <tr>
+        <th>Id Materia</th>
+        <th>Nombre</th> 
+        <th>Clave</th>
+        <th>Créditos</th>
+    </tr>
+    <% @materias.each do |materia| %>
+        <tr>
+            <th><%= materia.Id_Materia %></th>
+            <th><%= materia.Nombre %></th> 
+            <th><%= materia.Clave %></th>
+            <th><%= materia.Créditos %></th>
+        </tr>
+    <%end%>
+</table>

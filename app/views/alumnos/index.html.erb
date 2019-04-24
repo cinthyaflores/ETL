@@ -1,0 +1,31 @@
+<h1>Alumnos#index</h1>
+<p>Find me in app/views/alumnos/index.html.erb</p>
+<h2>ALUMNOS EN CONTROL ACADEMICO</h2>
+<table style="width:100%">
+    <tr>
+        <th>No. de Control</th>
+        <th>Nombre</th> 
+        <th>Carrera</th>
+    </tr>
+    <% @alumno.each do |alumno| %>
+        <tr>
+            <th><%= alumno.No_control %></th>
+            <th><%= alumno.Nombre %></th> 
+            <th><%= alumno.Id_Carrera %></th>
+        </tr>
+    <%end%>
+</table>
+<h2>ALUMNOS EN EXTRAESCOLAES</h2>
+<table style="width:100%">
+    <tr>
+        <th>No. de Control</th>
+        <th>Nombre</th> 
+        <th>Carrera</th>
+    </tr>
+    <% @alumnoE.each do |alumno| %>
+        <tr>
+            <th><%= alumno.No_control %></th>
+            <th><%= alumno.Nombre %></th> 
+        </tr>
+    <%end%>
+</table>

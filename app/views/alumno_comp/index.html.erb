@@ -1,0 +1,18 @@
+<h1>Alumno - Competencia#index</h1>
+<p>Find me in app/views/alumno_comp/index.html.erb</p>
+<table style="width:100%">
+    <tr>
+        <th>Id Alumno</th>
+        <th>Id Competencia</th> 
+        <th>Oportunidad</th>
+        <th>Calificación</th>
+    </tr>
+    <% @alumComp.each do |alumno| %>
+        <tr>
+            <th><%= alumno.Id_Alumno %></th>
+            <th><%= alumno.Id_Compet %></th> 
+            <th><%= alumno.Oportunidad %></th> 
+            <th><%= alumno.Calificación %></th>
+        </tr>
+    <%end%>
+</table>
