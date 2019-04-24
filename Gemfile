@@ -23,6 +23,7 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'ar-octopus'
 gem 'pg'
+gem 'roo'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
