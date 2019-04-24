@@ -29,3 +29,13 @@
         </tr>
     <%end%>
 </table>
+<h2>ALUMNOS EN BIBLIOTECA</h2>
+<table style="width:100%">
+    <% @alumnoB.each do |alumno| %> <!-- RECORRE LAS FILAS Y ME REGRESA UN ARRAY CON LOS VALORES DE LAS CELDAS DE LAS FILAS-->
+        <tr>
+            <% alumno.each do |data| %> <!-- DESPLEGAR LOS VALORES DEL ARRAY QUE ME GENERÓ ANTES -->
+                <th><%= data %></th>
+            <%end%>
+        </tr>
+    <%end%>
+</table>

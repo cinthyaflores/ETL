@@ -1,5 +1,6 @@
 class AlumnosController < ApplicationController
   def index  
+    @alumnoB = @biblio.sheet('alumnos')
     @alumno = Alumno.using(:controlA).all
     @alumnoE= Alumno.using(:extra).all
   end
