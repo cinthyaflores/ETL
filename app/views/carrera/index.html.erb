@@ -1,19 +1,50 @@
 <h1>Carrera#index</h1>
 <p>Find me in app/views/carrera/index.html.erb</p>
 <h2>CARRERAS EN CONTROL ACADEMICO</h2>
-<table style="width:100%">
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
         <th>Id Carrera</th>
-        <th>Nombre</th> 
+        <th>Nombre</th>
+        <th>Descripción</th> 
         <th>Créditos</th>
         <th>Acreditada</th>
     </tr>
-    <% @carreras.each do |carrera| %>
+    <% @carrerasCA.each do |carrera| %>
         <tr>
             <th><%= carrera.Id_Carrera %></th>
             <th><%= carrera.Nombre %></th> 
+            <th><%= carrera.Descripción %></th> 
             <th><%= carrera.Creditos %></th>
             <th><%= carrera.Acreditada %></th>
+        </tr>
+    <%end%>
+</table>
+<h2>CARRERAS EN EXTRAESCOLARES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Carrera</th>
+        <th>Nombre</th> 
+    </tr>
+    <% @carrerasE.each do |carrera| %>
+        <tr>
+            <th><%= carrera.Id_carrera %></th>
+            <th><%= carrera.Nombre %></th> 
+        </tr>
+    <%end%>
+</table>
+<h2>ERRORES EN CARRERAS EN EXTRAESCOLARES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Carrera</th>
+        <th>Nombre</th> 
+        <th>Opciones</th>
+    </tr>
+    <% @nameErrorsE.each do |carrera| %>
+        <tr>
+            <th><%= carrera.Id_carrera %></th>
+            <th style="background-color:yellow"><%= carrera.Nombre %></th> 
+            <th><%= link_to "Editar", carrera_edit_path %>
+            <%= link_to "Eliminar" %></th>
         </tr>
     <%end%>
 </table>

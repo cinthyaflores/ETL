@@ -1,0 +1,58 @@
+<h1>GrupoActividad#index</h1>
+<p>Find me in app/views/grupo_actividad/index.html.erb</p>
+<h2>GRUPOS REGISTRADOS EN EXTRAESCOLARES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Grupo</th>
+        <th>Nombre</th> 
+        <th>Cupo</th>
+        <th>Id Area</th> 
+        <th>Id Actividad</th>
+        <th>Dias</th> 
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th> 
+        <th>Opciones</th> 
+    </tr>
+    <% @gruposE.each do |grupo| %>
+        <tr>
+            <th><%= grupo.Id_grupo_A %></th>
+            <th><%= grupo.Nombre %></th> 
+            <th><%= grupo.Cupo %></th>
+            <th><%= grupo.Id_area %></th> 
+            <th><%= grupo.Id_actividad %></th>
+            <th><%= grupo.Dias %></th> 
+            <th><%= grupo.Hora_inicio %></th>
+            <th><%= grupo.Hora_fin %></th>
+            <th><%= link_to "Editar", grupo_actividad_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+</table>
+<h2>ERRORES EN LOS GRUPOS DE ACTIVIDADES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Grupo</th>
+        <th>Nombre</th> 
+        <th>Cupo</th>
+        <th>Id Area</th> 
+        <th>Id Actividad</th>
+        <th>Dias</th> 
+        <th>Hora Inicio</th>
+        <th>Hora Fin</th> 
+        <th>Opciones</th> 
+    </tr>
+    <% @cupoErrorsE.each do |grupo| %>
+        <tr>
+            <th><%= grupo.Id_grupo_A %></th>
+            <th><%= grupo.Nombre %></th> 
+            <th style="background-color:yellow"><%= grupo.Cupo %></th>
+            <th><%= grupo.Id_area %></th> 
+            <th><%= grupo.Id_actividad %></th>
+            <th><%= grupo.Dias %></th> 
+            <th><%= grupo.Hora_inicio %></th>
+            <th><%= grupo.Hora_fin %></th>
+            <th><%= link_to "Editar", grupo_actividad_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+</table>

@@ -1,0 +1,95 @@
+<h1>Maestros#index</h1>
+<p>Find me in app/views/maestros/index.html.erb</p>
+<h2>MAESTROS</h2>
+<h2>MAESTROS CON ERRORES EN CONTROL ACADÉMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th> 
+        <th>Correo Electrónico</th>
+        <th>Teléfono</th>
+        <th>Título / Grado</th>
+        <th>Opciones</th>
+    </tr>
+    <% @nameErrorsCA.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th style="background-color:yellow"><%= maestro.Nombre %></th> 
+            <th><%= maestro.CorreoElec %></th>
+            <th><%= maestro.Telefono %></th>
+            <th><%= maestro.Titulo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+    <% @numberErrorsCA.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th><%= maestro.Nombre %></th> 
+            <th><%= maestro.CorreoElec %></th>
+            <th style="background-color:yellow"><%= maestro.Telefono %></th>
+            <th><%= maestro.Titulo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+    <% @bothErrorsCA.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th style="background-color:yellow"><%= maestro.Nombre %></th> 
+            <th><%= maestro.CorreoElec %></th>
+            <th style="background-color:yellow"><%= maestro.Telefono %></th>
+            <th><%= maestro.Titulo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+</table>
+<h2>MAESTROS CON ERRORES EN EXTRAESCOLARES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th> 
+        <th>Género</th>
+        <th>Fecha Nacimiento</th>
+        <th>Teléfono</th>
+        <th>Correo Electronico</th>
+        <th>Opciones</th>
+    </tr>
+    <% @nameErrorsE.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th style="background-color:yellow"><%= maestro.Nombre %></th> 
+            <th><%= maestro.Genero %></th>
+            <th><%= maestro.Fecha_Nacimiento %></th>
+            <th><%= maestro.Telefono %></th> 
+            <th><%= maestro.Correo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+    <% @numberErrorsE.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th><%= maestro.Nombre %></th> 
+            <th><%= maestro.Genero %></th>
+            <th><%= maestro.Fecha_Nacimiento %></th>
+            <th style="background-color:yellow"><%= maestro.Telefono %></th> 
+            <th><%= maestro.Correo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+    <% @bothErrorsE.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_Maestro %></th>
+            <th style="background-color:yellow"><%= maestro.Nombre %></th> 
+            <th><%= maestro.Genero %></th>
+            <th><%= maestro.Fecha_Nacimiento %></th>
+            <th style="background-color:yellow"><%= maestro.Telefono %></th> 
+            <th><%= maestro.Correo %></th> 
+            <th><%= link_to "Editar", maestros_edit_path %>
+            <%= link_to "Eliminar" %></th>
+        </tr>
+    <%end%>
+</table>
