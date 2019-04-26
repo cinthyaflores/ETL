@@ -1,0 +1,40 @@
+<h1>Constancias#index</h1>
+<p>Find me in app/views/constancias/index.html.erb</p>
+<h2>CONSTANCIAS EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Constancia</th>
+        <th>Id Alumno</th> 
+        <th>Id Personal</th>
+        <th>Id Tipo Constancia</th>
+        <th>Fecha de elaboración</th>
+    </tr>
+    <% @constancias_data.each do |constancia| %>
+        <tr>
+            <th><%= constancia.Id_Const %></th> 
+            <th><%= constancia.Id_Alumno %></th> 
+            <th><%= constancia.Id_Personal %></th> 
+            <th><%= constancia.Id_Tipo_Con %></th>  
+            <th><%= constancia.Fecha_elab %></th> 
+        </tr>
+    <%end%>
+</table>
+<h2>CONSTANCIAS EN CONTROL ACADEMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Constancia</th>
+        <th>Id Alumno</th> 
+        <th>Id Personal</th>
+        <th>Id Tipo Constancia</th>
+        <th>Fecha de elaboración</th>
+    </tr>
+    <% @constancias_ca.each do |constancia| %>
+        <tr>
+            <th><%= constancia.Id_Const %></th> 
+            <th><%= constancia.Id_Alumno %></th> 
+            <th><%= constancia.Id_Personal %></th> 
+            <th><%= constancia.Id_Tipo_Con %></th>  
+            <th><%= constancia.Fecha_elab %></th> 
+        </tr>
+    <%end%>
+</table>

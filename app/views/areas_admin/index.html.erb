@@ -1,0 +1,32 @@
+<h1>AreasAdmin#index</h1>
+<p>Find me in app/views/areas_admin/index.html.erb</p>
+<h2>AREAS ADMINISTRATIVAS EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Area Admin </th>
+        <th>Nombre</th> 
+        <th>Descripción</th>
+    </tr>
+    <% @areas_admin_data.each do |area| %>
+        <tr>
+            <th><%= area.Id_Area %></th> 
+            <th><%= area.Nombre %></th> 
+            <th><%= area.Descr %></th> 
+        </tr>
+    <%end%>
+</table>
+<h2>AREAS ADMINISTRATIVAS EN CONTROL ACADEMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Area Admin </th>
+        <th>Nombre</th> 
+        <th>Descripción</th>
+    </tr>
+    <% @areas_admin_ca.each do |area| %>
+        <tr>
+            <th><%= area.Id_Area %></th> 
+            <th><%= area.Nombre %></th> 
+            <th><%= area.Descr %></th> 
+        </tr>
+    <%end%>
+</table>

@@ -11,11 +11,11 @@ class ApplicationController < ActionController::Base
   end
 
   def import_excel
-    @biblio = Roo::Spreadsheet.open('./public/Alumnos.xlsx')
+    @biblio = Roo::Spreadsheet.open('./public/Biblioteca.xlsx')
   end
 
   def validate_name (name)
-    !!(name =~ /\d+/) #Validar si el nombre tiene numeros. Convertir a boolean
+    !!(name =~ /\d+/) #Validar si el nombre tiene numeros. Convertir a boolean SOLO LETRAS: /^\D+/
   end
 
   def validate_number (num) #Validar números telefónicos (10 digitos)

@@ -1,0 +1,2 @@
+module AreaMaestroHelper
+end

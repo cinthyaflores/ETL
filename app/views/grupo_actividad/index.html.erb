@@ -11,7 +11,6 @@
         <th>Dias</th> 
         <th>Hora Inicio</th>
         <th>Hora Fin</th> 
-        <th>Opciones</th> 
     </tr>
     <% @gruposE.each do |grupo| %>
         <tr>
@@ -23,8 +22,6 @@
             <th><%= grupo.Dias %></th> 
             <th><%= grupo.Hora_inicio %></th>
             <th><%= grupo.Hora_fin %></th>
-            <th><%= link_to "Editar", grupo_actividad_edit_path %>
-            <%= link_to "Eliminar" %></th>
         </tr>
     <%end%>
 </table>

@@ -1,90 +1,105 @@
 class AlumnosController < ApplicationController
+
   def index  
-    @excel = @biblio.sheet('alumnos')
-    @alumnosCA = Alumno.using(:controlA).all #CAMPOS: Id_Alumno, No_control, Id_Carrera, Id_curso, Nombre, Genero, CorreoElec, Dirección, Telefono, Curp, Fecha_nac, Fecha_ing, Cre_acum, Promedio_G, Estado, Fec_egreso
-    @alumnosE= Alumno.using(:extra).all #CAMPOS: No_control, Nombre, Genero, Email, Edad, Fecha_nacimineto, Fecha_ingreso, Peso, Estatura, Telefono, Carrera, Numero_emergencia, TipoAlumno
-
-    @exists = Array.new #Alumnos de Extraescolares en Control Academico
-    collect_data()
-
-    @nameErrorsCA = Array.new #Errores en Control academico 
-    @numberErrorsCA = Array.new #Errores en el Telefono 
-    @curpErrorsCA = Array.new #Errores en el Telefono 
-
-    @alumnosCA.each do |alumno|
-      if validate_name(alumno.Nombre)
-        @nameErrorsCA << alumno
-      end
-      if !validate_number(alumno.Telefono)
-        @numberErrorsCA << alumno
-      end
-      if !validate_curp(alumno.Curp)
-        @curpErrorsCA << alumno
-      end
-    end
-
-    @weightErrorsE = Array.new #Errores en Extraescolares
-    @numberErrorsE = Array.new #Errores en Telefono
-    @bothErrorsE = Array.new #Errores en Ambos
-
-    @alumnosE.each do |alumno|
-      if !validate_weight(alumno.Peso) && !validate_number(alumno.Telefono)
-        @bothErrorsE << alumno
-      elsif !validate_weight(alumno.Peso)
-        @weightErrorsE << alumno
-      elsif !validate_number(alumno.Telefono)
-        @numberErrorsE << alumno
-      end
-    end
-
-    @nameErrorsB = Array.new #Errores en Biblioteca
-    @excel.each(noctrol: 'No. Control', name: 'Nombre', gen: 'Género', email: 'E-mail') do |hash|
-      if validate_name( hash[:name] )
-        @nameErrorsB << hash
-      end
-    end
+    @alumnosData = Alumno.using(:data_warehouse).all
+    export
   end
 
   def edit
-    #@alumno = Alumno.using(:controlA).find(params[:id])
+    @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
+    @errores = [@alumno.errorNombre, @alumno.errorTelefono, @alumno.errorCurp, @alumno.errorPeso]
   end
 
   def update
+    @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
+    @errores = [@alumno.errorNombre, @alumno.errorTelefono, @alumno.errorCurp, @alumno.errorPeso]
+    if @alumno.update_attributes({Id_Alumno: params[:alumno][:Id_Alumno], Nombre: params[:alumno][:Nombre], Telefono: params[:alumno][:Telefono], Curp: params[:alumno][:Curp], Peso: params[:alumno][:Peso], errorNombre: nil, errorTelefono: nil, errorCurp: nil, errorPeso: nil})
+      redirect_to "/" 
+    else
+      render :edit
+    end
   end
 
-  def delete
+  def destroy
+    @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
+    @alumno.destroy
+    redirect_to "/", notice: "Registro borrado con éxito"
   end
 
   private
 
-  def collect_data()
-    #Alumnos de BIBLIOTECA que existen en Control Academico
-    @excel.each(noctrol: 'No. Control') do |hash|
-      @alumnosCA.each do |alumno|
-        if hash[:noctrol] == alumno.No_control
-          @exists << alumno
-        end 
+  def export
+    Alumno.using(:data_warehouse).delete_all if !Alumno.using(:data_warehouse).all.empty?
+    
+    id_al=0
+    @excel = @biblio.sheet('Alumnos')
+    @alumnosCA = Alumno.using(:controlA).all 
+    @alumnosE= Alumno.using(:extra).all 
+
+    @alumnosCA.each do |alumnoCA|
+      alumnoNew = Alumno.using(:data_warehouse).new
+      if validate_name(alumnoCA.Nombre)
+        alumnoNew.errorNombre = 1
       end
-    end
-    #Alumnos de EXTRAESCOLARES que existen en Control Academico
-    @alumnosE.each do |alumnoE|
-      @alumnosCA.each do |alumnoCA|
-        if alumnoE.No_control == alumnoCA.No_control
-          @exists << alumnoCA
+      if !validate_number(alumnoCA.Telefono)
+        alumnoNew.errorTelefono = 1
+      end
+      if !validate_curp(alumnoCA.Curp)
+        alumnoNew.errorCurp = 1
+      end
+      id_al+=1
+      alumnoNew.Id_Alumno = id_al
+      alumnoNew.No_control = alumnoCA.No_control
+      alumnoNew.Id_Carrera = alumnoCA.Id_Carrera
+      alumnoNew.Nombre = alumnoCA.Nombre
+      alumnoNew.Genero = alumnoCA.Genero
+      alumnoNew.CorreoElec = alumnoCA.CorreoElec
+      alumnoNew.Dirección = alumnoCA.Dirección
+      alumnoNew.Telefono = alumnoCA.Telefono
+      alumnoNew.Curp = alumnoCA.Curp
+      alumnoNew.Fecha_nac = alumnoCA.Fecha_nac
+      alumnoNew.Cre_acum = alumnoCA.Cre_acum
+      alumnoNew.Promedio_G = alumnoCA.Promedio_G 
+      alumnoNew.Estado = alumnoCA.Estado
+      alumnoNew.Fec_ingreso = alumnoCA.Fecha_ing 
+      alumnoNew.Fec_egreso = alumnoCA.Fec_egreso
+      @alumnosE.each do |alumnoE| #Si el alumno existe en Extraescolares, agregar el peso y la estatura registrada
+        if alumnoCA.No_control == alumnoE.No_control
+          alumnoNew.Peso = alumnoE.Peso
+          alumnoNew.Estatura = alumnoE.Estatura
         end
+      end
+      alumnoNew.save!     
+    end
+
+
+    @alumnosE.each do |alumnoE| #Ingresar los que no existen en Control Academico
+      if @alumnosCA.exists?(No_control: alumnoE.No_control) == false    
+        alumnoNew = Alumno.using(:data_warehouse).new
+        if validate_name(alumnoE.Nombre)
+          alumnoNew.errorNombre = 1
+        end
+        if !validate_number(alumnoE.Telefono)
+          alumnoNew.errorTelefono = 1
+        end
+        if !validate_weight(alumnoE.Peso)
+          alumnoNew.errorPeso = 1
+        end
+        id_al += 1
+        alumnoNew.Id_Alumno = id_al
+        alumnoNew.No_control = alumnoE.No_control
+        alumnoNew.Id_Carrera = alumnoE.Carrera
+        alumnoNew.Nombre = alumnoE.Nombre
+        alumnoNew.Genero = alumnoE.Genero
+        alumnoNew.CorreoElec = alumnoE.Email
+        alumnoNew.Telefono = alumnoE.Telefono
+        alumnoNew.Fecha_nac = alumnoE.Fecha_nacimineto
+        alumnoNew.Fec_ingreso = alumnoE.Fecha_ingreso 
+        alumnoNew.Peso = alumnoE.Peso
+        alumnoNew.Estatura = alumnoE.Estatura
+        alumnoNew.save!     
       end
     end
   end
 
-  def export
-    alumnosData = Alumno.using(:Data)
-    aluControl = Alumno.using(:controlA).all
-    
-    aluControl.each do |alumno|
-      #alumnosData.No_control = alumno.No_Control
-      #etc
-      #alumnosData.save
-    end
-    
-  end
 end

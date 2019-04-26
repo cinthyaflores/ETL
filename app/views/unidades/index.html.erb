@@ -1,12 +1,13 @@
 <h1>Unidades#index</h1>
 <p>Find me in app/views/unidades/index.html.erb</p>
+<h2>UNIDADES EN DATA WAREHOUSE</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
         <th>Id Unidad</th>
         <th>Id Materia</th> 
         <th>Nombre</th>
     </tr>
-    <% @unidades.each do |unidad| %>
+    <% @unidades_data.each do |unidad| %>
         <tr>
             <th><%= unidad.Id_Unidad %></th>
             <th><%= unidad.Id_Materia %></th> 

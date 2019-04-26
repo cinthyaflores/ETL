@@ -1,2 +1,33 @@
 <h1>Maestros#edit</h1>
 <p>Find me in app/views/maestros/edit.html.erb</p>
+<div>
+  <%= form_for @maestro, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+      <%@maestro.errors.each do |value, message|%> 
+        <h5 class= "alert alert-danger"><%=message%></h5>
+      <%end%>
+    <div class = "field">
+      <%= f.text_field :Id_maestro, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%if @errores[0] == nil%>
+        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+      <%else%>
+        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4"%>
+      <%end%>
+    </div>
+    <div class = "field">
+      <%if @errores[1] == nil%>
+        <%= f.text_field :Telefono, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+      <%else%>
+        <%= f.text_field :Telefono, placeholder: "Título", class:"form-control m-4"%>
+      <%end%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :CorreoElec, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+    </div>
+    <%= link_to  "Regresar", maestros_path, class:"btn btn-primary m-2" %>
+  <% end %> 
+<div>

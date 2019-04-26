@@ -1,0 +1,2 @@
+module AreasAdminHelper
+end
