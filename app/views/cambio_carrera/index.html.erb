@@ -1,0 +1,36 @@
+<h1>CambioCarrera#index</h1>
+<p>Find me in app/views/cambio_carrera/index.html.erb</p>
+<h2>CAMBIOS DE CARRERA EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Cambio</th>
+        <th>Id Alumno</th> 
+        <th>Id Carrera Anterior</th>
+        <th>Fecha de Cambio</th>
+    </tr>
+    <% @cambios_data.each do |cambio| %>
+        <tr>
+            <th><%= cambio.Id_Cambio %></th> 
+            <th><%= cambio.Id_Alumno %></th> 
+            <th><%= cambio.Id_Carr_Ant %></th> 
+            <th><%= cambio.Fec_Cambio %></th> 
+        </tr>
+    <%end%>
+</table>
+<h2>CAMBIOS DE CARRERA CONTROL ACADEMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Cambio</th>
+        <th>Id Alumno</th> 
+        <th>Id Carrera Anterior</th>
+        <th>Fecha de Cambio</th>
+    </tr>
+    <% @cambios_ca.each do |cambio| %>
+        <tr>
+            <th><%= cambio.Id_Cambio %></th> 
+            <th><%= cambio.Id_Alumno %></th> 
+            <th><%= cambio.Id_Carr_Ant %></th> 
+            <th><%= cambio.Fec_Cambio %></th> 
+        </tr>
+    <%end%>
+</table>

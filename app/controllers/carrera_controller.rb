@@ -1,16 +1,54 @@
 class CarreraController < ApplicationController
-  def index
-    #@excelB
-    @carrerasCA = Carrera.using(:controlA).all #Id_carrera, Nombre, Descripción, Creditos, Acreditada
-    @carrerasE = Carrera.using(:extra).all #CAMPOS: Id_carrera, Nombre
+  def index  
+    @carreras_data = Carrera.using(:data_warehouse).all
+    export
+  end
+  
+  def edit
+    @carrera = Carrera.using(:data_warehouse).find_by(Id_Carrera: params[:id])
+    @error = @carrera.errorNombre
+  end
 
-    @nameErrorsE = Array.new #ERRORES EN CARRERA
+  def update
+    @carrera = Carrera.using(:data_warehouse).find_by(Id_Carrera: params[:id])
+    @error = @carrera.errorNombre
 
-    @carrerasE.each do |carrera|
-      if validate_name(carrera.Nombre)
-        @nameErrorsE << carrera
-      end
+    if @carrera.update_attributes({Nombre: params[:carrera][:Nombre], errorNombre: nil})
+      redirect_to "/"
+    else
+      render :edit
     end
+  end
+  
+  def destroy
+    @carrera = Carrera.using(:data_warehouse).find_by(Id_Carrera: params[:id])
+    @carrera.destroy
+    redirect_to "/"
+  end
+  private
 
+  def export
+    Carrera.using(:data_warehouse).delete_all if !Carrera.using(:data_warehouse).all.empty?
+
+    @excel = @biblio.sheet('Carrera')
+    @carreras_ca = Carrera.using(:controlA).all #Id_carrera, Nombre, Descripción, Creditos, Acreditada
+    @carreras_e = Carrera.using(:extra).all #CAMPOS: Id_carrera, Nombre
+
+    @carreras_ca.each do |carrera_ca|
+      carrera_new = Carrera.using(:data_warehouse).new
+      carrera_new.Id_Carrera = carrera_ca.Id_Carrera
+      @carreras_e.each do |carrera_e| 
+        if carrera_ca.Id_Carrera == carrera_e.Id_carrera
+          carrera_new.Nombre = I18n.transliterate(carrera_e.Nombre)
+          if validate_name(carrera_new.Nombre)
+            carrera_new.errorNombre = 1
+          end
+        end    
+      end
+      carrera_new.Descripción = carrera_ca.Descripción
+      carrera_new.Creditos = carrera_ca.Creditos
+      carrera_new.Acreditada = carrera_ca.Acreditada
+      carrera_new.save!   
+    end
   end
 end

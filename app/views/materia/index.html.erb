@@ -1,6 +1,6 @@
 <h1>Materia#index</h1>
 <p>Find me in app/views/materia/index.html.erb</p>
-<h2>MATERIAS EN CONTROL ACADEMICO</h2>
+<h2>MATERIAS EN DATA WAREHOUSE</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
         <th>Id Materia</th>
@@ -8,7 +8,7 @@
         <th>Clave</th>
         <th>Créditos</th>
     </tr>
-    <% @materias.each do |materia| %>
+    <% @materias_data.each do |materia| %>
         <tr>
             <th><%= materia.Id_Materia %></th>
             <th><%= materia.Nombre %></th> 

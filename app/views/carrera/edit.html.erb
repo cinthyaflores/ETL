@@ -1,2 +1,32 @@
 <h1>Carrera # Edit</h1>
 <p>EDITAR LAS CARRERAS CON ERROR</p>
+<div>
+  <%= form_for @carrera, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+      <%@carrera.errors.each do |value, message|%> 
+        <h5 class= "alert alert-danger"><%=message%></h5>
+      <%end%>
+    <div class = "field">
+      <%= f.text_field :Id_Carrera, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%if @error == nil%>
+        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+      <%else%>
+        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4"%>
+      <%end%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Descripción, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Creditos, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Acreditada, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+    </div>
+    <%= link_to  "Regresar", carrera_path, class:"btn btn-primary m-2" %>
+  <% end %> 
+<div>

@@ -1,53 +1,83 @@
 class MaestrosController < ApplicationController
-  def index
-   #@excel = @biblio.sheet('maestro')
-    @maestrosCA = Maestro.using(:controlA).all #CAMPOS: Id_Maestro, Id_Area_mtro, Id_contrato, Nombre, CorreoElec, Telefono, Titulo
-    @maestrosE= Maestro.using(:extra).all #CAMPOS: Id_Maestro, Nombre, Genero, Edad, Fecha_Nacimiento, Telefono, Correo, TipoMaestro
 
-    @nameErrorsCA = Array.new 
-    @numberErrorsCA = Array.new 
-    @bothErrorsCA = Array.new
-
-    @maestrosCA.each do |maestro|
-      if validate_name(maestro.Nombre) && !validate_number(maestro.Telefono)
-        @bothErrorsCA << maestro
-      elsif validate_name(maestro.Nombre)
-        @nameErrorsCA << maestro
-      elsif !validate_number(maestro.Telefono)
-        @numberErrorsCA << maestro
-      end
-    end
-
-    @nameErrorsE = Array.new 
-    @numberErrorsE = Array.new 
-    @bothErrorsE = Array.new 
-    
-    @maestrosE.each do |maestro|
-      if validate_name(maestro.Nombre) && !validate_number(maestro.Telefono)
-        @bothErrorsE << maestro
-      elsif validate_name(maestro.Nombre)
-        @nameErrorsE << maestro
-      elsif !validate_number(maestro.Telefono)
-        @numberErrorsE << maestro
-      end
-    end
-
-    @nameErrorsB = Array.new #Errores en Biblioteca
-
-    # @excel.each(noctrol: 'No. Control', name: 'Nombre', gen: 'Género', email: 'E-mail') do |hash|
-    #   if validate_name( hash[:name] )
-    #     @nameErrorsB << hash
-    #   end
-    # end
-
+  def index  
+    @maestrosData = Maestro.using(:data_warehouse).all
+    export
   end
 
   def edit
+    @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
+    @errores = [@maestro.errorNombre, @maestro.errorTelefono]
   end
 
   def update
+    @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
+    @errores = [@maestro.errorNombre, @maestro.errorTelefono]
+    if @maestro.update_attributes({Id_maestro: params[:maestro][:Id_maestro], Nombre: params[:maestro][:Nombre], Telefono: params[:maestro][:Telefono], errorNombre: nil, errorTelefono: nil})
+      redirect_to "/" 
+    else
+      render :edit
+    end
   end
 
-  def delete
+  def destroy
+    @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
+    @maestro.destroy
+    redirect_to "/", notice: "Registro borrado con éxito"
   end
+
+  private
+
+  def export
+    Maestro.using(:data_warehouse).destroy_all
+    id_m=0
+    @excel = @biblio.sheet('Maestros')
+    @maestrosCA = Maestro.using(:controlA).all 
+    @maestrosE= Maestro.using(:extra).all 
+
+    @maestrosCA.each do |maestroCA|
+      maestroNew = Maestro.using(:data_warehouse).new
+      if validate_name(maestroCA.Nombre)
+        errorNombre = 1
+      end
+      if !validate_number(maestroCA.Telefono)
+        errorTelefono = 1
+      end
+      id_m+=1
+      maestroNew.Id_maestro = maestroCA.Id_maestro
+      maestroNew.Id_Area_mtro = maestroCA.Id_Area_mtro
+      maestroNew.Id_contrato = maestroCA.Id_contrato
+      maestroNew.Nombre = maestroCA.Nombre
+      maestroNew.CorreoElec = maestroCA.CorreoElec
+      maestroNew.Telefono = maestroCA.Telefono
+      maestroNew.Titulo = maestroCA.Titulo 
+      maestroNew.errorNombre = errorNombre
+      maestroNew.errorTelefono = errorTelefono
+      maestroNew.save!     
+      errorNombre = 0, errorTelefono = 0
+    end
+
+    @maestrosE.each do |maestroE|
+      if @maestrosCA.exists?(Id_Maestro: maestroE.Id_maestro) == false    
+        maestroNew = Maestro.using(:data_warehouse).new
+        if validate_name(maestroE.Nombre)
+          errorNombre = 1
+        end
+        if !validate_number(maestroE.Telefono)
+          errorTelefono = 1
+        end
+        id_m += 1
+        maestroNew.Id_maestro = id_m
+        maestroNew.Clave = maestroE.Id_maestro_extra
+        maestroNew.Nombre = maestroE.Nombre
+        maestroNew.CorreoElec = maestroE.Correo
+        maestroNew.Telefono = maestroE.Telefono
+        maestroNew.errorNombre = errorNombre
+        maestroNew.errorTelefono = errorTelefono
+        maestroNew.save!     
+        errorNombre = 0, errorTelefono = 0
+      end
+    end
+  end
+
 end

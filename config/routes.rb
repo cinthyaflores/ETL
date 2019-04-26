@@ -1,29 +1,32 @@
 Rails.application.routes.draw do
 
-  get 'grupo_actividad/index'
-  get 'grupo_actividad/edit'
-  get 'grupo_actividad/update'
-  get 'grupo_actividad/delete'
-  get 'aula/index'
-  get 'periodo/index'
-  get 'maestros/index'
-  get 'maestros/edit'
-  get 'maestros/update'
-  get 'maestros/delete'
-  get 'admin_user/index'
-  root 'welcome#index'
+  get 'alumno_grupo/index'
+  get 'constancias/index'
+  get 'cambio_carrera/index'
+  get 'bajas/index'
+  get 'areas_admin/index'
+  #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
+
+  resources :admin_user, only: [:index]
+  resources :alumno_comp, only: [:index]
+  resources :alumno_grupo, only: [:index]
+  resources :alumnos, except: [:delete, :show]
+  resources :area_maestro, only: [:index]
+  resources :areas_admin, only: [:index]
+  resources :aula, only: [:index]
+  resources :bajas, only: [:index]
+  resources :cambio_carrera, only: [:index]
+  resources :carrera, except: [:delete, :show]
+  resources :competencias, only: [:index]
+  resources :constancias, only: [:index]
+  resources :grupo_actividad, except: [:delete, :show] 
+  resources :maestros, except: [:delete, :show]
+  resources :materia, only: [:index]
+  resources :periodo, only: [:index]
+  resources :unidades, only: [:index]
   
   get 'welcome/index'
-  get 'alumno_comp/index'
-  get 'competencias/index'
-  get 'unidades/index'
-  get 'materia/index'
-  get 'alumno_clase/index'
-  get 'act_compl/index'
-  get 'carrera/index'
-  get 'carrera/edit'
-  get 'alumnos/index'
-  get 'alumnos/edit'
+  root 'welcome#index'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions'

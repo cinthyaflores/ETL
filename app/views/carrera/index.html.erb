@@ -1,5 +1,50 @@
 <h1>Carrera#index</h1>
 <p>Find me in app/views/carrera/index.html.erb</p>
+<%if current_user.tipo == 1%>
+    <h2>CARRERAS CON ERRORES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Carrera</th>
+            <th>Nombre</th>
+            <th>Descripción</th> 
+            <th>Créditos</th>
+            <th>Acreditada</th>
+            <th>Opciones</th>
+        </tr>
+        <% @carreras_data.each do |carrera| %>
+            <%if carrera.errorNombre %>
+                <tr>
+                    <th><%= carrera.Id_Carrera %></th>
+                    <th class ='alert alert-danger'><%= carrera.Nombre %></th> 
+                    <th><%= carrera.Descripción %></th> 
+                    <th><%= carrera.Creditos %></th>
+                    <th><%= carrera.Acreditada %></th>
+                    <th><%= link_to "Editar", edit_carrera_path(id: carrera.Id_Carrera) %>
+                    <%= link_to "Eliminar", carrera, method: :delete, data: { confirm: "Desea eliminar #{carrera.Nombre}?"} %></th>
+                </tr>
+            <%end%>
+        <%end%>
+    </table>
+    <h2>CARRERAS EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Carrera</th>
+            <th>Nombre</th>
+            <th>Descripción</th> 
+            <th>Créditos</th>
+            <th>Acreditada</th>
+        </tr>
+        <% @carreras_data.each do |carrera| %>
+            <tr>
+                <th><%= carrera.Id_Carrera %></th>
+                <th><%= carrera.Nombre %></th> 
+                <th><%= carrera.Descripción %></th> 
+                <th><%= carrera.Creditos %></th>
+                <th><%= carrera.Acreditada %></th>
+            </tr>
+        <%end%>
+    </table>
+<%end%>
 <h2>CARRERAS EN CONTROL ACADEMICO</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
@@ -9,7 +54,7 @@
         <th>Créditos</th>
         <th>Acreditada</th>
     </tr>
-    <% @carrerasCA.each do |carrera| %>
+    <% @carreras_ca.each do |carrera| %>
         <tr>
             <th><%= carrera.Id_Carrera %></th>
             <th><%= carrera.Nombre %></th> 
@@ -25,26 +70,20 @@
         <th>Id Carrera</th>
         <th>Nombre</th> 
     </tr>
-    <% @carrerasE.each do |carrera| %>
+    <% @carreras_e.each do |carrera| %>
         <tr>
             <th><%= carrera.Id_carrera %></th>
             <th><%= carrera.Nombre %></th> 
         </tr>
     <%end%>
 </table>
-<h2>ERRORES EN CARRERAS EN EXTRAESCOLARES</h2>
+<h2>CARRERAS EN BIBLIOTECA</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <tr>
-        <th>Id Carrera</th>
-        <th>Nombre</th> 
-        <th>Opciones</th>
-    </tr>
-    <% @nameErrorsE.each do |carrera| %>
+    <% @excel.each do |row| %> <!-- RECORRE LAS FILAS Y ME REGRESA UN ARRAY CON LOS VALORES DE LAS CELDAS DE LAS FILAS-->
         <tr>
-            <th><%= carrera.Id_carrera %></th>
-            <th style="background-color:yellow"><%= carrera.Nombre %></th> 
-            <th><%= link_to "Editar", carrera_edit_path %>
-            <%= link_to "Eliminar" %></th>
+            <% row.each do |data| %>
+                <th><%= data %></th>
+            <%end%> 
         </tr>
     <%end%>
 </table>
