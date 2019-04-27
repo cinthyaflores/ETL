@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'alumno_grupo/index'
-  get 'constancias/index'
-  get 'cambio_carrera/index'
-  get 'bajas/index'
-  get 'areas_admin/index'
   #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
 
   resources :admin_user, only: [:index]
@@ -19,9 +14,16 @@ Rails.application.routes.draw do
   resources :carrera, except: [:delete, :show]
   resources :competencias, only: [:index]
   resources :constancias, only: [:index]
+  resources :evaluaciones_ingreso, only: [:index]
+  resources :forma_titulacion, only: [:index]
+  resources :grupo, except: [:delete, :show]
   resources :grupo_actividad, except: [:delete, :show] 
+  resources :hora, only: [:index]
+  resources :justificante, only: [:index]
   resources :maestros, except: [:delete, :show]
   resources :materia, only: [:index]
+  resources :movilidad, except: [:delete, :show]
+  resources :movilidad_alumno_periodo, only: [:index]
   resources :periodo, only: [:index]
   resources :unidades, only: [:index]
   

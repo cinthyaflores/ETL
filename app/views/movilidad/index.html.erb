@@ -1,0 +1,74 @@
+<h1>Movilidad#index</h1>
+<p>Find me in app/views/movilidad/index.html.erb</p>
+<%if current_user.tipo == 1%>
+    <h2>MOVILIDAD CON ERRORES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Movilidad</th>
+            <th>Id Carrera</th>
+            <th>País</th> 
+            <th>Estado</th>
+            <th>Universidad</th>
+            <th>Opciones</th>
+        </tr>
+        <% @movilidad_data.each do |movi| %>
+            <%if movi.errorPais || movi.errorEstado %>
+                <tr>
+                    <th><%= movi.Id_Movilidad %></th>
+                    <th><%= movi.Id_Carrera %></th> 
+                    <%if movi.errorPais == 1%>
+                      <th class ='alert alert-danger'><%= movi.País %></th>
+                    <%else%>
+                      <th><%= movi.País %></th>
+                    <%end%>
+                    <%if movi.errorEstado == 1%>
+                      <th class ='alert alert-danger'><%= movi.Estado %></th>
+                    <%else%>
+                      <th><%= movi.Estado %></th>
+                    <%end%>
+                    <th><%= movi.Universidad %></th>
+                    <th><%= link_to "Editar", edit_movilidad_path(id: movi.Id_Movilidad) %>
+                    <%= link_to "Eliminar", movi, method: :delete, data: { confirm: "Desea eliminar movilidad a #{movi.País}?"} %></th>
+                </tr>
+            <%end%>
+        <%end%>
+    </table>
+    <h2>MOVILIDAD EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Movilidad</th>
+            <th>Id Carrera</th>
+            <th>País</th> 
+            <th>Estado</th>
+            <th>Universidad</th>
+        </tr>
+        <% @movilidad_data.each do |movi| %>
+            <tr>
+                <th><%= movi.Id_Movilidad %></th>
+                <th><%= movi.Id_Carrera %></th> 
+                <th><%= movi.País %></th>
+                <th><%= movi.Estado %></th>
+                <th><%= movi.Universidad %></th>
+            </tr>
+        <%end%>
+    </table>
+<%end%>
+<h2>MOVILIDAD EN CONTROL ACADEMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+      <th>Id Movilidad</th>
+      <th>Id Carrera</th>
+      <th>País</th> 
+      <th>Estado</th>
+      <th>Universidad</th>
+    </tr>
+    <% @movilidad_ca.each do |movi| %>
+        <tr>
+          <th><%= movi.Id_Movilidad %></th>
+          <th><%= movi.Id_Carrera %></th> 
+          <th><%= movi.País %></th>
+          <th><%= movi.Estado %></th>
+          <th><%= movi.Universidad %></th>
+        </tr>
+    <%end%>
+</table>
