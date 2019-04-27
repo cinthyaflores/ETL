@@ -1,0 +1,19 @@
+<h1>Titulado#index</h1>
+<p>Find me in app/views/titulado/index.html.erb</p>
+<h2>TITULACIONES EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Titulación</th>
+        <th>Id Alumno</th> 
+        <th>Id Forma Titu.</th>
+        <th>Fecha de Titulación</th> 
+    </tr>
+    <% @titulado_data.each do |titulado| %>
+        <tr>
+            <th><%= titulado.Id_Titulado%></th> 
+            <th><%= titulado.Id_Alumno %></th> 
+            <th><%= titulado.Id_Form_Titu%></th> 
+            <th><%= titulado.Fecha_Tit %></th> 
+        </tr>
+    <%end%>
+</table>

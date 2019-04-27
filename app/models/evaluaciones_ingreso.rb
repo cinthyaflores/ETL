@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 class Evaluaciones_ingreso < ApplicationRecord
-  self.table_name = 'Evaluaciones_Ingreso'
-  #SI NO ES EL PLURAL: self.table_name = 'nombre'
+  self.table_name = "Evaluaciones_Ingreso"
+  # SI NO ES EL PLURAL: self.table_name = 'nombre'
 end

@@ -1,0 +1,17 @@
+<h1>TipoConstancia#index</h1>
+<p>Find me in app/views/tipo_constancia/index.html.erb</p>
+<h2>TIPOS DE CONSTANCIA EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Tipo de Constancia</th>
+        <th>Nombre</th>
+        <th>Costo</th> 
+    </tr>
+    <% @constancia_data.each do |const| %>
+        <tr>
+            <th><%= const.Id_Tipo_con%></th> 
+            <th><%= const.Nombre %></th>  
+            <th>$<%= const.Costo %></th> 
+        </tr>
+    <%end%>
+</table>

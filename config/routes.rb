@@ -25,6 +25,11 @@ Rails.application.routes.draw do
   resources :movilidad, except: [:delete, :show]
   resources :movilidad_alumno_periodo, only: [:index]
   resources :periodo, only: [:index]
+  resources :personal_admin, except: [:delete, :show]
+  resources :tipo_baja, only: [:index]
+  resources :titulado, only: [:index]
+  resources :tipo_constancia, only: [:index]
+  resources :tipo_contrato, only: [:index]
   resources :unidades, only: [:index]
   
   get 'welcome/index'
