@@ -1,0 +1,17 @@
+<h1>TipoContrato#index</h1>
+<p>Find me in app/views/tipo_contrato/index.html.erb</p>
+<h2>TIPOS DE CONTRATOS EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Contrato</th>
+        <th>Nombre</th>
+        <th>Duración</th> 
+    </tr>
+    <% @contrato_data.each do |cont| %>
+        <tr>
+            <th><%= cont.Id_contrato%></th> 
+            <th><%= cont.Nombre %></th> 
+            <th><%= cont.Duración %></th> 
+        </tr>
+    <%end%>
+</table>

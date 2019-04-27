@@ -23,8 +23,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :Administrador %>
-    <%= f.check_box :tipo %>
+    <%= f.label :tipo do %>
+      <%= f.radio_button :tipo, 1 %> Administrador
+      <%= f.radio_button :tipo, 2 %> Control Academico
+      <%= f.radio_button :tipo, 3 %> Extraescolares
+      <%= f.radio_button :tipo, 4 %> Biblioteca
+    <%end%>
   </div>
 
   <div class="form-group">

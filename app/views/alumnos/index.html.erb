@@ -1,6 +1,7 @@
 <h1>Alumnos#index</h1>
 <p>Find me in app/views/alumnos/index.html.erb</p>
-<%if current_user.tipo == 1%> 
+<%case current_user.tipo %>
+<%when 1 %>
     <h2>ERRORES EN DATA WAREHOUSE</h2>
     <table style="width:100%", class= "table table-striped table-bordered table-sm">
         <tr>
@@ -24,21 +25,30 @@
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
-                    <%if alumno.errorNombre%>
+                    <%if alumno.errorNombre %>
                         <th class ='alert alert-danger'><%= alumno.Nombre %></th>
                     <%else%>
                         <th><%= alumno.Nombre %></th>
                     <%end%>
-                    <%if alumno.errorCurp%>
+                    <%if alumno.errorCurp %>
                         <th class ='alert alert-danger'><%= alumno.Curp %></th> 
                     <%else%>
                         <th><%= alumno.Curp %></th> 
                     <%end%>
-                    <th><%= alumno.Id_Carrera %></th> 
-                    <%if alumno.errorTelefono%>
-                        <th class ='alert alert-danger'><%= alumno.Telefono %></th>
-                    <%else%>
-                        <th><%= alumno.Telefono %></th>
+                    <th><%= alumno.Id_Carrera %></th>
+                    <%if alumno.base.match('e')%> 
+                        <%if alumno.errorTelefono%>
+                            <th class ='alert alert-danger'><%= alumno.telefono_extra %></th>
+                        <%else%>
+                            <th><%= alumno.telefono_extra %></th>
+                        <%end%>
+                    <%end%> 
+                    <%if alumno.base=="c"%>
+                        <%if alumno.errorTelefono%>
+                            <th class ='alert alert-danger'><%= alumno.Telefono %></th>
+                        <%else%>
+                            <th><%= alumno.Telefono %></th>
+                        <%end%>
                     <%end%>
                     <th><%= alumno.Fecha_nac %></th>
                     <th><%= alumno.Fec_ingreso %></th>
@@ -57,13 +67,14 @@
             <%end%>
         <%end%>
     </table>
-    <h2>ALUMNOS EN DATA WAREHOUSE</h2>
-    <table style="width:100%", class= "table table-striped table-bordered table-sm">
-        <tr>
-            <th>Id</th>
-            <th>No. Control</th> 
-            <th>Nombre</th> 
-            <th>Curp</th> 
+<%when 2 %>
+<h2>ALUMNOS CON ERROR EN CONTROL ACADÉMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id</th>
+        <th>No. Control</th> 
+        <th>Nombre</th> 
+        <th>Curp</th> 
             <th>Id Carr.</th> 
             <th>Teléfono</th>
             <th>Fecha Nac.</th> 
@@ -71,82 +82,80 @@
             <th>Estado</th>
             <th>Fecha Egr.</th>
             <th>Prom.</th>
+            <th>Opciones</th>
+    </tr>
+        <% @alumnosData.each do |alumno| %>
+            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorTelefono) && alumno.base.match('c') %>
+                <tr>
+                    <th><%= alumno.Id_Alumno %></th>
+                    <th><%= alumno.No_control %></th> 
+                    <%if alumno.errorNombre%>
+                        <th class ='alert alert-danger'><%= alumno.Nombre %></th>
+                    <%else%>
+                        <th><%= alumno.Nombre %></th>
+                    <%end%>
+                    <%if alumno.errorCurp%>
+                        <th class ='alert alert-danger'><%= alumno.Curp %></th> 
+                    <%else%>
+                        <th><%= alumno.Curp %></th> 
+                    <%end%>
+                    <th><%= alumno.Id_Carrera %></th> 
+                    <%if alumno.errorTelefono == 1 %> 
+                        <th class ='alert alert-danger'><%= alumno.Telefono %></th>
+                    <%else%>
+                        <th><%= alumno.Telefono %></th>
+                    <%end%>
+                    <th><%= alumno.Fecha_nac %></th>
+                    <th><%= alumno.Fec_ingreso %></th>
+                    <th><%= alumno.Estado %></th>
+                    <th><%= alumno.Fec_egreso %></th>
+                    <th><%= alumno.Promedio_G %></th>
+                    <th><%= link_to "Editar", edit_alumno_path(id: alumno.Id_Alumno)%> 
+                    <%= link_to "Eliminar", alumno, method: :delete, data: { confirm: "¿Desea eliminar a #{alumno.Nombre}?"}%></th>
+                </tr>
+            <%end%>
+        <%end%>
+</table>
+<%when 3 %>
+<h2>ALUMNOS CON ERROR EN EXTRAESCOLAES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id</th>
+            <th>No. Control</th> 
+            <th>Id Carr.</th> 
+            <th>Teléfono</th>
+            <th>Fecha Nac.</th> 
+            <th>Fecha Ing.</th>
             <th>Peso</th>
             <th>Estatura</th>
+            <th>Opciones</th>
         </tr>
         <% @alumnosData.each do |alumno| %>
-            <tr>
-                <th><%= alumno.Id_Alumno %></th>
-                <th><%= alumno.No_control %></th> 
-                <th><%= alumno.Nombre %></th>
-                <th><%= alumno.Curp %></th> 
-                <th><%= alumno.Id_Carrera %></th> 
-                <th><%= alumno.Telefono %></th>
-                <th><%= alumno.Fecha_nac %></th>
-                <th><%= alumno.Fec_ingreso %></th>
-                <th><%= alumno.Estado %></th>
-                <th><%= alumno.Fec_egreso %></th>
-                <th><%= alumno.Promedio_G %></th>
-                <th><%= alumno.Peso %></th>
-                <th><%= alumno.Estatura %></th>
-            </tr>
+            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorPeso|| alumno.errorTelefono) && alumno.base.match('e')%>
+                <tr>
+                    <th><%= alumno.Id_Alumno %></th>
+                    <th><%= alumno.No_control %></th> 
+                    <th><%= alumno.Id_Carrera %></th> 
+                    <%if alumno.errorTelefono %>
+                        <th class ='alert alert-danger'><%= alumno.telefono_extra %></th>
+                    <%else%>
+                        <th><%= alumno.telefono_extra %></th>
+                    <%end%>
+                    <th><%= alumno.Fecha_nac %></th>
+                    <th><%= alumno.Fec_ingreso %></th>
+                    <%if alumno.errorPeso%>
+                        <th class ='alert alert-danger'><%= alumno.Peso %></th>
+                    <%else%>
+                        <th><%= alumno.Peso %></th>
+                    <%end%>
+                    <th><%= alumno.Estatura %></th>
+                    <th><%= link_to "Editar", edit_alumno_path(id: alumno.Id_Alumno)%> 
+                    <%= link_to "Eliminar", alumno, method: :delete, data: { confirm: "¿Desea eliminar a #{alumno.Nombre}?"}%></th>
+                </tr>
+            <%end%>
         <%end%>
-    </table>
-<%end%>
-
-<h2>ALUMNOS CONTROL ACADÉMICO</h2>
-<table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <tr>
-        <th>Id</th>
-        <th>No. Control</th> 
-        <th>Nombre</th> 
-        <th>Id Carrera</th> 
-        <th>Teléfono</th>
-        <th>Curp</th>
-        <th>Fecha Nac.</th> 
-        <th>Fecha Ingreso</th>
-        <th>Prom.</th>
-    </tr>
-    <% @alumnosCA.each do |alumno| %>
-        <tr>
-            <th><%= alumno.Id_Alumno %></th>
-            <th><%= alumno.No_control %></th> 
-            <th><%= alumno.Nombre %></th>
-            <th><%= alumno.Id_Carrera %></th> 
-            <th><%= alumno.Telefono %></th>
-            <th><%= alumno.Curp %></th> 
-            <th><%= alumno.Fecha_nac %></th>
-            <th><%= alumno.Fecha_ing %></th>
-            <th><%= alumno.Promedio_G %></th>
-        </tr>
-    <%end%>
-</table>
-
-<h2>ALUMNOS EN EXTRAESCOLAES</h2>
-<table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <tr>
-        <th>No. de Control</th>
-        <th>Nombre</th> 
-        <th>Fecha Nac</th>
-        <th>Fecha Ingr</th>
-        <th>Peso</th> 
-        <th>Estatura</th>
-        <th>Teléfono</th>
-        <th>Opciones</th>
-    </tr>
-    <% @alumnosE.each do |alumno| %>
-        <tr>
-            <th><%= alumno.No_control %></th>
-            <th><%= alumno.Nombre %></th> 
-            <th><%= alumno.Fecha_nacimineto%></th> 
-            <th><%= alumno.Fecha_ingreso %></th>
-            <th><%= alumno.Peso %></th> 
-            <th><%= alumno.Estatura%></th> 
-            <th><%= alumno.Telefono %></th>
-        </tr>
-    <%end%>
 </table> 
-
+<%when 4 %>
 <h2>ALUMNOS EN BIBLIOTECA</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <% @excel.each do |row| %> <!-- RECORRE LAS FILAS Y ME REGRESA UN ARRAY CON LOS VALORES DE LAS CELDAS DE LAS FILAS-->
@@ -157,3 +166,4 @@
         </tr>
     <%end%>
 </table>
+<%end%>
