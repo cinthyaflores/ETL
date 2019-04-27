@@ -1,0 +1,48 @@
+<h1>Justificante#index</h1>
+<p>Find me in app/views/justificante/index.html.erb</p>
+<h2>JUSTIFICANTES EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Justificante</th>
+        <th>Id Alumno</th> 
+        <th>Id Personal</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Causa</th>
+        <th>Fecha Elaboración</th>
+    </tr>
+    <% @justificantes_data.each do |just| %>
+        <tr>
+            <th><%= just.Id_Just %></th> 
+            <th><%= just.Id_Alumno %></th> 
+            <th><%= just.Id_Personal %></th> 
+            <th><%= just.Fecha_ini %></th>  
+            <th><%= just.Fecha_fin %></th> 
+            <th><%= just.Causa %></th>  
+            <th><%= just.Fecha_elab %></th> 
+        </tr>
+    <%end%>
+</table>
+<h2>JUSTIFICANTES EN CONTROL ACADEMICO</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Justificante</th>
+        <th>Id Alumno</th> 
+        <th>Id Personal</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Causa</th>
+        <th>Fecha Elaboración</th>
+    </tr>
+    <% @justificantes_ca.each do |just| %>
+        <tr>
+          <th><%= just.Id_Just %></th> 
+          <th><%= just.Id_Alumno %></th> 
+          <th><%= just.Id_Personal %></th> 
+          <th><%= just.Fecha_ini %></th>  
+          <th><%= just.Fecha_fin %></th> 
+          <th><%= just.Causa %></th>  
+          <th><%= just.Fecha_elab %></th> 
+        </tr>
+    <%end%>
+</table>

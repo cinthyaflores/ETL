@@ -30,4 +30,8 @@ class ApplicationController < ActionController::Base
     !!(peso.to_s =~ /^\d+/) #Debe de tener puros numeros
   end
 
+  def validate_clave (clave)
+    !!(clave =~ /^[A-Z]{2}+\d{4}$/)
+  end
+
 end

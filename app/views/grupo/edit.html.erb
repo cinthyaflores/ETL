@@ -1,0 +1,38 @@
+<h1>Grupo#edit</h1>
+<p>EDITAR LOS GRUPOS CON ERROR</p>
+<div>
+  <%= form_for @grupo, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+      <%@grupo.errors.each do |value, message|%> 
+        <h5 class= "alert alert-danger"><%=message%></h5>
+      <%end%>
+    <div class = "field">
+      <%= f.text_field :Id_Grupo, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Id_Materia, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Id_hora, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Id_Maestro, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Id_Periodo, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%= f.text_field :Id_Aula, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
+    </div>
+    <div class = "field">
+      <%if @error == nil%>
+        <%= f.text_field :Clave, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+      <%else%>
+        <%= f.text_field :Clave, placeholder: "Título", class:"form-control m-4"%>
+      <%end%>
+    </div>
+    <div class = "field">
+      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+    </div>
+    <%= link_to  "Regresar", grupo_index_path , class:"btn btn-primary m-2" %>
+  <% end %> 
+<div>
