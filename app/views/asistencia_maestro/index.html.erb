@@ -1,0 +1,23 @@
+<h1>AsistenciaMaestro#index</h1>
+<p>Find me in app/views/asistencia_maestro/index.html.erb</p>
+<h2>ASISTENCIA DE MAESTROS DE EXTRAESCOLARES EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Maestro</th>
+        <th>Id Área</th>
+        <th>Id Periodo</th>
+        <th>Asistencias</th> 
+        <th>Faltas</th>
+        <th>Retardos</th>
+    </tr>
+    <% @asistencia_maestro_data.each do |maestro| %>
+        <tr>
+            <th><%= maestro.Id_maestro%></th>
+            <th><%= maestro.Id_Area_mtro %></th>  
+            <th><%= maestro.Id_periodo %></th> 
+            <th><%= maestro.Asistencias%></th> 
+            <th><%= maestro.Faltas%></th> 
+            <th><%= maestro.Retardos%></th> 
+        </tr>
+    <%end%>
+</table>

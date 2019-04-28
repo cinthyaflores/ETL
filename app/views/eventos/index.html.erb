@@ -1,0 +1,21 @@
+<h1>Eventos#index</h1>
+<p>Find me in app/views/eventos/index.html.erb</p>
+<h2>EVENTOS DE EXTRAESCOLARES EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Evento</th>
+        <th>Id Tipo Evento</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+    </tr>
+    <% @eventos_data.each do |evento| %>
+        <tr>
+            <th><%= evento.Id_evento%></th>
+            <th><%= evento.Tipo_evento %></th>
+            <th><%= evento.Nombre%></th>  
+            <th><%= evento.Descripcion %></th> 
+            <th><%= evento.Fecha %></th>  
+        </tr>
+    <%end%>
+</table>

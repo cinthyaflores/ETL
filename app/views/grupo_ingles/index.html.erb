@@ -1,0 +1,27 @@
+<h1>GrupoIngles#index</h1>
+<p>Find me in app/views/grupo_ingles/index.html.erb</p>
+<h2>GRUPOS DE INGLES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Grupo</th>
+            <th>Nombre</th> 
+            <th>Cupo</th>
+            <th>Id Aula</th> 
+            <th>Id Nivel</th>
+            <th>Id Dias</th> 
+            <th>Hora Inicio</th>
+            <th>Hora Fin</th>  
+        </tr>
+        <% @grupos_data.each do |grupo| %>
+                <tr>
+                    <th><%= grupo.Id_grupo_I %></th>
+                    <th><%= grupo.Nombre %></th> 
+                    <th><%= grupo.Cupo %></th>
+                    <th><%= grupo.Id_aula %></th> 
+                    <th><%= grupo.Id_nivel %></th>
+                    <th><%= grupo.Dias %></th> 
+                    <th><%= grupo.Hora_inicio.strftime("%T") %></th>
+                    <th><%= grupo.Hora_fin.strftime("%T") %></th>
+                </tr>
+        <%end%>
+    </table>

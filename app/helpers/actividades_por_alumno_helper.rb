@@ -1,0 +1,2 @@
+module ActividadesPorAlumnoHelper
+end

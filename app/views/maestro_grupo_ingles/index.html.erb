@@ -1,0 +1,17 @@
+<h1>MaestroGrupoIngles#index</h1>
+<p>Find me in app/views/maestro_grupo_ingles/index.html.erb</p>
+<h2>MAESTROS EN INGLES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Maestro</th>
+            <th>Id Grupo</th> 
+            <th>Id Periodo</th>
+        </tr>
+        <% @maestros_data.each do |maestro| %>
+                <tr>
+                    <th><%= maestro.Id_maestro %></th>
+                    <th><%= maestro.Id_grupo_I %></th>
+                    <th><%= maestro.Id_periodo %></th>
+                </tr>
+        <%end%>
+    </table>

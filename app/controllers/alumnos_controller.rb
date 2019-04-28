@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class AlumnosController < ApplicationController
-  def index
-    @alumnosData = Alumno.using(:data_warehouse).all
+  def init
     export
+  end
+
+  def index
+    @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+    verify
   end
 
   def edit
@@ -23,7 +27,7 @@ class AlumnosController < ApplicationController
       update = @alumno.update_attributes(Id_Alumno: params[:alumno][:Id_Alumno], Nombre: params[:alumno][:Nombre], Curp: params[:alumno][:Curp], Peso: params[:alumno][:Peso], telefono_extra: params[:alumno][:telefono_extra], errorNombre: nil, errorTelefono: nil, errorCurp: nil, errorPeso: nil)
     end
     if update
-      redirect_to "/"
+      redirect_to "/alumnos"
     else
       render :edit
     end
@@ -32,15 +36,44 @@ class AlumnosController < ApplicationController
   def destroy
     @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
     @alumno.destroy
-    redirect_to "/", notice: "Registro borrado con éxito"
+    redirect_to "/alumnos", notice: "Registro borrado con éxito"
   end
 
+  
+
   private
+
+    def verify
+      case current_user.tipo
+      when 1
+        @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+        @alumnosData.each do |alumno|
+          if alumno.errorNombre || alumno.errorPeso || alumno.errorTelefono || alumno.errorCurp
+            @errores = true
+          end
+        end
+      when 1 #ERRORES EN CONTROL ACADEMICO
+        @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+        @alumnosData.each do |alumno|
+          if alumno.errorNombre || alumno.errorPeso || alumno.errorTelefono || alumno.errorCurp
+            @errores = true
+          end
+        end
+      when 1 #ERRORES EN EXTRAESCOLARE
+        @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+        @alumnosData.each do |alumno|
+          if alumno.errorNombre || alumno.errorPeso || alumno.errorTelefono || alumno.errorCurp
+            @errores = true
+          end
+        end
+      end
+    end
 
     def export
       Alumno.using(:data_warehouse).delete_all if !Alumno.using(:data_warehouse).all.empty?
 
       id_al = 0
+      @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
       @excel = @biblio.sheet("Alumnos")
       @alumnosCA = Alumno.using(:controlA).all
       @alumnosE = Alumno.using(:extra).all
@@ -77,6 +110,7 @@ class AlumnosController < ApplicationController
           if alumnoCA.No_control == alumnoE.No_control
             if !validate_number(alumnoE.Telefono)
               alumnoNew.errorTelefono = 2
+              @error=true
             end
             if !validate_weight(alumnoE.Peso)
               alumnoNew.errorPeso = 1
