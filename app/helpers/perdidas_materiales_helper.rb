@@ -1,0 +1,2 @@
+module PerdidasMaterialesHelper
+end

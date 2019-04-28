@@ -1,0 +1,21 @@
+<h1>RecursosMateriales#index</h1>
+<p>Find me in app/views/recursos_materiales/index.html.erb</p>
+<h2>RECURSOS MATERIALES EXTRAESCOLARES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Recurso</th>
+            <th>Id Área</th> 
+            <th>Nombre</th> 
+            <th>Cantidad</th>
+            <th>Costo</th>
+        </tr>
+        <% @recursos_data.each do |recurso| %>
+                <tr>
+                    <th><%= recurso.Id_recurso %></th>
+                    <th><%= recurso.Area_pertenece %></th> 
+                    <th><%= recurso.Nombre %></th>
+                    <th><%= recurso.Cantidad %></th> 
+                    <th><%= recurso.Costo %></th> 
+                </tr>
+        <%end%>
+    </table>
