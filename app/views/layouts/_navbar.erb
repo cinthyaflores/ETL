@@ -1,15 +1,17 @@
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="/welcome/index">
     <!--<img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-    Pancho Villa
+    Escuela Pancho Villa
   </a>
   <form class="form-inline my-2 my-lg-0">
     
   <%if user_signed_in?%>
-        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+  <div class="text-right">
+    <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+  </div>
     <%else%>
-        <%= link_to "Registrarse", new_user_registration_path, class: "btn btn-primary"%>
-        <%= link_to "Iniciar Sesión", new_user_session_path, class: "btn btn-primary"%>
+      
+        
     <%end%> 
   </form>
   

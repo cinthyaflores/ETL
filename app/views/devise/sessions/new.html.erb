@@ -1,27 +1,29 @@
-<h1><%= t('.sign_in') %></h1>
-
+<div class="text-center mb-4">
+  <%= image_tag("Userlogin.png", size: "90x90") %>
+</div>
+<h1 class="text-center">Iniciar Sesión</h1>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-group">
-    <%= f.label :email %>
+  <div class="form-group text-center">
+    <%= f.label 'Correo' %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
   </div>
   
-  <div class="form-group">
-    <%= f.label :password %>
+  <div class="form-group text-center" id="input_text">
+    <%= f.label 'Contraseña' %>
     <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
   </div>
 
   <% if devise_mapping.rememberable? %>
-    <div class="form-group form-check">
+    <div class="form-group form-check text-center">
       <%= f.check_box :remember_me, class: 'form-check-input' %>
-      <%= f.label :remember_me, class: 'form-check-label' do %>
+      <%= f.label 'Recordarme', class: 'form-check-label' do %>
         <%= resource.class.human_attribute_name('remember_me') %>
       <% end %>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.submit  t('.sign_in'), class: 'btn btn-primary' %>
+  <div class="form-group text-center">
+    <%= f.submit 'Ingresar', class: 'btn btn-primary btn-lg' %>
   </div>
 <% end %>
 

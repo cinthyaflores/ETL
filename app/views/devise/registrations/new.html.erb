@@ -1,15 +1,15 @@
-<h1><%= t('.sign_up') %></h1>
+<h1 class="text-center">Nuevo usuario</h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {class: 'shadow p-3 mb-5 bg-white rounded'}) do |f| %>
   <%= bootstrap_devise_error_messages! %>
 
-  <div class="form-group">
-    <%= f.label :email %>
+  <div class="form-group text-center">
+    <%= f.label 'Corrreo' %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :password %>
+  <div class="form-group text-center">
+    <%= f.label 'Contraseña' %>
     <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
 
     <% if @minimum_password_length %>
@@ -17,12 +17,13 @@
     <% end %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
+  <div class="form-group text-center">
+    <%= f.label 'Cofirmar contraseña' %>
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
 
-  <div class="form-group">
+  <div class="form-group text-center">
+  <h4>Elija el rol que va representar</h4>
     <%= f.label :tipo do %>
       <%= f.radio_button :tipo, 1 %> Administrador
       <%= f.radio_button :tipo, 2 %> Control Academico
@@ -31,8 +32,8 @@
     <%end%>
   </div>
 
-  <div class="form-group">
-    <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
+  <div class="form-group text-center">
+    <%= f.submit 'Registrarse', class: 'btn btn-primary btn-lg' %>
   </div>
 <% end %>
 
