@@ -1,0 +1,19 @@
+<h1>OrdenDeCompra#index</h1>
+<p>Find me in app/views/orden_de_compra/index.html.erb</p>
+<h2>ORDEN DE COMPRA EXTRAESCOLARES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Orden</th>
+            <th>Fecha</th> 
+            <th>Costo</th>
+            <th>Estado</th> 
+        </tr>
+        <% @ordenes_data.each do |orden| %>
+                <tr>
+                    <th><%= orden.Id_orden_compra %></th>
+                    <th><%= orden.Fecha %></th> 
+                    <th><%= orden.Costo %></th>
+                    <th><%= orden.Estado %></th> 
+                </tr>
+        <%end%>
+    </table>

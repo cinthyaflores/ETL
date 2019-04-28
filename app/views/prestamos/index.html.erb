@@ -1,0 +1,23 @@
+<h1>Prestamos#index</h1>
+<p>Find me in app/views/prestamos/index.html.erb</p>
+<h2>PRESTAMOS EXTRAESCOLARES EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Prestamo</th>
+            <th>Id Maestro</th> 
+            <th>Id Periodo</th>
+            <th>Fecha préstamo</th> 
+            <th>Fecha entrega</th>
+            <th>Estado</th>
+        </tr>
+        <% @prestamos_data.each do |prestamo| %>
+                <tr>
+                    <th><%= prestamo.Id_prestamo %></th>
+                    <th><%= prestamo.Id_maestro_ex %></th> 
+                    <th><%= prestamo.Id_periodo %></th>
+                    <th><%= prestamo.Fechaprestamo %></th> 
+                    <th><%= prestamo.Fechaentrega %></th>
+                    <th><%= prestamo.Estado %></th> 
+                </tr>
+        <%end%>
+    </table>
