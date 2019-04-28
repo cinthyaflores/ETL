@@ -1,0 +1,17 @@
+<h1>DetallePrestamo#index</h1>
+<p>Find me in app/views/detalle_prestamo/index.html.erb</p>
+<h2>DETALLE DE PRESTAMO DE RECURSOS DE EXTRAESCOLARES EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Préstamo</th>
+        <th>Id Recurso</th>
+        <th>Cantidad</th>
+    </tr>
+    <% @prestamo_data.each do |prestamo| %>
+        <tr>
+            <th><%= prestamo.Id_prestamo%></th>
+            <th><%= prestamo.IdRM%></th>  
+            <th><%= prestamo.Cantidad %></th> 
+        </tr>
+    <%end%>
+</table>

@@ -1,24 +1,58 @@
 # frozen_string_literal: true
 
 class GrupoActividadController < ApplicationController
+  def init
+    export
+  end
+
   def index
-    @gruposE = Grupo_actividad.using(:extra).all # CAMPOS: Id_grupo_A, Nombre, Cupo, Id_Area, Id_Actividad, Dias, Hora_inicio, Hora_fin
-
-    @cupoErrorsE = Array.new # ERRORES EN CARRERA
-
-    @gruposE.each do |grupo|
-      if !validate_weight(grupo.Cupo)
-        @cupoErrorsE << grupo
-      end
-    end
+    @grupos_data = Grupo_actividad.using(:data_warehouse).all
+    export
   end
 
   def edit
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @error = @grupo.errorCupo
   end
 
   def update
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @error = @grupo.errorCupo
+
+    if @grupo.update_attributes(Cupo: params[:grupo_actividad][:Cupo], errorCupo: nil)
+      redirect_to "/"
+    else
+      render :edit
+    end
   end
 
-  def delete
+  def destroy
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @grupo.destroy
+    redirect_to "/"
   end
+
+  private
+
+    def export
+      Grupo_actividad.using(:data_warehouse).delete_all if !Grupo_actividad.using(:data_warehouse).all.empty?
+
+      @grupo_extra = Grupo_actividad.using(:extra).all 
+
+      @grupo_extra.each do |grupo_e|
+        grupo = Grupo_actividad.using(:data_warehouse).new
+        if !validate_weight(grupo_e.Cupo)
+          grupo.errorCupo = 1
+        end
+        grupo.Id_Grupo = grupo_e.Id_Grupo
+        grupo.Id_actividad = grupo_e.Id_actividad_e
+        grupo.Nombre = grupo_e.Nombre
+        grupo.Cupo = grupo_e.Cupo
+        grupo.Id_area = grupo_e.Id_area
+        grupo.Dias = grupo_e.Dias
+        grupo.Hora_inicio = grupo_e.Hora_inicio
+        grupo.Hora_fin = grupo_e.Hora_fin
+        grupo.save!
+      end
+    end
 end

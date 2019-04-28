@@ -32,6 +32,7 @@ class MaestrosController < ApplicationController
     def export
       Maestro.using(:data_warehouse).destroy_all
       id_m = 0
+      @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
       @excel = @biblio.sheet("Maestros")
       @maestrosCA = Maestro.using(:controlA).all
       @maestrosE = Maestro.using(:extra).all
@@ -66,6 +67,7 @@ class MaestrosController < ApplicationController
         end
         id_m += 1
         maestroNew.Id_maestro = id_m
+        maestroNew.Id_Area_mtro = area_maestro(maestroE.TipoMaestro)
         maestroNew.Clave = maestroE.Id_maestro_extra
         maestroNew.Nombre = maestroE.Nombre
         maestroNew.CorreoElec = maestroE.Correo

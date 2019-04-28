@@ -85,7 +85,7 @@
             <th>Opciones</th>
     </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorTelefono) && alumno.base.match('c') %>
+            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorTelefono == 1) && alumno.base.match('c') %>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -131,7 +131,7 @@
             <th>Opciones</th>
         </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorPeso|| alumno.errorTelefono) && alumno.base.match('e')%>
+            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorPeso|| alumno.errorTelefono == 2 ) && alumno.base.match('e')%>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -155,15 +155,9 @@
             <%end%>
         <%end%>
 </table> 
-<%when 4 %>
-<h2>ALUMNOS EN BIBLIOTECA</h2>
-<table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <% @excel.each do |row| %> <!-- RECORRE LAS FILAS Y ME REGRESA UN ARRAY CON LOS VALORES DE LAS CELDAS DE LAS FILAS-->
-        <tr>
-            <% row.each do |data| %>
-                <th><%= data %></th>
-            <%end%> 
-        </tr>
-    <%end%>
-</table>
+<%end%>
+<%if @errores %>
+    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
+<%else%>
+    <%= link_to "CONTINUAR" , carrera_index_path, method: :get %>
 <%end%>

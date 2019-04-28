@@ -1,0 +1,17 @@
+<h1>AreaRecreativa#index</h1>
+<p>Find me in app/views/area_recreativa/index.html.erb</p>
+<h2>AREAS RECREATIVAS EN DATA WAREHOUSE</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id Área</th>
+        <th>Nombre</th> 
+        <th>Descripción</th>
+    </tr>
+    <% @area_rec_data.each do |area| %>
+        <tr>
+            <th><%= area.Id_area_rec%></th> 
+            <th><%= area.Nombre %></th> 
+            <th><%= area.Descripción%></th> 
+        </tr>
+    <%end%>
+</table>

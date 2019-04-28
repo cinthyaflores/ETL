@@ -1,0 +1,21 @@
+<h1>NivelInglesAlumno#index</h1>
+<p>Find me in app/views/nivel_ingles_alumno/index.html.erb</p>
+<h2>NIVELES DE INGLES DE ALUMNO EN DATAWAREHOUSE</h2>
+    <table style="width:100%", class= "table table-striped table-bordered table-sm">
+        <tr>
+            <th>Id Nivel</th>
+            <th>Id Alumno</th> 
+            <th>Id Periodo</th>
+            <th>Calificación</th>
+            <th>Créditos</th> 
+        </tr>
+        <% @niveles_alu_data.each do |nivel| %>
+                <tr>
+                    <th><%= nivel.Id_nivel %></th>
+                    <th><%= nivel.Id_Alumno %></th> 
+                    <th><%= nivel.Id_Periodo %></th>
+                    <th><%= nivel.Calificacion %></th>
+                    <th><%= nivel.Creditos %></th>
+                </tr>
+        <%end%>
+    </table>

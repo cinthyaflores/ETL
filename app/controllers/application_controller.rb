@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :import_excel
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  protected
+  
+  private
 
     # PARA AGREGAR MÁS DATOS AL INICIO DE SESION DE DEVISE (solo se ponen los datos extras)
     def configure_permitted_parameters
@@ -40,4 +41,31 @@ class ApplicationController < ActionController::Base
       puts
       !!(estado.to_s =~ /[1-2]{1}/)
     end
+
+    def find_id_alumno(no_ctrl)
+      data = Alumno.using(:data_warehouse).all
+      data.each do |alumno|
+        return alumno.Id_Alumno if alumno.No_control == no_ctrl
+      end
+    end
+
+    def area_maestro(tipo)
+      return 10 if tipo == 2
+      return 11 if tipo == 1
+    end
+
+    def area_maestro_id(clave)
+      maestros_data = Maestro.using(:data_warehouse).all
+      maestros_data.each do |maestro|
+        return maestro.Id_Area_mtro if maestro.Clave == clave
+      end
+    end
+
+    def find_id_maestro(clave)
+      data = Maestro.using(:data_warehouse).all
+      data.each do |maestro|
+        return maestro.Id_maestro if maestro.Clave == clave
+      end
+    end
+
 end

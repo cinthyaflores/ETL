@@ -2,5 +2,5 @@
 
 class Grupo_actividad < ApplicationRecord
   self.table_name = "Grupo_Actividad"
-  # SI NO ES EL PLURAL: self.table_name = 'nombre'
+  validates :Cupo, format: { with: /\A\d+/, message: "El cupo debe tener cantidades positivas" }, on: :update
 end
