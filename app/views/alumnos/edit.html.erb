@@ -1,5 +1,5 @@
 <div class = "container">
-<h2 class="text-center">Alumnos#Edit</h2>
+<h2 class="text-center">Alumnos</h2>
 <h2 class="text-center">EDITAR DATOS DEL ALUMNO</h2>
 <%case current_user.tipo %>
 <%when 1 %>
@@ -131,13 +131,13 @@
         <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
-   <!---- <div class = "field">---->
-    <div class = "text-center">
-      <%= f.submit "Guardar", class:"btn btn-primary btn-lg m-2" %> 
+    <!----<div class = "field">--->
+      <div class = "text-center">
+        <%= f.submit "Guardar", class:"btn btn-primary btn-lg m-2" %> 
       </div>
-    <!-----</div>----->
+    <!-----</div>
     <div class = "text-center">
-    <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary btn-lg  m-2" %>
+      <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary btn-lg  m-2" %>
     </div>
   <% end %> 
 <% end %> 
