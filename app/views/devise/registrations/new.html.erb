@@ -1,5 +1,5 @@
 <h1 class="text-center">Nuevo usuario</h1>
-
+<body class="Backgruond">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {class: 'shadow p-3 mb-5 bg-white rounded'}) do |f| %>
   <%= bootstrap_devise_error_messages! %>
 
@@ -38,3 +38,4 @@
 <% end %>
 
 <%= render 'devise/shared/links' %>
+</body>
