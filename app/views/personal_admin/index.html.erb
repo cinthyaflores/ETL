@@ -1,6 +1,7 @@
 <h1>PersonalAdmin#index</h1>
 <p>Find me in app/views/personal_admin/index.html.erb</p>
-<%if current_user.tipo == 1%>
+<% case current_user.tipo %>
+<% when 1 %>
     <h2>PERSONAL ADMINISTRATIVO CON ERRORES EN DATAWAREHOUSE</h2>
     <table style="width:100%", class= "table table-striped table-bordered table-sm">
         <tr>
@@ -35,28 +36,7 @@
             <%end%>
         <%end%>
     </table>
-    <h2>MOVILIDAD EN DATAWAREHOUSE</h2>
-    <table style="width:100%", class= "table table-striped table-bordered table-sm">
-        <tr>
-            <th>Id Personal</th>
-            <th>Id Area</th>
-            <th>Nombre</th> 
-            <th>E-mail</th>
-            <th>Fecha de Contr.</th>
-            <th>Estado</th>
-        </tr>
-        <% @pers_admin_data.each do |personal| %>
-            <tr>
-                <th><%= personal.Id_Pers %></th>
-                <th><%= personal.Id_Area %></th> 
-                      <th><%= personal.Nombre %></th>
-                    <th><%= personal.CorreoE %></th>
-                    <th><%= personal.Fecha_Cont %></th>
-                      <th><%= personal.Estado %></th>
-            </tr>
-        <%end%>
-    </table>
-<%end%>
+<% when 2 %>
 <h2>PERSONAL ADMINISTRATIVO CON ERRORES EN CONTROL ACADEMICO</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
@@ -91,3 +71,9 @@
             <%end%>
     <%end%>
 </table>
+<%end%>
+<%if @errores %>
+    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
+<%else%>
+    <%= link_to "CONTINUAR" , descargar_etl_path, method: :get %>
+<%end%>

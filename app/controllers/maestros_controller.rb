@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class MaestrosController < ApplicationController
+  def init
+    export
+  end
+
   def index
     @maestrosData = Maestro.using(:data_warehouse).all
-    export
+    verify
   end
 
   def edit
@@ -15,7 +19,7 @@ class MaestrosController < ApplicationController
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
     @errores = [@maestro.errorNombre, @maestro.errorTelefono]
     if @maestro.update_attributes(Id_maestro: params[:maestro][:Id_maestro], Nombre: params[:maestro][:Nombre], Telefono: params[:maestro][:Telefono], errorNombre: nil, errorTelefono: nil)
-      redirect_to "/"
+      redirect_to "/maestros"
     else
       render :edit
     end
@@ -24,10 +28,18 @@ class MaestrosController < ApplicationController
   def destroy
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
     @maestro.destroy
-    redirect_to "/", notice: "Registro borrado con éxito"
+    redirect_to "/maestros", notice: "Registro borrado con éxito"
   end
 
   private
+
+    def verify
+      @maestrosData.each do |maestro|
+        if maestro.errorNombre || maestro.errorTelefono
+          @errores = true
+        end
+      end
+    end
 
     def export
       Maestro.using(:data_warehouse).destroy_all

@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class PersonalAdminController < ApplicationController
+  def init
+    export
+  end
+
   def index
     @pers_admin_data = Personal_Admin.using(:data_warehouse).all
-    export
+    verify
   end
 
   def edit
@@ -16,7 +20,7 @@ class PersonalAdminController < ApplicationController
     @errores = [@personal.errorNombre, @personal.errorEstado]
 
     if @personal.update_attributes(Nombre: params[:personal_admin][:Nombre], Estado: params[:personal_admin][:Estado], errorNombre: nil, errorEstado: nil)
-      redirect_to "/"
+      redirect_to "/personal_admin"
     else
       render :edit
     end
@@ -25,9 +29,18 @@ class PersonalAdminController < ApplicationController
   def destroy
     @personal = Personal_Admin.using(:data_warehouse).find_by(Id_Pers: params[:id])
     @personal.destroy
-    redirect_to "/"
+    redirect_to "/personal_admin"
   end
+  
   private
+
+    def verify
+      @pers_admin_data.each do |personal|
+        if personal.errorNombre || personal.errorEstado
+          @errores = true
+        end
+      end
+    end
 
     def export
       Personal_Admin.using(:data_warehouse).delete_all if !Personal_Admin.using(:data_warehouse).all.empty?

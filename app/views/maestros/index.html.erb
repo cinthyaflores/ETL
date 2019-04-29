@@ -110,3 +110,8 @@
     <%end%>
 </table>
 <%end%>
+<%if @errores %>
+    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
+<%else%>
+    <%= link_to "CONTINUAR" , movilidad_index_path, method: :get %>
+<%end%>
