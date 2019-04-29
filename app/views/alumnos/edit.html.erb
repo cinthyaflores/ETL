@@ -1,6 +1,6 @@
 <div class = "container">
-<h2>Alumnos#Edit</h2>
-<h2>EDITAR DATOS DEL ALUMNO</h2>
+<h2 class="text-center">Alumnos#Edit</h2>
+<h2 class="text-center">EDITAR DATOS DEL ALUMNO</h2>
 <%case current_user.tipo %>
 <%when 1 %>
   <%= form_for @alumno, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
@@ -131,10 +131,14 @@
         <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
-    <div class = "field">
-      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+   <!---- <div class = "field">---->
+    <div class = "text-center">
+      <%= f.submit "Guardar", class:"btn btn-primary btn-lg m-2" %> 
+      </div>
+    <!-----</div>----->
+    <div class = "text-center">
+    <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary btn-lg  m-2" %>
     </div>
-    <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary m-2" %>
   <% end %> 
 <% end %> 
 </div>

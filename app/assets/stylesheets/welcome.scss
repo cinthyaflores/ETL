@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-body{
+.Backgruond{
     background-image: url('Gradient-image.jpg');
     background-size: cover;
 }
@@ -10,7 +10,4 @@ body{
 .form-control {
     width: 30%;
     margin: auto;
-}
-h5 .definition_etl {
-text-size-adjust: 12px;
 }
