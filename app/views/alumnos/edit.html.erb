@@ -61,22 +61,22 @@
       <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
     </div>
     <div class = "field">
-      <%if @errores[0] == nil%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
-      <%else%>
+      <%if @errores[0] == 1%>
         <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4"%>
+      <%else%>
+        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
     <div class = "field">
-      <%if @errores[2] == nil%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
-      <%else%>
+      <%if @errores[2] == 1%>
         <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4"%>
+      <%else%>
+        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
     <div class = "field">
       <%if @errores[1] == 1%>
-        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
+        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4" %>
       <%else%>
         <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
       <%end%>
@@ -95,17 +95,17 @@
       <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
     </div>
     <div class = "field">
-      <%if @errores[2] == nil%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
-      <%else%>
+      <%if @errores[2] == 2%>
         <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4"%>
+      <%else%>
+        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
     <div class = "field">
-      <%if @errores[0] == nil%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
-      <%else%>
+      <%if @errores[0] == 2%>
         <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4"%>
+      <%else%>
+        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
     <div class = "field">
@@ -125,10 +125,10 @@
       <%end%>
     </div>
     <div class = "field">
-      <%if @errores[3] == nil%>
-        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
-      <%else%>
+      <%if @errores[3] == 2%>
         <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4"%>
+      <%else%>
+        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
       <%end%>
     </div>
     <div class = "field">

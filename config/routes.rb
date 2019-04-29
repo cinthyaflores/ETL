@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
- 
-  get 'productoras/index'
-  get 'software/index'
-  get 'tipo_pelicula/index'
+
   #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
 
   resources :actividades_por_alumno, only: [:index]
@@ -30,6 +27,7 @@ Rails.application.routes.draw do
   resources :detalle_orden_compra, only: [:index]
   resources :detalle_prestamo, only: [:index]
   resources :dias, only: [:index]
+  resources :editoriales, only: [:index]
   resources :escuela_de_ingles_externa, only: [:index]
   resources :estantes, only: [:index]
   resources :eventos, only: [:index]
@@ -39,10 +37,13 @@ Rails.application.routes.draw do
   resources :grupo, except: [:delete, :show]
   resources :grupo_actividad, except: [:delete, :show] 
   resources :grupo_ingles, only: [:index] 
+  resources :hardware, only: [:index] 
+  resources :hardware_mantenimiento, only: [:index] 
   resources :hora, only: [:index] 
   resources :horarios_area, only: [:index]
   resources :idiomas, only: [:index]
   resources :justificante, only: [:index]
+  resources :libros, only: [:index]
   resources :maestros, except: [:delete, :show]
   resources :materia, only: [:index]
   resources :materiales, only: [:index]
@@ -55,12 +56,16 @@ Rails.application.routes.draw do
   resources :paises, only: [:index]
   resources :peliculas, only: [:index]
   resources :periodo, only: [:index]
+  resources :periodicos, only: [:index]
   resources :personal_admin, except: [:delete, :show]
   resources :perdidas_materiales, only: [:index]
   resources :prestamos, only: [:index]
+  resources :prestamos_sala, only: [:index]
   resources :productoras, only: [:index]
   resources :recurso_material, only: [:index]
   resources :revistas, only: [:index]
+  resources :sala_trabajo, only: [:index]
+  resources :sala_hardware, only: [:index]
   resources :secciones, only: [:index]
   resources :software, only: [:index]
   resources :orden_de_compra, only: [:index]
@@ -68,13 +73,15 @@ Rails.application.routes.draw do
   resources :titulado, only: [:index]
   resources :tipo_constancia, only: [:index]
   resources :tipo_contrato, only: [:index]
+  resources :tipo_mtto, only: [:index]
   resources :tipo_pelicula, only: [:index]
   resources :unidades, only: [:index]
   
   get '/etl', to: 'admin_user#init', as: 'etl'
   get '/etl_errores', to: 'admin_user#errors', as: 'etl_errores'
   get '/descargar_etl', to: 'admin_user#download', as: 'descargar_etl'
-  get '/verificar', to: 'alumnos#verify', as: 'verificar'
+  get '/delete_alumnos', to: 'alumnos#delete_table', as: 'eliminar_alumnos'
+
 
   get 'welcome/index'
   root 'welcome#index'

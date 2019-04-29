@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 class MovilidadController < ApplicationController
+  def init
+    export
+  end
+
   def index
     @movilidad_data = Movilidad.using(:data_warehouse).all
-    export
+    verify
   end
 
   def edit
@@ -16,7 +20,7 @@ class MovilidadController < ApplicationController
     @errores = [@movilidad.errorPais, @movilidad.errorEstado]
 
     if @movilidad.update_attributes(País: params[:movilidad][:País], Estado: params[:movilidad][:Estado], errorPais: nil, errorEstado: nil)
-      redirect_to "/"
+      redirect_to "/movilidad"
     else
       render :edit
     end
@@ -25,9 +29,18 @@ class MovilidadController < ApplicationController
   def destroy
     @movilidad = Movilidad.using(:data_warehouse).find_by(Id_Movilidad: params[:id])
     @movilidad.destroy
-    redirect_to "/"
+    redirect_to "/movilidad"
   end
+
   private
+
+    def verify
+      @movilidad_data.each do |mov|
+        if mov.errorPais || mov.errorEstado
+          @errores = true
+        end
+      end
+    end
 
     def export
       Movilidad.using(:data_warehouse).delete_all if !Movilidad.using(:data_warehouse).all.empty?

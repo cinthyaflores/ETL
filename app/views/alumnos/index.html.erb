@@ -85,7 +85,7 @@
             <th>Opciones</th>
     </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorTelefono == 1) && alumno.base.match('c') %>
+            <%if alumno.errorNombre == 1 || alumno.errorCurp == 1 || alumno.errorTelefono == 1 %>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -131,7 +131,7 @@
             <th>Opciones</th>
         </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if (alumno.errorNombre || alumno.errorCurp || alumno.errorPeso|| alumno.errorTelefono == 2 ) && alumno.base.match('e')%>
+            <%if alumno.errorNombre == 2 || alumno.errorPeso ==2 || alumno.errorTelefono == 2 %>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -156,6 +156,7 @@
         <%end%>
 </table> 
 <%end%>
+<%= link_to "Eliminar todo", eliminar_alumnos_path, data: { confirm: "Desea eliminar todos los registros de alumnos?" } %>
 <%if @errores %>
     <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
 <%else%>

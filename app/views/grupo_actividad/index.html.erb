@@ -24,10 +24,10 @@
                     <th><%= grupo.Id_area %></th> 
                     <th><%= grupo.Id_actividad %></th>
                     <th><%= grupo.Dias %></th> 
-                    <th><%= grupo.Hora_inicio %></th>
-                    <th><%= grupo.Hora_fin %></th>
+                    <th><%= grupo.Hora_inicio.strftime("%T") %></th>
+                    <th><%= grupo.Hora_fin.strftime("%T") %></th>
                     <th><%= link_to "Editar", edit_grupo_actividad_path(id: grupo.Id_Grupo) %>
-                    <%= link_to "Eliminar", grupo, method: :delete, data: { confirm: "Desea eliminar #{grupo.Nombre}?"} %></th>
+                    <%= link_to "Eliminar", grupo, method: :delete, data: { confirm: "Desea eliminar #{grupo.Nombre}?" } %></th>
                 </tr>
             <%end%>
         <%end%>
@@ -55,8 +55,8 @@
                     <th><%= grupo.Id_area %></th> 
                     <th><%= grupo.Id_actividad %></th>
                     <th><%= grupo.Dias %></th> 
-                    <th><%= grupo.Hora_inicio %></th>
-                    <th><%= grupo.Hora_fin %></th>
+                    <th><%= grupo.Hora_inicio.strftime("%T") %></th>
+                    <th><%= grupo.Hora_fin.strftime("%T") %></th>
                     <th><%= link_to "Editar", edit_grupo_actividad_path(id: grupo.Id_Grupo) %>
                     <%= link_to "Eliminar", grupo, method: :delete, data: { confirm: "Desea eliminar #{grupo.Nombre}?"} %></th>
                 </tr>
@@ -64,3 +64,8 @@
         <%end%>
 </table>
  <%end%>
+ <%if @errores %>
+    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
+<%else%>
+    <%= link_to "CONTINUAR" , grupo_index_path, method: :get %>
+<%end%>
