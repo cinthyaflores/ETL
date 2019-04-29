@@ -32,6 +32,12 @@ class PersonalAdminController < ApplicationController
     redirect_to "/personal_admin"
   end
   
+  def delete_table
+    Personal_Admin.using(:data_warehouse).where(errorNombre: 1).destroy_all
+    Personal_Admin.using(:data_warehouse).where(errorEstado: 1).destroy_all
+    redirect_to "/personal_admin"
+  end
+
   private
 
     def verify

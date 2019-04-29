@@ -1,9 +1,8 @@
 
-<h1 class="text-center" >PersonalAdmin#index</h1>
-<p>Find me in app/views/personal_admin/index.html.erb</p>
+<h1 class="text-center" >PersonalAdmin</h1>
 <% case current_user.tipo %>
 <% when 1 %>
-    <h2>PERSONAL ADMINISTRATIVO CON ERRORES EN DATAWAREHOUSE</h2>
+    <h2 class="text-center" >PERSONAL ADMINISTRATIVO CON ERRORES EN DATAWAREHOUSE</h2>
     <table style="width:100%", class= "table table-striped table-bordered table-sm">
         <tr>
             <th>Id Personal</th>
@@ -73,8 +72,11 @@
     <%end%>
 </table>
 <%end%>
-<%if @errores %>
-    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
-<%else%>
-    <%= link_to "CONTINUAR" , descargar_etl_path, method: :get %>
-<%end%>
+<div class="text-center">
+    <%= link_to "Eliminar todo", eliminar_personal_admin_path, data: { confirm: "Desea eliminar todos los registros de Personal Administrativo?" }, class: 'btn btn-primary btn-lg' %>
+    <%if @errores %>
+            <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
+    <%else%>
+            <%= link_to "Continuar" , descargar_etl_path, method: :get , class: 'btn btn-primary btn-lg'%>
+    <%end%>
+</div>

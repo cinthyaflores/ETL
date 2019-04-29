@@ -81,6 +81,12 @@ Rails.application.routes.draw do
   get '/etl_errores', to: 'admin_user#errors', as: 'etl_errores'
   get '/descargar_etl', to: 'admin_user#download', as: 'descargar_etl'
   get '/delete_alumnos', to: 'alumnos#delete_table', as: 'eliminar_alumnos'
+  get '/delete_carreras', to: 'carrera#delete_table', as: 'eliminar_carreras'
+  get '/delete_grupo', to: 'grupo#delete_table', as: 'eliminar_grupo'
+  get '/delete_grupo_act', to: 'grupo_actividad#delete_table', as: 'eliminar_grupo_act'
+  get '/delete_maestro', to: 'maestros#delete_table', as: 'eliminar_maestros'
+  get '/delete_movilidad', to: 'movilidad#delete_table', as: 'eliminar_movilidad'
+  get '/delete_personal_admin', to: 'personal_admin#delete_table', as: 'eliminar_personal_admin'
 
 
   get 'welcome/index'

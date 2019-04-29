@@ -1,8 +1,8 @@
 <body class="Backgruond">
 <h1 class="text-center">SE ENCONTRARON ERRORES AL MOMENTO DE REALIZAR EL ETL</h1>
 <div class="text-center">
-<h2>¿Qué desea hacer?</h2>
-<h3><%= link_to "REVISAR ERRORES", etl_errores_path, method: :get, class: 'btn btn-primary btn-lg ' %></h3>
-<h3><%= link_to "OMITIR ERRORES", descargar_etl_path, method: :get,  class:'btn btn-primary btn-lg ' %></h3> <!--BORRAR TODOS LOS REGISTROS CON ERRORES-->
-</div>
+  <h2>¿Qué desea hacer?</h2>
+  <h3><%= link_to "REVISAR ERRORES", etl_errores_path, method: :get, class: 'btn btn-primary btn-lg ' %></h3>
+  <h3><%= link_to "OMITIR ERRORES", descargar_etl_path, method: :get, disabled: true, class:'btn btn-primary btn-lg ' %></h3> <!--BORRAR TODOS LOS REGISTROS CON ERRORES-->
+  </div>
 </body>

@@ -32,6 +32,12 @@ class MovilidadController < ApplicationController
     redirect_to "/movilidad"
   end
 
+  def delete_table
+    Movilidad.using(:data_warehouse).where(errorPais: 1).destroy_all
+    Movilidad.using(:data_warehouse).where(errorEstado: 1).destroy_all
+    redirect_to "/movilidad"
+  end
+
   private
 
     def verify

@@ -156,13 +156,11 @@
         <%end%>
 </table> 
 <%end%>
-<%= link_to "Eliminar todo", eliminar_alumnos_path, data: { confirm: "Desea eliminar todos los registros de alumnos?" } %>
-<%if @errores %>
-    <div class="text-center">
-        <%= link_to "CONTINUAR" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
-    </div>
-<%else%>
-    <div class="text-center">
-        <%= link_to "CONTINUAR" , carrera_index_path, method: :get , class: 'btn btn-primary btn-lg'%>
-    </div>
-<%end%>
+<div class="text-center">
+<%= link_to "Eliminar todo", eliminar_alumnos_path, data: { confirm: "Desea eliminar todos los registros de alumnos?" }, class: 'btn btn-primary btn-lg' %>
+    <%if @errores %>
+            <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
+    <%else%>
+            <%= link_to "Continuar" , carrera_index_path, method: :get , class: 'btn btn-primary btn-lg'%>
+    <%end%>
+ </div>

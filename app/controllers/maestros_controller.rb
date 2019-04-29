@@ -31,6 +31,12 @@ class MaestrosController < ApplicationController
     redirect_to "/maestros", notice: "Registro borrado con éxito"
   end
 
+  def delete_table
+    Maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
+    Maestro.using(:data_warehouse).where(errorTelefono: 1).destroy_all
+    redirect_to "/maestros"
+  end
+
   private
 
     def verify
