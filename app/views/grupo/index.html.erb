@@ -1,5 +1,4 @@
 <h1 class="text-center" >Grupos</h1>
-<p>Find me in app/views/grupo/index.html.erb</p>
 <% case current_user.tipo %>
 <% when 1 %>
     <h2 class="text-center">GRUPOS CON ERRORES EN DATAWAREHOUSE</h2>
@@ -60,8 +59,11 @@
         <%end%>
 </table>
 <%end%>
- <%if @errores %>
-    <%= link_to "CONTINUAR" ,'', data: { confirm: "No puedes continuar si no has quitado los errores :(" } %>
-<%else%>
-    <%= link_to "CONTINUAR" , maestros_path, method: :get %>
-<%end%>
+<div class="text-center">
+    <%= link_to "Eliminar todo", eliminar_grupo_path, data: { confirm: "Desea eliminar todos los registros de grupo?" }, class: 'btn btn-primary btn-lg' %>
+    <%if @errores %>
+            <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
+    <%else%>
+            <%= link_to "Continuar" , maestros_path, method: :get , class: 'btn btn-primary btn-lg'%>
+    <%end%>
+</div>

@@ -11,15 +11,15 @@ class GrupoActividadController < ApplicationController
   end
 
   def edit
-    grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
     @error = @grupo.errorCupo
   end
 
   def update
-    grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
     @error = @grupo.errorCupo
 
-    if grupo.update_attributes(Cupo: params[:grupo_actividad][:Cupo], errorCupo: nil)
+    if @grupo.update_attributes(Cupo: params[:grupo_actividad][:Cupo], errorCupo: nil)
       redirect_to "/grupo_actividad"
     else
       render :edit
@@ -27,8 +27,13 @@ class GrupoActividadController < ApplicationController
   end
 
   def destroy
-    grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
-    grupo.destroy
+    @grupo = Grupo_actividad.using(:data_warehouse).find_by(Id_Grupo: params[:id])
+    @grupo.destroy
+    redirect_to "/grupo_actividad"
+  end
+
+  def delete_table
+    Grupo_actividad.using(:data_warehouse).where(errorCupo: 1).destroy_all
     redirect_to "/grupo_actividad"
   end
 

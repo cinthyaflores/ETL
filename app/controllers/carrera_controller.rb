@@ -33,6 +33,11 @@ class CarreraController < ApplicationController
     redirect_to "/carrera"
   end
 
+  def delete_table
+    Carrera.using(:data_warehouse).where(errorNombre: 1).destroy_all
+    redirect_to "/carrera"
+  end
+
   private
 
     def verify

@@ -31,6 +31,11 @@ class GrupoController < ApplicationController
     redirect_to "/grupo", notice: "Registro borrado con éxito"
   end
 
+  def delete_table
+    Grupo.using(:data_warehouse).where(errorClave: 1).destroy_all
+    redirect_to "/grupo"
+  end
+
   private
 
     def verify
