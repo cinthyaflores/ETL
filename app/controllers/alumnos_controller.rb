@@ -39,6 +39,18 @@ class AlumnosController < ApplicationController
     redirect_to "/alumnos", notice: "Registro borrado con éxito"
   end
 
+  def delete_table
+    Alumno.using(:data_warehouse).where(errorNombre: 1).destroy_all
+    Alumno.using(:data_warehouse).where(errorNombre: 2).destroy_all
+    Alumno.using(:data_warehouse).where(errorTelefono: 1).destroy_all
+    Alumno.using(:data_warehouse).where(errorTelefono: 2).destroy_all
+    Alumno.using(:data_warehouse).where(errorCurp: 1).destroy_all
+    Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
+    Alumno.using(:data_warehouse).where(errorPeso: 1).destroy_all
+    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all
+    
+    redirect_to "/alumnos"
+  end
   
 
   private
@@ -52,17 +64,17 @@ class AlumnosController < ApplicationController
             @errores = true
           end
         end
-      when 1 #ERRORES EN CONTROL ACADEMICO
+      when 2 #ERRORES EN CONTROL ACADEMICO
         @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
         @alumnosData.each do |alumno|
-          if alumno.errorNombre || alumno.errorPeso || alumno.errorTelefono || alumno.errorCurp
+          if alumno.errorNombre == 1 || alumno.errorTelefono == 1 || alumno.errorCurp == 1
             @errores = true
           end
         end
-      when 1 #ERRORES EN EXTRAESCOLARE
+      when 3 #ERRORES EN EXTRAESCOLARE
         @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
         @alumnosData.each do |alumno|
-          if alumno.errorNombre || alumno.errorPeso || alumno.errorTelefono || alumno.errorCurp
+          if alumno.errorNombre == 2|| alumno.errorPeso == 2 || alumno.errorTelefono == 2
             @errores = true
           end
         end
@@ -74,7 +86,7 @@ class AlumnosController < ApplicationController
 
       id_al = 0
       @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
-      @excel = @biblio.sheet("Alumnos")
+      @alumnosBi = @biblio.sheet("Alumnos")
       @alumnosCA = Alumno.using(:controlA).all
       @alumnosE = Alumno.using(:extra).all
 
@@ -113,7 +125,7 @@ class AlumnosController < ApplicationController
               @error=true
             end
             if !validate_weight(alumnoE.Peso)
-              alumnoNew.errorPeso = 1
+              alumnoNew.errorPeso = 2
             end
             alumnoNew.Peso = alumnoE.Peso
             alumnoNew.Estatura = alumnoE.Estatura
@@ -129,13 +141,13 @@ class AlumnosController < ApplicationController
         if @alumnosCA.exists?(No_control: alumnoE.No_control) == false
           alumnoNew = Alumno.using(:data_warehouse).new
           if validate_name(alumnoE.Nombre)
-            alumnoNew.errorNombre = 1
+            alumnoNew.errorNombre = 2
           end
           if !validate_number(alumnoE.Telefono)
             alumnoNew.errorTelefono = 2 # Error 2 es en la base de extraescolares
           end
           if !validate_weight(alumnoE.Peso)
-            alumnoNew.errorPeso = 1
+            alumnoNew.errorPeso = 2
           end
           id_al += 1
           alumnoNew.Id_Alumno = id_al
@@ -150,6 +162,18 @@ class AlumnosController < ApplicationController
           alumnoNew.Peso = alumnoE.Peso
           alumnoNew.Estatura = alumnoE.Estatura
           alumnoNew.base = "e"
+          alumnoNew.save!
+        end
+      end
+
+      @alumnosBi.each_row_streaming(offset: 1) do |alumnoB| # Ingresar los que no existen en Control Academico
+        if @alumnosCA.exists?(No_control: alumnoB[1].value) == false
+          alumnoNew = Alumno.using(:data_warehouse).new
+          id_al += 1
+          alumnoNew.Id_Alumno = alumnoB[0]
+          alumnoNew.No_control = alumnoB[1]
+          alumnoNew.Id_Carrera = alumnoB[2]
+          alumnoNew.base = "b"
           alumnoNew.save!
         end
       end

@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class CarreraController < ApplicationController
+
+  def init
+    export
+  end
+
   def index
     @carreras_data = Carrera.using(:data_warehouse).all
-    export
+    verify
   end
 
   def edit
@@ -16,7 +21,7 @@ class CarreraController < ApplicationController
     @error = @carrera.errorNombre
 
     if @carrera.update_attributes(Nombre: params[:carrera][:Nombre], errorNombre: nil)
-      redirect_to "/"
+      redirect_to "/carrera"
     else
       render :edit
     end
@@ -25,13 +30,23 @@ class CarreraController < ApplicationController
   def destroy
     @carrera = Carrera.using(:data_warehouse).find_by(Id_Carrera: params[:id])
     @carrera.destroy
-    redirect_to "/"
+    redirect_to "/carrera"
   end
+
   private
+
+    def verify
+      @carreras_data.each do |carrera|
+        if carrera.errorNombre
+          @errores = true
+        end
+      end
+    end
 
     def export
       Carrera.using(:data_warehouse).delete_all if !Carrera.using(:data_warehouse).all.empty?
 
+      @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
       @excel = @biblio.sheet("Carrera")
       @carreras_ca = Carrera.using(:controlA).all # Id_carrera, Nombre, Descripción, Creditos, Acreditada
       @carreras_e = Carrera.using(:extra).all # CAMPOS: Id_carrera, Nombre

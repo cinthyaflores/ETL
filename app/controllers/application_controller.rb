@@ -68,4 +68,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def find_nombre_alumno(id_alumno)
+      biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
+      solicitantes = biblio.sheet("Solicitante")
+      solicitantes.each do |soli|
+        if soli[1] == id_alumno && soli[2] == 1
+          return soli[3]
+        end
+      end
+    end
+
 end
