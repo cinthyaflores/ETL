@@ -38,8 +38,17 @@ class ApplicationController < ActionController::Base
     end
   
     def validate_estado(estado)
-      puts
       !!(estado.to_s =~ /[1-2]{1}/)
+    end
+
+    def validate_estado_tres(estado)
+      !!(estado.to_s =~ /[1-3]{1}/)
+    end
+
+    def validate_email(correo)
+      puts correo
+      puts !!(correo.to_s =~ /\A(\w+)+@+(\w+)+\.+(\w+)\z/)
+      !!(correo.to_s =~ /\A(\w+)+@+(\w+)+\.+(\w+)\z/)
     end
   
     def validate_oportunidad(op)

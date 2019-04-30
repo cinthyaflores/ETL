@@ -1,0 +1,16 @@
+<div class = "container">
+  <h2 class="text-center">Tipo de Evaluación</h2>
+  <h2 class="text-center">EDITAR TIPO DE EVALUACIÓN</h2>
+  <%= simple_form_for @tipo_eva, url: tipo_evaluacion_path, method: :patch do |f| %>
+    <%@tipo_eva.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_Tipo_Eva, readonly: true %>
+    <%= f.input :Nombre, error: false%>
+    <%= f.input :Descripción, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", tipo_evaluacion_index_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

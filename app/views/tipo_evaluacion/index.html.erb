@@ -1,0 +1,53 @@
+<h1>TipoEvaluacion#index</h1>
+<h2 class="text-center">TIPO DE EVALUACIÓN CON ERROR EN DATA WAREHOUSE</h2>
+<% case current_user.tipo %>
+<% when 1 %>
+  <table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+      <th>Id Tipo Evaluación </th>
+      <th>Nombre</th> 
+      <th>Descripción</th>
+      <th>Opciones</th>
+    </tr>
+    <% @tipo_eva_data.each do |tipo| %>
+      <% if tipo.errorNombre %>
+        <tr>
+          <th><%= tipo.Id_Tipo_Eva %></th> 
+          <th class ='alert alert-danger' ><%= tipo.Nombre %></th>  
+          <th><%= tipo.Descripción %></th>
+          <th><%= link_to "Editar", edit_tipo_evaluacion_path(tipo.Id_Tipo_Eva) %>
+          <%= link_to "Eliminar", tipo, method: :delete, data: {confirm: "Deseas eliminar el Tipo de evaluación con ID: #{tipo.Id_Tipo_Eva}?"} %></th> 
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+<% when 4 %>
+  <h2 class="text-center">ADEUDOS CON ERROR EN BIBLIOTECA</h2>
+  <table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+      <th>Id Adeudo </th>
+      <th>Id Prestamo</th> 
+      <th>Cargo Día</th>
+      <th>Opciones</th>
+    </tr>
+    <% @adeudos_data.each do |adeudo| %>
+      <% if adeudo.errorCargo %>
+        <tr>
+          <th><%= adeudo.id_Adeudos %></th> 
+          <th><%= adeudo.id_Prestamo %></th>
+          <th class ='alert alert-danger' ><%= adeudo.Cargo_Dia %></th>  
+          <th><%= link_to "Editar", edit_adeudo_path(adeudo.id_Adeudos) %>
+          <%= link_to "Eliminar", adeudo, method: :delete, data: {confirm: "Deseas eliminar el adeudo con ID: #{adeudo.id_Adeudos}?"} %></th> 
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+<%end%>
+<div class="text-center">
+  <%= link_to "Eliminar todo", eliminar_tipo_eva_path, data: { confirm: "Desea eliminar todos los registros de Tipo de Evaluación?" }, class: 'btn btn-primary btn-lg' %>
+  <%if @errores %>
+    <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
+  <%else%>
+    <%= link_to "Continuar" , '/', method: :get , class: 'btn btn-primary btn-lg'%>
+  <%end%>
+</div>

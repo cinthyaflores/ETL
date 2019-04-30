@@ -1,0 +1,16 @@
+<div class = "container">
+  <h2 class="text-center">Adeudos</h2>
+  <h2 class="text-center">EDITAR ADEUDOS</h2>
+  <%= simple_form_for @adeudo, url: adeudo_path, method: :patch do |f| %>
+    <%@adeudo.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :id_Adeudos, readonly: true %>
+    <%= f.input :id_Prestamo, readonly: true %>
+    <%= f.input :Cargo_Dia, error: false %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", adeudos_index_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

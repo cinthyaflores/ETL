@@ -1,0 +1,31 @@
+<div class = "container">
+  <h2 class="text-center">Empleados</h2>
+  <h2 class="text-center">EDITAR EMPLEADOS</h2>
+  <%= simple_form_for @empleado, url: empleado_path, method: :patch do |f| %>
+    <%@empleado.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :idEmpleado, readonly: true %>
+    <% if @errores[0] %>
+      <%= f.input :nombre_empleado, error: false  %>
+    <% else %>
+      <%= f.input :nombre_empleado, readonly: true%>
+    <% end %>
+    <%= f.input :direccion, readonly: true %>
+    <% if @errores[1] %>
+      <%= f.input :telefono, error: false%>
+    <% else %>
+      <%= f.input :telefono, readonly: true %>
+    <% end %>
+    <% if @errores[2] %>
+      <%= f.input :email,error: false %>
+    <% else %>
+      <%= f.input :email, readonly: true  %>
+    <% end %>
+    <%= f.input :id_turno, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", empleados_index_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

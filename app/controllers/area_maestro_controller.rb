@@ -15,8 +15,8 @@ class AreaMaestroController < ApplicationController
     @area_maestro = Area_maestro.using(:data_warehouse).find_by(Id_Area_mtro: params[:id])
     @error = @area_maestro.errorNombre
     usuario = current_user.email
-    fecha = DateTime.now
-    campo_modificado = "Area_Maestro: Nombre" if @error != nil
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Actualizó Area Maestro ID #{params[:id]}: Nombre" if @error != nil
 
     if @area_maestro.update_attributes(Nombre: params[:area_maestro][:Nombre], errorNombre: nil)
       User_logins.using(:data_warehouse).all
@@ -31,16 +31,32 @@ class AreaMaestroController < ApplicationController
   def destroy 
     @area_maestro = Area_maestro.using(:data_warehouse).find_by(Id_Area_mtro: params[:id])
     @area_maestro.destroy
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó registró - Área Maestro ID: #{params[:id]}"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     redirect_to "/"
   end
 
   def delete_table 
     Area_maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
     Area_maestro.using(:data_warehouse).where(errorNombre: 2).destroy_all
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó todos los registros con errores - Area Maestro"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     redirect_to "/"
   end
 
   private
+
+    def verify
+      @area_maestro_data.each do |area|
+        if area.errorNombre
+          @errores = true
+        end
+      end
+    end
 
     def export
       Area_maestro.using(:data_warehouse).delete_all if !Area_maestro.using(:data_warehouse).all.empty?
