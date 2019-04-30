@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'tipo_evaluacion/index'
+  get 'tipo_evaluacion/edit'
+  get 'turnos/index'
+  get 'empleados/index'
+  get 'empleados/edit'
+  get 'adeudos/index'
+  get 'adeudos/edit'
+  get 'prestamos_material/index'
   #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
 
   resources :actividades_por_alumno, except: [:delete, :show]
@@ -79,6 +87,7 @@ Rails.application.routes.draw do
   resources :tipo_contrato, except: [:delete, :show]
   resources :tipo_mtto, except: [:delete, :show]
   resources :tipo_pelicula, except: [:delete, :show]
+  resources :turnos, only: [:index]
   resources :unidades, only: [:index]
   
   get '/etl', to: 'admin_user#init', as: 'etl'
@@ -91,7 +100,10 @@ Rails.application.routes.draw do
   get '/delete_maestro', to: 'maestros#delete_table', as: 'eliminar_maestros'
   get '/delete_movilidad', to: 'movilidad#delete_table', as: 'eliminar_movilidad'
   get '/delete_personal_admin', to: 'personal_admin#delete_table', as: 'eliminar_personal_admin'
-  get '/delete_areas_maestro', to: 'areas_maestro#delete_table', as: 'eliminar_areas_maestro'
+  get '/delete_areas_maestro', to: 'area_maestro#delete_table', as: 'eliminar_areas_maestro' #Solo de aqui en adelante tienen validacion login
+  get '/delete_adeudos', to: 'adeudos#delete_table', as: 'eliminar_adeudos'
+  get '/delete_empleados', to: 'empleados#delete_table', as: 'eliminar_empleados'
+  get '/delete_tipo_eva', to: 'tipo_evaluacion#delete_table', as: 'eliminar_tipo_eva'
 
 
   get 'welcome/index'

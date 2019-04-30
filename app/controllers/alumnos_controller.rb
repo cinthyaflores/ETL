@@ -20,12 +20,12 @@ class AlumnosController < ApplicationController
     @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
     @errores = [@alumno.errorNombre, @alumno.errorTelefono, @alumno.errorCurp, @alumno.errorPeso]
     usuario = current_user.email
-    fecha = DateTime.now
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campos_modificados = Array.new
-    campos_modificados.push("Alumno: Nombre") if @errores[0] != nil
-    campos_modificados.push("Alumno: Teléfono") if @errores[1] != nil
-    campos_modificados.push("Alumno: Curp") if @errores[2] != nil
-    campos_modificados.push("Alumno: Peso") if @errores[3] != nil
+    campos_modificados.push("Actializó Alumno ID #{params[:id]}: Nombre") if @errores[0] != nil
+    campos_modificados.push("Actializó Alumno ID #{params[:id]}: Teléfono") if @errores[1] != nil
+    campos_modificados.push("Actializó Alumno ID #{params[:id]}: Curp") if @errores[2] != nil
+    campos_modificados.push("Actializó Alumno ID #{params[:id]}: Peso") if @errores[3] != nil
    
     case @alumno.base
     when "c"
@@ -38,7 +38,6 @@ class AlumnosController < ApplicationController
     if update
       User_logins.using(:data_warehouse).all
       campos_modificados.each do |campo|
-        puts "EACH #{campo}"
         User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo)
       end
       redirect_to "/"
@@ -50,6 +49,10 @@ class AlumnosController < ApplicationController
   def destroy
     @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
     @alumno.destroy
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó registró - Alumno ID: #{params[:id]}"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     redirect_to "/alumnos", notice: "Registro borrado con éxito"
   end
 
@@ -61,7 +64,11 @@ class AlumnosController < ApplicationController
     Alumno.using(:data_warehouse).where(errorCurp: 1).destroy_all
     Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
     Alumno.using(:data_warehouse).where(errorPeso: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all    
+    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all   
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó todos los registros con errores - Alumno"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado) 
     redirect_to "/alumnos"
   end
   

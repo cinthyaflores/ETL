@@ -1,19 +1,16 @@
 <div class = "container">
   <h2 class="text-center">Áreas Maestros</h2>
   <h2 class="text-center">EDITAR ÁREAS DEL MAESTRO</h2>
-  <% case current_user.tipo %>
-  <% when 1 %>
-    <%= simple_form_for @area_maestro, url: area_maestro_path, method: :patch do |f| %>
-      <%@area_maestro.errors.each do |value, message|%> 
-        <h5 class= "alert alert-danger"><%=message%></h5>
-      <%end%>
-      <%= f.input :Id_Area_mtro, readonly: true %>
-      <%= f.input :Nombre, error: false %>
-      <%= f.input :Descripción, readonly: true %>
-      <div class= "text-center">
-        <%= f.submit 'Guardar', class: "btn btn-primary"%>
-        <%= link_to  "Regresar", area_maestro_index_path, class: "btn btn-primary" %>
-      </div>
-    <% end %>
+  <%= simple_form_for @area_maestro, url: area_maestro_path, method: :patch do |f| %>
+    <%@area_maestro.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_Area_mtro, readonly: true %>
+    <%= f.input :Nombre, error: false %>
+    <%= f.input :Descripción, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", area_maestro_index_path, class: "btn btn-primary" %>
+    </div>
   <% end %>
 </div>
