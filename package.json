@@ -1,5 +1,5 @@
 {
-  "name": "etl_school",
-  "private": true,
-  "dependencies": {}
+    "name": "etl_school",
+    "private": true,
+    "dependencies": {}
 }

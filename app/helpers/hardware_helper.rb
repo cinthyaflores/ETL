@@ -1,2 +1,0 @@
-module HardwareHelper
-end

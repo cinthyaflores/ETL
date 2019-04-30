@@ -7,6 +7,7 @@ class AlumnosController < ApplicationController
 
   def index
     @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+    export
     verify
   end
 
@@ -18,6 +19,14 @@ class AlumnosController < ApplicationController
   def update
     @alumno = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
     @errores = [@alumno.errorNombre, @alumno.errorTelefono, @alumno.errorCurp, @alumno.errorPeso]
+    usuario = current_user.email
+    fecha = DateTime.now
+    campos_modificados = Array.new
+    campos_modificados.push("Alumno: Nombre") if @errores[0] != nil
+    campos_modificados.push("Alumno: Teléfono") if @errores[1] != nil
+    campos_modificados.push("Alumno: Curp") if @errores[2] != nil
+    campos_modificados.push("Alumno: Peso") if @errores[3] != nil
+   
     case @alumno.base
     when "c"
       update = @alumno.update_attributes(Id_Alumno: params[:alumno][:Id_Alumno], Nombre: params[:alumno][:Nombre], Telefono: params[:alumno][:Telefono], Curp: params[:alumno][:Curp], Peso: params[:alumno][:Peso], errorNombre: nil, errorTelefono: nil, errorCurp: nil)
@@ -27,7 +36,12 @@ class AlumnosController < ApplicationController
       update = @alumno.update_attributes(Id_Alumno: params[:alumno][:Id_Alumno], Nombre: params[:alumno][:Nombre], Curp: params[:alumno][:Curp], Peso: params[:alumno][:Peso], telefono_extra: params[:alumno][:telefono_extra], errorNombre: nil, errorTelefono: nil, errorCurp: nil, errorPeso: nil)
     end
     if update
-      redirect_to "/alumnos"
+      User_logins.using(:data_warehouse).all
+      campos_modificados.each do |campo|
+        puts "EACH #{campo}"
+        User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo)
+      end
+      redirect_to "/"
     else
       render :edit
     end
@@ -47,8 +61,7 @@ class AlumnosController < ApplicationController
     Alumno.using(:data_warehouse).where(errorCurp: 1).destroy_all
     Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
     Alumno.using(:data_warehouse).where(errorPeso: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all
-    
+    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all    
     redirect_to "/alumnos"
   end
   
@@ -167,12 +180,12 @@ class AlumnosController < ApplicationController
       end
 
       @alumnosBi.each_row_streaming(offset: 1) do |alumnoB| # Ingresar los que no existen en Control Academico
-        if @alumnosCA.exists?(No_control: alumnoB[1].value) == false
+        if @alumnosData.exists?(No_control: alumnoB[1].value) == false
           alumnoNew = Alumno.using(:data_warehouse).new
           id_al += 1
-          alumnoNew.Id_Alumno = alumnoB[0]
+          alumnoNew.Id_Alumno = id_al
           alumnoNew.No_control = alumnoB[1]
-          alumnoNew.Id_Carrera = alumnoB[2]
+          alumnoNew.Id_Carrera = alumnoB[2].value
           alumnoNew.base = "b"
           alumnoNew.save!
         end
