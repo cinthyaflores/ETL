@@ -8,6 +8,7 @@ class CarreraController < ApplicationController
 
   def index
     @carreras_data = Carrera.using(:data_warehouse).all
+    export
     verify
   end
 
@@ -52,7 +53,7 @@ class CarreraController < ApplicationController
       Carrera.using(:data_warehouse).delete_all if !Carrera.using(:data_warehouse).all.empty?
 
       @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
-      @excel = @biblio.sheet("Carrera")
+      @carreras_bi = @biblio.sheet("Carrera")
       @carreras_ca = Carrera.using(:controlA).all # Id_carrera, Nombre, Descripción, Creditos, Acreditada
       @carreras_e = Carrera.using(:extra).all # CAMPOS: Id_carrera, Nombre
 
@@ -74,5 +75,19 @@ class CarreraController < ApplicationController
         carrera_new.Acreditada = carrera_ca.Acreditada
         carrera_new.save!
       end
+
+      @carreras_bi.each_row_streaming(offset: 1) do |carreraB| # Ingresar los que no existen en Control Academico
+        if @carreras_data.exists?(Id_Carrera: carreraB[0].value) == false
+          carrera_new = Carrera.using(:data_warehouse).new
+          carrera_new.Id_Carrera = carreraB[0].value
+          carrera_new.Nombre = I18n.transliterate(carreraB[1].value)
+          if validate_name(carrera_new.Nombre)
+            carrera_new.errorNombre = 1
+          end
+          carrera_new.base = "b"
+          carrera_new.save!
+        end
+      end
+
     end
 end

@@ -6,6 +6,10 @@ class AlumnoCompController < ApplicationController
     export
   end
 
+  def edit 
+    @alumno_comp = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
+  end
+
   private
 
     def export
@@ -15,6 +19,9 @@ class AlumnoCompController < ApplicationController
 
       @alum_comp_CA.each do |detalle|
         alum_comp_new = Alumno_comp.using(:data_warehouse).new
+        if validate_oportunidad(detalle.Oportunidad) == false
+          alum_comp_new.error = 1
+        end
         alum_comp_new.Id_Compet = detalle.Id_Compet
         alum_comp_new.Id_Alumno = detalle.Id_Alumno
         alum_comp_new.Oportunidad = detalle.Oportunidad

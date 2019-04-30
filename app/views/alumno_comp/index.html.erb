@@ -6,13 +6,18 @@
         <th>Id Competencia</th> 
         <th>Oportunidad</th>
         <th>Calificación</th>
+        <th>Opciones</th>
     </tr>
     <% @alum_comp_data.each do |alumno| %>
+      <%if !alumno.error %>
         <tr>
             <th><%= alumno.Id_Alumno %></th>
             <th><%= alumno.Id_Compet %></th> 
             <th><%= alumno.Oportunidad %></th> 
             <th><%= alumno.Calificación %></th>
+            <th><%= link_to "Editar", edit_alumno_comp_path(id: alumno.Id_Alumno)%> 
+            <%= link_to "Eliminar", alumno, method: :delete, data: { confirm: "¿Desea eliminar el registro del Alumno #{alumno.Id_Alumno}?"}%></th>
         </tr>
+      <%end%>
     <%end%>
 </table>

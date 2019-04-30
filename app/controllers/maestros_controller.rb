@@ -7,6 +7,7 @@ class MaestrosController < ApplicationController
 
   def index
     @maestrosData = Maestro.using(:data_warehouse).all
+    export
     verify
   end
 
@@ -50,8 +51,9 @@ class MaestrosController < ApplicationController
     def export
       Maestro.using(:data_warehouse).destroy_all
       id_m = 0
+
       @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
-      @excel = @biblio.sheet("Maestros")
+      @maestrosB = @biblio.sheet("Maestros")
       @maestrosCA = Maestro.using(:controlA).all
       @maestrosE = Maestro.using(:extra).all
 
@@ -93,5 +95,17 @@ class MaestrosController < ApplicationController
         maestroNew.base = "e"
         maestroNew.save!
       end
+
+      @maestrosB.each_row_streaming(offset: 1) do |maestroB| # Ingresar los que no existen en Control Academico
+        if @maestrosData.exists?(Id_maestro: maestroB[0].value) == false
+          maestroNew = Maestro.using(:data_warehouse).new
+          maestroNew.Id_maestro = maestroB[0].value
+          maestroNew.Id_Area_mtro = maestroB[1].value
+          maestroNew.base = "b"
+          maestroNew.save!
+        end
+      end
+
     end
+
 end

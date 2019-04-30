@@ -3,141 +3,108 @@
 <h2 class="text-center">EDITAR DATOS DEL ALUMNO</h2>
 <%case current_user.tipo %>
 <%when 1 %>
-  <%= form_for @alumno, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
-      <%@alumno.errors.each do |value, message|%> 
+  <%= simple_form_for @alumno, url: alumno_path, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+    <%@alumno.errors.each do |value, message|%> 
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
-    <div class = "field">
-      <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
-      <%if @errores[2] == nil%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
-      <%else%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4"%>
-      <%end%>
-    </div>
-    <div class = "field">
+    <%= f.input :Id_Alumno %>
+    <%if @errores[2] == nil%>
+      <%= f.input :Curp, placeholder: "Curp", readonly: true%>
+    <%else%>
+     <%= f.input :Curp, placeholder: "Curp" %>
+    <%end%>
       <%if @errores[0] == nil%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Nombre, readonly: true %>
       <%else%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4"%>
+        <%= f.input :Nombre, placeholder: "Nombre"%>
       <%end%>
-    </div>
-    <div class = "field">
       <%case @errores[1]%>
         <%when 1 %>
-          <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4"%>
+          <%= f.input :Telefono, placeholder: "Teléfono Contro Académico"%>
         <%when 2 %>
-          <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
-          <%= f.text_field :telefono_extra, placeholder: "Teléfono Extraescolares", class:"form-control m-4"%>
+          <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
+          <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares"%>
         <%else%>
           <%if @alumno.base.match('e')%>
-            <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
-            <%= f.text_field :telefono_extra, placeholder: "Teléfono Extraescolares", class:"form-control m-4", readonly: "true"%>
+            <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
+            <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", readonly: true%>
           <%else%>
-            <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
+            <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
           <%end%>
       <%end%>
-    </div>
-    <div class = "field">
       <%if @errores[3] == nil%>
-        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Peso, placeholder: "Peso", readonly: true%>
       <%else%>
-        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4"%>
+        <%= f.input :Peso, placeholder: "Peso" %>
       <%end%>
-    </div>
-    <div class = "field">
-      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
-    </div>
-    <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary m-2" %>
+          <%= f.submit 'Guardar', class: "btn btn-primary" %>
+          <%= link_to  "Regresar", alumnos_path, class: "btn btn-primary" %>
   <% end %> 
 <% when 2 %>
- <%= form_for @alumno, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+ <%= simple_form_for @alumno, url: alumno_path, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
       <%@alumno.errors.each do |value, message|%> 
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
-    <div class = "field">
-      <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
+      <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", readonly: true %>
       <%if @errores[0] == 1%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4"%>
+        <%= f.text_field :Nombre, placeholder: "Nombre" %>
       <%else%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
+        <%= f.text_field :Nombre, placeholder: "Nombre", readonly: true%>
       <%end%>
-    </div>
-    <div class = "field">
       <%if @errores[2] == 1%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4"%>
+        <%= f.text_field :Curp, placeholder: "Curp" %>
       <%else%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
+        <%= f.text_field :Curp, placeholder: "Curp", readonly: true %>
       <%end%>
-    </div>
-    <div class = "field">
       <%if @errores[1] == 1%>
-        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4" %>
+        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico"  %>
       <%else%>
-        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
+        <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
       <%end%>
+    <div class = "text-center">
+          <%= f.submit "Guardar", class:"btn btn-primary btn-lg m-2" %> 
+        <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary btn-lg  m-2" %>
     </div>
-    <div class = "field">
-      <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
-    </div>
-    <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary m-2" %>
   <% end %> 
 <% when 3 %>
-<%= form_for @alumno, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+ <%= simple_form_for @alumno, url: alumno_path, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
       <%@alumno.errors.each do |value, message|%> 
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
-    <div class = "field">
-      <%= f.text_field :Id_Alumno, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
+      <%= f.input :Id_Alumno, placeholder: "Id_Alumno", readonly: true%>
       <%if @errores[2] == 2%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4"%>
+        <%= f.input :Curp, placeholder: "Curp" %>
       <%else%>
-        <%= f.text_field :Curp, placeholder: "Curp", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Curp, placeholder: "Curp", readonly: true%>
       <%end%>
-    </div>
-    <div class = "field">
       <%if @errores[0] == 2%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4"%>
+        <%= f.input :Nombre, placeholder: "Nombre" %>
       <%else%>
-        <%= f.text_field :Nombre, placeholder: "Nombre", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Nombre, placeholder: "Nombre", readonly: true%>
       <%end%>
-    </div>
-    <div class = "field">
       <%case @errores[1]%>
         <%when 1 %>
-          <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4"%>
+          <%= f.input :Telefono, placeholder: "Teléfono Contro Académico" %>
         <%when 2 %>
-          <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
-          <%= f.text_field :telefono_extra, placeholder: "Teléfono Extraescolares", class:"form-control m-4"%>
+          <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
+          <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares" %>
         <%else%>
           <%if @alumno.base.match('e')%>
-            <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
-            <%= f.text_field :telefono_extra, placeholder: "Teléfono Extraescolares", class:"form-control m-4", readonly: "true"%>
+            <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
+            <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", readonly: true %>
           <%else%>
-            <%= f.text_field :Telefono, placeholder: "Teléfono Contro Académico", class:"form-control m-4", readonly: "true"%>
+            <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
           <%end%>
       <%end%>
-    </div>
-    <div class = "field">
       <%if @errores[3] == 2%>
-        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4"%>
+        <%= f.input :Peso, placeholder: "Peso", class:"form-control m-4"%>
       <%else%>
-        <%= f.text_field :Peso, placeholder: "Peso", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Peso, placeholder: "Peso", class:"form-control m-4", readonly: true%>
       <%end%>
-    </div>
-    <!----<div class = "field">--->
-      <div class = "text-center">
-        <%= f.submit "Guardar", class:"btn btn-primary btn-lg m-2" %> 
-      </div>
-    <!-----</div>
+
     <div class = "text-center">
-      <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary btn-lg  m-2" %>
+          <%= f.submit "Guardar", class:"btn btn-primary" %> 
+        <%= link_to  "Regresar", alumnos_path, class:"btn btn-primary" %>
     </div>
   <% end %> 
 <% end %> 
