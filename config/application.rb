@@ -1,5 +1,7 @@
 require_relative 'boot'
 
+require 'devkit'
+require 'tiny_tds'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
