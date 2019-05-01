@@ -33,6 +33,9 @@ GEM
       activemodel (= 5.2.3)
       activesupport (= 5.2.3)
       arel (>= 9.0)
+    activerecord-sqlserver-adapter (5.2.0)
+      activerecord (~> 5.2.0)
+      tiny_tds
     activestorage (5.2.3)
       actionpack (= 5.2.3)
       activerecord (= 5.2.3)
@@ -53,6 +56,14 @@ GEM
     ast (2.4.0)
     autoprefixer-rails (9.5.1)
       execjs
+    axlsx (3.0.0.pre)
+      htmlentities (~> 4.3, >= 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (~> 1.8, >= 1.8.2)
+      rubyzip (~> 1.2, >= 1.2.1)
+    axlsx_rails (0.5.2)
+      actionpack (>= 3.1)
+      axlsx (>= 2.0.1)
     bcrypt (3.1.12)
     bcrypt (3.1.12-x86-mingw32)
     bindex (0.7.0)
@@ -98,7 +109,7 @@ GEM
     ffi (1.10.0-x86-mingw32)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    htmlbeautifier (1.3.1)
+    htmlentities (4.3.4)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -236,6 +247,8 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
+    tiny_tds (2.1.2)
+    tiny_tds (2.1.2-x86-mingw32)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -264,7 +277,10 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-sqlserver-adapter
   ar-octopus
+  axlsx
+  axlsx_rails
   bootsnap (= 1.4.1)
   bootstrap-sass
   byebug
@@ -273,7 +289,6 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   devise-bootstrap-views
-  htmlbeautifier
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
@@ -290,6 +305,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
+  tiny_tds
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)

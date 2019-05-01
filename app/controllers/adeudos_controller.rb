@@ -6,7 +6,6 @@ class AdeudosController < ApplicationController
 
   def index
     @adeudos_data = Adeudos.using(:data_warehouse).all
-    export
     verify
   end
 

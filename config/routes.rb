@@ -1,13 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'tipo_evaluacion/index'
-  get 'tipo_evaluacion/edit'
-  get 'turnos/index'
-  get 'empleados/index'
-  get 'empleados/edit'
-  get 'adeudos/index'
-  get 'adeudos/edit'
-  get 'prestamos_material/index'
+  get 'show_tables/index'
   #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
 
   resources :actividades_por_alumno, except: [:delete, :show]
@@ -79,6 +72,7 @@ Rails.application.routes.draw do
   resources :sala_trabajo, except: [:delete, :show]
   resources :sala_hardware, except: [:delete, :show]
   resources :secciones, only: [:index]
+  resources :show_tables, only: [:index]
   resources :software, except: [:delete, :show]
   resources :tipo_baja, except: [:delete, :show]
   resources :titulado, only: [:index]
@@ -104,7 +98,7 @@ Rails.application.routes.draw do
   get '/delete_adeudos', to: 'adeudos#delete_table', as: 'eliminar_adeudos'
   get '/delete_empleados', to: 'empleados#delete_table', as: 'eliminar_empleados'
   get '/delete_tipo_eva', to: 'tipo_evaluacion#delete_table', as: 'eliminar_tipo_eva'
-
+  get '/download', to: 'show_tables#download', as: 'download'
 
   get 'welcome/index'
   root 'welcome#index'

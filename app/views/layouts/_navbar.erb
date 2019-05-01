@@ -1,18 +1,21 @@
-<nav class="navbar navbar-light bg-light Backgruond">
-  <a class="navbar-brand" href="/welcome/index">
-    <!--<img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-    Escuela Pancho Villa
-  </a>
-  <form class="form-inline my-2 my-lg-0">
-    
+
+<nav class="d-flex bd-highlight mb-3">
+  <a class="navbar-brand mr-auto p-2 bd-highlight" href="/welcome/index">Escuela Pancho Villa</a>
   <%if user_signed_in?%>
-  <div class="text-right">
-    <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
-  </div>
-    <%else%>
-      
-        
-    <%end%> 
-  </form>
-  
+      <% case current_user.tipo %>
+      <% when 1 %>
+        <%= link_to "Administrador", '', class: "btn btn-primary"%>
+        <%= link_to "Control Académico", '', class: "btn btn-primary"%>
+        <%= link_to "Extraescolares", '', class: "btn btn-primary"%>
+        <%= link_to "Biblioteca", '', class: "btn btn-primary"%>
+      <% when 2 %>
+        <%= link_to "Control Académico", '', class: "btn btn-primary"%>
+      <% when 3 %>
+        <%= link_to "Extraescolares", '', class: "btn btn-primary"%>
+      <% when 4 %>
+        <%= link_to "Biblioteca", '', class: "btn btn-primary"%>
+      <% end %>
+      <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+    
+  <%end%> 
 </nav>
