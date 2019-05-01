@@ -1,8 +1,7 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.Backgruond{
+.Backgruond {
     background-image: url('Gradient-image.jpg');
     background-size: cover;
 }
@@ -10,4 +9,17 @@
 .form-control {
     width: 30%;
     margin: auto;
+}
+
+.navbar_ {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.botones_tablas {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
 }

@@ -1,89 +1,93 @@
 # frozen_string_literal: true
 
 class AdminUserController < ApplicationController
+
+  def index 
+    @empty = db_empty
+  end
+
   def init
     AlumnosController.new.init #LO INICIALIZA, PARA QUE EL INDEX SOLO MUESTRE LO QUE TIENE EL DATAWAREHOUSE
     MaestrosController.new.init
-    ActividadExtraescolarController.new.index
-    ActividadesPorAlumnoController.new.index
-    AlumnoCompController.new.index
-    AlumnoGrupoActividadController.new.index
-    AlumnoGrupoInglesController.new.index
-    AlumnosExternosInglesController.new.index
-    AreaMaestroController.new.index
-    AreaRecreativaController.new.index
-    AreasAdminController.new.index
-    ArticulosController.new.index
-    AsistenciaAlumnoController.new.index
-    AsistenciaMaestroController.new.index
-    AulaController.new.index
-    BajasController.new.index
-    CalificacionesAlumnoController.new.index
-    CambioCarreraController.new.index
-    CarreraController.new.init
-    CompetenciasController.new.index
-    ConstanciasController.new.index
-    DetalleOrdenCompraController.new.index
-    DetallePrestamoController.new.index
-    DiasController.new.index
-    EditorialesController.new.index
-    EscuelaDeInglesExternaController.new.index
-    EstantesController.new.index
-    EvaluacionesIngresoController.new.index
-    EventosAlumnoController.new.index
-    EventosController.new.index
-    FormaTitulacionController.new.index
-    GrupoActividadController.new.init
-    GrupoController.new.init
-    GrupoInglesController.new.index
-    HardwareController.new.index
-    HardwareMantenimientoController.new.index
-    HoraController.new.index
-    HorariosAreaController.new.index
-    IdiomasController.new.index
-    JustificanteController.new.index
-    LibrosController.new.index
-    MaestroGrupoActividadesController.new.index
-    MaestroGrupoInglesController.new.index
-    MateriaController.new.index
-    MaterialesController.new.index
-    MovilidadAlumnoPeriodoController.new.index
-    MovilidadController.new.init
-    NivelDeInglesController.new.index
-    NivelInglesAlumnoController.new.index
-    OrdenDeCompraController.new.index
-    PaisesController.new.index
-    PeliculasController.new.index
-    PerdidasMaterialesController.new.index
-    PeriodicosController.new.index
-    PeriodoController.new.index
-    PersonalAdminController.new.init
-    PrestamosController.new.index
-    PrestamosSalaController.new.index
-    ProductorasController.new.index
-    RecursoMaterialController.new.index
-    RevistasController.new.index
-    SalaHardwareController.new.index
-    SalaTrabajoController.new.index
-    SeccionesController.new.index
-    SoftwareController.new.index
-    TipoBajaController.new.index
-    TipoConstanciaController.new.index
-    TipoContratoController.new.index
-    TipoMttoController.new.index
-    TipoPeliculaController.new.index
-    TituladoController.new.index
-    UnidadesController.new.index
-   
-  end
+    # ActividadExtraescolarController.new.init
+    # ActividadesPorAlumnoController.new.init
+    # AdeudosController.new.init
+    # AlumnoCompController.new.init
+    # AlumnoGrupoController.new.init
+    # AlumnoGrupoActividadController.new.init
+    # AlumnoGrupoInglesController.new.init
+    # AlumnosExternosInglesController.new.init
+    # AreaMaestroController.new.init
+    # AreaRecreativaController.new.init
+    # AreasAdminController.new.init
+    # ArticulosController.new.init
+    # AsistenciaAlumnoController.new.init
+    # AsistenciaMaestroController.new.init
+    # AulaController.new.init
+    # BajasController.new.init
+    # CalificacionesAlumnoController.new.init
+    # CambioCarreraController.new.init
+    # CarreraController.new.init
+    # CompetenciasController.new.init
+    # ConstanciasController.new.init
+    # DetalleOrdenCompraController.new.init
+    # DetallePrestamoController.new.init
+    # DiasController.new.init
+    # EditorialesController.new.init
+    # EmpleadosController.new.init
+    # EscuelaDeInglesExternaController.new.init
+    # EstantesController.new.init
+    # EvaluacionesIngresoController.new.init
+    # EventosAlumnoController.new.init
+    # EventosController.new.init
+    # FormaTitulacionController.new.init
+    # GrupoActividadController.new.init
+    # GrupoController.new.init
+    # GrupoInglesController.new.init
+    # HardwareController.new.init
+    # HardwareMantenimientoController.new.init
+    # HoraController.new.init
+    # HorariosAreaController.new.init
+    # IdiomasController.new.init
+    # JustificanteController.new.init
+    # LibrosController.new.init
+    # MaestroGrupoActividadesController.new.init
+    # MaestroGrupoInglesController.new.init
+    # MateriaController.new.init
+    # MaterialesController.new.init
+    # MovilidadAlumnoPeriodoController.new.init
+    # MovilidadController.new.init
+    # NivelDeInglesController.new.init
+    # NivelInglesAlumnoController.new.init
+    # OrdenDeCompraController.new.init
+    # PaisesController.new.init
+    # PeliculasController.new.init
+    # PerdidasMaterialesController.new.init
+    # PeriodicosController.new.init
+    # PeriodoController.new.init
+    # PersonalAdminController.new.init
+    # PrestamosController.new.init
+    # PrestamosMaterialController.new.init
+    # PrestamosSalaController.new.init
+    # ProductorasController.new.init
+    # RecursoMaterialController.new.init
+    # RevistasController.new.init
+    # SalaHardwareController.new.init
+    # SalaTrabajoController.new.init
+    # SeccionesController.new.init
+    # SoftwareController.new.init
+    # TipoBajaController.new.init
+    # TipoConstanciaController.new.init
+    # TipoContratoController.new.init
+    # TipoEvaluacionController.new.init
+    # TipoMttoController.new.init
+    # TipoPeliculaController.new.init
+    # TituladoController.new.init
+    # TurnosController.new.init
+    # UnidadesController.new.init
+    
+    redirect_to show_tables_path
 
-  def errors
-    redirect_to '/alumnos'
   end
-
-  def download
-    render :download
-  end
-
 
 end

@@ -26,4 +26,14 @@ octopus:
       password: "admin" #root
       database: Extraescolares
 
+    data_warehouse_final:
+      adapter: sqlserver
+      mode: dblib
+      host: localhost
+      port: 1433
+      username: admin
+      password: admin
+      #username: DESKTOP-E84MTHS\MSSQLSERVER2016
+      database: DataWareHouse
+
 

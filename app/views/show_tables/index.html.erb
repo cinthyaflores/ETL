@@ -1,0 +1,15 @@
+<% if @all_empty == true %>
+  <div class = "text-center">
+    <h1>¡Has corregido todos los datos!</h1>
+    <%= link_to "Generar EXCEL", download_path, class: "btn btn-primary d-flex"%>
+  </div>
+<%else%>
+  <h1 class="text-center">Tablas con errores</h1>
+<%end%>
+
+<%if @alumnos == true %>
+  <%= link_to "Alumnos", alumnos_path, class: "btn botones_tablas"%>
+<%end%>
+<%if @maestros == true %>
+  <%= link_to "Maestros", maestros_path, class: "btn botones_tablas"%>
+<%end%>

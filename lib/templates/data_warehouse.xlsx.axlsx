@@ -1,0 +1,10 @@
+require 'axlsx'
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Alumnos") do |sheet|
+        sheet.add_row ["ID", "Nombre", "Apellidos", "Cargo"], 
+            :style => [header_cell, header_cell, header_cell, header_cell]
+        @alumnos_bien.each do |t|
+            sheet.add_row [t.Id_Alumno, t.No_Control, t.Nombre, t.Id_Carrera]
+        end
+    end
+end
