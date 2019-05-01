@@ -8,7 +8,6 @@ class CarreraController < ApplicationController
 
   def index
     @carreras_data = Carrera.using(:data_warehouse).all
-    export
     verify
   end
 
@@ -76,6 +75,7 @@ class CarreraController < ApplicationController
         carrera_new.save!
       end
 
+      @carreras_data = Carrera.using(:data_warehouse).all
       @carreras_bi.each_row_streaming(offset: 1) do |carreraB| # Ingresar los que no existen en Control Academico
         if @carreras_data.exists?(Id_Carrera: carreraB[0].value) == false
           carrera_new = Carrera.using(:data_warehouse).new

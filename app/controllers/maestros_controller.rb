@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 class MaestrosController < ApplicationController
+
   def init
     export
   end
 
+  def empty
+    return Alumno.using(:data_warehouse).all.empty?
+  end
+
   def index
     @maestrosData = Maestro.using(:data_warehouse).all
-    export
-    verify
   end
 
   def edit
@@ -29,24 +32,63 @@ class MaestrosController < ApplicationController
   def destroy
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
     @maestro.destroy
-    redirect_to "/maestros", notice: "Registro borrado con éxito"
+    redirect_to "/maestros"
   end
 
   def delete_table
     Maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
     Maestro.using(:data_warehouse).where(errorTelefono: 1).destroy_all
-    redirect_to "/maestros"
+    redirect_to "/show_tables"
   end
 
-  private
-
-    def verify
+  def verify(c_user)
+    @maestrosData = Maestro.using(:data_warehouse).all
+    case c_user
+    when 1
       @maestrosData.each do |maestro|
         if maestro.errorNombre || maestro.errorTelefono
           @errores = true
+          return true
+        end
+      end
+    when 2
+      @maestrosData.each do |maestro|
+        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "c"
+          @errores = true
+          return true
+        end
+      end
+    when 3
+      @maestrosData.each do |maestro|
+        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "e"
+          @errores = true
+          return true
+        end
+      end
+    when 4
+      @maestrosData.each do |maestro|
+        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "b"
+          @errores = true
+          return true
         end
       end
     end
+    return false
+  end
+
+  def export_to_sql
+    Maestro.using(:data_warehouse_final).destroy_all
+    maestros_bien = Maestro.using(:data_warehouse).all.order(:Id_maestro)
+    maestros_bien.each do |data|
+      Maestro.using(:data_warehouse_final).create(Id_maestro: data.Id_maestro, Id_Area_mtro: data.Id_Area_mtro, Id_contrato: data.Id_contrato, Nombre: data.Nombre, CorreoElec: data.CorreoElec, Telefono: data.Telefono, Titulo: data.Titulo, Clave: data.Clave)
+    end
+  end
+  
+  def data 
+    maestros_bien = Maestro.using(:data_warehouse).all.order(:Id_maestro)
+  end
+
+  private
 
     def export
       Maestro.using(:data_warehouse).destroy_all
@@ -96,6 +138,7 @@ class MaestrosController < ApplicationController
         maestroNew.save!
       end
 
+      @maestrosData = Maestro.using(:data_warehouse).all
       @maestrosB.each_row_streaming(offset: 1) do |maestroB| # Ingresar los que no existen en Control Academico
         if @maestrosData.exists?(Id_maestro: maestroB[0].value) == false
           maestroNew = Maestro.using(:data_warehouse).new
