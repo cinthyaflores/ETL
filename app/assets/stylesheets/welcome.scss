@@ -3,7 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .Backgruond {
     background-image: url('Gradient-image.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
+    background-color: #464646;
 }
 
 .form-control {
