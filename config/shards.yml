@@ -16,7 +16,7 @@ octopus:
       host: localhost
       username: postgres
       password: root #"admin"
-      database: dwh_school
+      database: dwh_school2
 
     extra:
       port: 5432

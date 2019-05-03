@@ -1,32 +1,36 @@
-
 <nav class="d-flex bd-highlight mb-3 Backgruond">
   <a class="navbar-brand" href="/welcome/index">
-  Escuela Pancho Villa
+  <%if user_signed_in?%>
+    <%= image_tag("Logo_escuela.png", size: "40x40") %>
+  <%end%> 
   </a>
   <%if user_signed_in?%>
       <% case current_user.tipo %>
       <% when 1 %>
+      <br>
       <div class="text-right">
-        <%= link_to "Administrador", '', class: "btn btn-primary"%>
-        <%= link_to "Control Académico", '', class: "btn btn-primary"%>
-        <%= link_to "Extraescolares", '', class: "btn btn-primary"%>
-        <%= link_to "Biblioteca", '', class: "btn btn-primary"%>
-        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+        <%= link_to "Administrador", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Control Académico", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Extraescolares", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Biblioteca", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
         </div>
+        <br>
+        
       <% when 2 %>
       <div class="text-right">
-        <%= link_to "Control Académico", '', class: "btn btn-primary"%>
-        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+        <%= link_to "Control Académico", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
         </div>
       <% when 3 %>
       <div class="text-right">
-        <%= link_to "Extraescolares", '', class: "btn btn-primary"%>
-        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+        <%= link_to "Extraescolares", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
         </div>
       <% when 4 %>
       <div class="text-right">
-        <%= link_to "Biblioteca", '', class: "btn btn-primary"%>
-        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary"%>
+        <%= link_to "Biblioteca", '', class: "btn btn-primary btn-menu"%>
+        <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
         </div>
       <% end %>
   <%end%> 

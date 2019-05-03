@@ -6,10 +6,11 @@
 <%else%>
   <h1 class="text-center">Tablas con errores</h1>
 <%end%>
-
+<div class="text-center">
 <%if @alumnos == true %>
   <%= link_to "Alumnos", alumnos_path, class: "btn botones_tablas"%>
 <%end%>
 <%if @maestros == true %>
   <%= link_to "Maestros", maestros_path, class: "btn botones_tablas"%>
 <%end%>
+</div>
