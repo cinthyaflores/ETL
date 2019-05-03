@@ -14,19 +14,23 @@
         <th>Opciones</th>
     </tr>
     <% @maestrosData.each do |maestro| %>
-        <%if maestro.errorNombre || maestro.errorTelefono %>
+        <%if maestro.errorNombre || maestro.errorTelefono || maestro.errorCorreo%>
             <tr>
                 <th><%= maestro.Id_maestro %></th>
                 <th><%= maestro.Id_Area_mtro %></th>
                 <th><%= maestro.Clave %></th>
                 <%if maestro.errorNombre%>
-                    <th class ='alert alert-danger'><%= maestro.Nombre %></th>
+                    <th class ='alert-danger'><%= maestro.Nombre %></th>
                 <%else%>
                     <th><%= maestro.Nombre %></th>
                 <%end%>
-                <th><%= maestro.CorreoElec %></th>
+                <%if maestro.errorCorreo%>
+                    <th class ='alert-danger'><%= maestro.CorreoElec %></th>
+                <%else%>
+                    <th><%= maestro.CorreoElec %></th>
+                <%end%>
                 <%if maestro.errorTelefono%>
-                    <th class ='alert alert-danger'><%= maestro.Telefono %></th>
+                    <th class ='alert-danger'><%= maestro.Telefono %></th>
                 <%else%>
                     <th><%= maestro.Telefono %></th>
                 <%end%>
@@ -50,7 +54,7 @@
         <th>Opciones</th>
     </tr>
     <% @maestrosData.each do |maestro| %>
-        <%if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == 'c'%>
+        <%if (maestro.errorNombre || maestro.errorTelefono || maestro.errorCorreo) && maestro.base == 'c'%>
             <tr>
                 <th><%= maestro.Id_maestro %></th>
                 <th><%= maestro.Id_Area_mtro %></th>
@@ -59,7 +63,11 @@
                 <%else%>
                     <th><%= maestro.Nombre %></th>
                 <%end%>
-                <th><%= maestro.CorreoElec %></th>
+                <%if maestro.errorCorreo%>
+                    <th class ='alert-danger'><%= maestro.CorreoElec %></th>
+                <%else%>
+                    <th><%= maestro.CorreoElec %></th>
+                <%end%>
                 <%if maestro.errorTelefono%>
                     <th class ='alert alert-danger'><%= maestro.Telefono %></th>
                 <%else%>
@@ -85,7 +93,7 @@
         <th>Opciones</th>
     </tr>
     <% @maestrosData.each do |maestro| %>
-        <%if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == 'e' %>
+        <%if (maestro.errorNombre || maestro.errorTelefono || maestro.errorCorreo) && maestro.base == 'e' %>
             <tr>
                 <th><%= maestro.Id_maestro %></th>
                 <th><%= maestro.Id_Area_mtro %></th>
@@ -95,7 +103,11 @@
                 <%else%>
                     <th><%= maestro.Nombre %></th>
                 <%end%>
-                <th><%= maestro.CorreoElec %></th>
+                <%if maestro.errorCorreo%>
+                    <th class ='alert-danger'><%= maestro.CorreoElec %></th>
+                <%else%>
+                    <th><%= maestro.CorreoElec %></th>
+                <%end%>
                 <%if maestro.errorTelefono%>
                     <th class ='alert alert-danger'><%= maestro.Telefono %></th>
                 <%else%>

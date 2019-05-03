@@ -1,9 +1,32 @@
 # frozen_string_literal: true
 
 class TipoContratoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Tipo_contrato.using(:data_warehouse).all.empty?
+  end
+
   def index
     @contrato_data = Tipo_contrato.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Tipo_contrato.using(:data_warehouse_final).delete_all if !Tipo_contrato.using(:data_warehouse_final).all.empty?
+
+    tipo = Tipo_contrato.using(:data_warehouse).all
+    Tipo_contrato.using(:data_warehouse_final).new
+    tipo.each do |data|
+      Tipo_contrato.using(:data_warehouse_final).create(Id_contrato: data.Id_contrato,
+        Nombre: data.Nombre, Duración: data.Duración)
+    end
+  end
+  
+  def data 
+    tipo = Tipo_contrato.using(:data_warehouse).all
   end
 
   private

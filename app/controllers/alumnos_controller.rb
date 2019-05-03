@@ -13,6 +13,7 @@ class AlumnosController < ApplicationController
 
   def index
     @alumnosData = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+    export
   end
 
   def edit
@@ -63,7 +64,7 @@ class AlumnosController < ApplicationController
       campos_modificados.each do |campo|
         User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo)
       end
-      redirect_to "/"
+      redirect_to "/alumnos"
     else
       render :edit
     end
@@ -95,6 +96,7 @@ class AlumnosController < ApplicationController
     Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
     Alumno.using(:data_warehouse).where(errorPromedio: 1).destroy_all
     Alumno.using(:data_warehouse).where(errorPromedio: 2).destroy_all
+    Adeudos.using(:data_warehouse).where(errorCargo: 1).destroy_all
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó todos los registros con errores - Alumno"
@@ -126,6 +128,7 @@ class AlumnosController < ApplicationController
         end
       end
     end
+    
     return false
   end
 

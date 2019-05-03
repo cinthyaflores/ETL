@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
 
+  get 'logins/index'
   get 'show_tables/index'
   #ME CREA LAS RUTAS NECESARIAS PARA LOS CONTROLADORES, CON EXCEPT LE DIGO CUALES RUTAS NO ME CRE
 
-  resources :actividades_por_alumno, except: [:delete, :show]
+  resources :actividades_por_alumno, only: [:index]
   resources :actividad_extraescolar, only: [:index]
   resources :adeudos, except: [:delete, :show]
   resources :admin_user, only: [:index]
-  resources :alumno_comp, except: [:delete, :show]
-  resources :alumno_grupo, except: [:delete, :show]
+  resources :alumno_comp, only: [:index]
+  resources :alumno_grupo, only: [:index]
   resources :alumno_grupo_actividad, only: [:index]
   resources :alumno_grupo_ingles, only: [:index]
   resources :alumnos_externos_ingles, only: [:index]
@@ -86,7 +87,7 @@ Rails.application.routes.draw do
   
   get '/etl', to: 'admin_user#init', as: 'etl'
   get '/etl_errores', to: 'admin_user#errors', as: 'etl_errores'
-  get '/descargar_etl', to: 'admin_user#download', as: 'descargar_etl'
+
   get '/delete_alumnos', to: 'alumnos#delete_table', as: 'eliminar_alumnos'
   get '/delete_carreras', to: 'carrera#delete_table', as: 'eliminar_carreras'
   get '/delete_grupo', to: 'grupo#delete_table', as: 'eliminar_grupo'
@@ -98,6 +99,11 @@ Rails.application.routes.draw do
   get '/delete_adeudos', to: 'adeudos#delete_table', as: 'eliminar_adeudos'
   get '/delete_empleados', to: 'empleados#delete_table', as: 'eliminar_empleados'
   get '/delete_tipo_eva', to: 'tipo_evaluacion#delete_table', as: 'eliminar_tipo_eva'
+  get '/delete_areas_admin', to: 'areas_admin#delete_table', as: 'eliminar_areas_admin'
+  get '/delete_asistencias_alumno', to: 'asistencia_alumno#delete_table', as: 'eliminar_asistencia_alumnos'
+
+  get '/delete_all', to: 'show_tables#delete_all', as: 'eliminar_errores'
+  
   get '/download', to: 'show_tables#download', as: 'download'
 
   get 'welcome/index'

@@ -1,9 +1,31 @@
 # frozen_string_literal: true
 
 class CompetenciasController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Competencia.using(:data_warehouse).all.empty?
+  end
+
   def index
     @competencias_data = Competencia.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Competencia.using(:data_warehouse_final).delete_all if !Competencia.using(:data_warehouse_final).all.empty?
+
+    competencias = Competencia.using(:data_warehouse).all
+    competencias.each do |data|
+      Competencia.using(:data_warehouse_final).create(Id_Compet: data.Id_Compet,
+        Id_Unidad: data.Id_Unidad, Descripción: data.Descripción)
+    end
+  end
+  
+  def data 
+    competencias = Competencia.using(:data_warehouse).all
   end
 
   private

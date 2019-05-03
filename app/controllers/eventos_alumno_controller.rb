@@ -2,10 +2,27 @@ class EventosAlumnoController < ApplicationController
   def init
     export
   end
+  
+  def empty
+    return Eventos_alumno.using(:data_warehouse).all.empty?
+  end
 
   def index
     @eventos_data = Eventos_alumno.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Eventos_alumno.using(:data_warehouse_final).delete_all if !Eventos_alumno.using(:data_warehouse_final).all.empty?
+
+    eventos = Eventos_alumno.using(:data_warehouse).all
+    eventos.each do |data|
+      Eventos_alumno.using(:data_warehouse_final).create(Id_Alumno: data.Id_Alumno,
+        Id_evento_e: data.Id_evento_e, Id_periodo_e: data.Id_periodo_e)
+    end
+  end
+  
+  def data 
+    eventos = Eventos_alumno.using(:data_warehouse).all
   end
 
   private

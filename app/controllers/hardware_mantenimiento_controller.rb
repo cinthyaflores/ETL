@@ -1,7 +1,30 @@
 class HardwareMantenimientoController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Hardware_mantenimiento.using(:data_warehouse).all.empty?
+  end
+  
   def index
     @hard_mtto_data = Hardware_mantenimiento.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Hardware_mantenimiento.using(:data_warehouse_final).delete_all if !Hardware_mantenimiento.using(:data_warehouse_final).all.empty?
+
+    manteni = Hardware_mantenimiento.using(:data_warehouse).all
+    manteni.each do |data|
+      Hardware_mantenimiento.using(:data_warehouse_final).create(Id_Tipo_Mtto: data.Id_Tipo_Mtto,
+        Fecha_Mtto: data.Fecha_Mtto, Diagnostico: data.Diagnostico, 
+        No_Tecnico: data.No_Tecnico, id_Hardware: data.id_Hardware)
+    end
+  end
+  
+  def data 
+    manteni = Hardware_mantenimiento.using(:data_warehouse).all
   end
 
   private
