@@ -1,7 +1,7 @@
 <body class="Backgruond">
-<div class="text-center mb-4">
-  <%= image_tag("Userlogin.png", size: "90x90") %>
-</div>
+<br>
+<br>
+<div class="text-center"><%= image_tag("Userlogin.png", size: "90x90") %></div>
 <h1 class="text-center">Iniciar Sesión</h1>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-group text-center">
@@ -24,7 +24,7 @@
   <% end %>
 
   <div class="form-group text-center">
-    <%= f.submit 'Ingresar', class: 'btn btn-primary btn-lg' %>
+    <%= f.submit 'Ingresar', class: 'btn btn-primary btn-lg btn-form' %>
   </div>
 <% end %>
 <div class="text-center">

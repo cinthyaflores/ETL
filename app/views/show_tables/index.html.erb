@@ -11,7 +11,7 @@
   <h1 class="text-center">Tablas con errores</h1>
 <%end%>
 
-<div>
+<div class="text-center">
 <%if !@all_empty %>
   <% case current_user.tipo %>
   <% when 1 %>
@@ -188,10 +188,9 @@
     <%end%>
   <%end%>
 <%end%>
-</div>
 
 <%if !@all_empty%>
   <%= link_to "Eliminar todos los datos", eliminar_errores_path, class: "btn btn-primary"%>
 <%end%>
-
+</div>
 
