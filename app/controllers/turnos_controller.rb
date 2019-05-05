@@ -1,8 +1,30 @@
 class TurnosController < ApplicationController
 
+  def init
+    export
+  end
+  
+  def empty
+    return Turnos.using(:data_warehouse).all.empty?
+  end
+
   def index
     @turnos_data = Turnos.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Turnos.using(:data_warehouse_final).delete_all if !Turnos.using(:data_warehouse_final).all.empty?
+
+    turnos = Turnos.using(:data_warehouse).all
+    turnos.each do |data|
+      Turnos.using(:data_warehouse_final).create(idTurno: data.idTurno,
+        nomb_turno: data.nomb_turno, hora_inicio: data.hora_inicio, 
+        hora_fin: data.hora_fin)
+    end
+  end
+  
+  def data 
+    turnos = Turnos.using(:data_warehouse).all
   end
 
   private

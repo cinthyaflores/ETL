@@ -1,7 +1,29 @@
 class AreaRecreativaController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Area_recreativa.using(:data_warehouse).all.empty?
+  end
+  
   def index
     @area_rec_data = Area_recreativa.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Area_recreativa.using(:data_warehouse_final).delete_all if !Area_recreativa.using(:data_warehouse_final).all.empty?
+
+    area_rec_data = Area_recreativa.using(:data_warehouse).all
+    area_rec_data.each do |data|
+      Area_recreativa.using(:data_warehouse_final).create(Id_area_rec: data.Id_area_rec,
+        Nombre: data.Nombre, Descripción: data.Descripción)
+    end
+  end
+  
+  def data 
+    area_rec_data = Area_recreativa.using(:data_warehouse).all
   end
 
   private

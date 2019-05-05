@@ -63,7 +63,7 @@ class AlumnosController < ApplicationController
       campos_modificados.each do |campo|
         User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo)
       end
-      redirect_to "/"
+      redirect_to "/alumnos"
     else
       render :edit
     end
@@ -81,23 +81,34 @@ class AlumnosController < ApplicationController
   end
 
   def delete_table
-    Alumno.using(:data_warehouse).where(errorNombre: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorNombre: 2).destroy_all
-    Alumno.using(:data_warehouse).where(errorTelefono: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorTelefono: 2).destroy_all
-    Alumno.using(:data_warehouse).where(errorCurp: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
-    Alumno.using(:data_warehouse).where(errorPeso: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorPeso: 2).destroy_all   
-    Alumno.using(:data_warehouse).where(errorCorreo: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorCorreo: 2).destroy_all
-    Alumno.using(:data_warehouse).where(errorCurp: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorCurp: 2).destroy_all
-    Alumno.using(:data_warehouse).where(errorPromedio: 1).destroy_all
-    Alumno.using(:data_warehouse).where(errorPromedio: 2).destroy_all
+    case current_user.tipo
+    when 1
+      Alumno.using(:data_warehouse).where(errorNombre: [1,2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorTelefono: [1,2,3]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCurp: [1,2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorPeso: [1,2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCorreo: [1,2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCreditos: [1,2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorPromedio: [1,2]).destroy_all
+      campo_modificado = "Eliminó todos los registros de todas las bases - Alumno"
+    when 2
+      Alumno.using(:data_warehouse).where(errorNombre: [1]).destroy_all
+      Alumno.using(:data_warehouse).where(errorTelefono: [1,3]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCurp: [1]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCorreo: [1]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCreditos: [1]).destroy_all
+      Alumno.using(:data_warehouse).where(errorPromedio: [1]).destroy_all
+      campo_modificado = "Eliminó todos los registros de Control Academico - Alumno"
+    when 3
+      Alumno.using(:data_warehouse).where(errorNombre: [2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorTelefono: [2,3]).destroy_all
+      Alumno.using(:data_warehouse).where(errorPeso: [2]).destroy_all
+      Alumno.using(:data_warehouse).where(errorCorreo: [2]).destroy_all
+      campo_modificado = "Eliminó todos los registros de Extraescolares - Alumno"
+    end
+    
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
-    campo_modificado = "Eliminó todos los registros con errores - Alumno"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado) 
     redirect_to "/show_tables"
   end
@@ -126,12 +137,14 @@ class AlumnosController < ApplicationController
         end
       end
     end
+    
     return false
   end
 
   def export_to_sql
-    Alumno.using(:data_warehouse_final).delete_all
+    
     alumnos_bien = Alumno.using(:data_warehouse).all.order(:Id_Alumno)
+    Alumno.using(:data_warehouse).new
     alumnos_bien.each do |data|
       Alumno.using(:data_warehouse_final).create(Id_Alumno: data.Id_Alumno, No_control: data.No_control, Id_Carrera: data.Id_Carrera, Nombre: data.Nombre, Genero: data.Genero, CorreoElec: data.CorreoElec, Telefono: data.Telefono, Curp: data.Curp, Fecha_nac: data.Fecha_nac, Cre_acum: data.Cre_acum, Promedio_G: data.Promedio_G, Estado: data.Estado, Fec_ingreso: data.Fec_ingreso, Fec_egreso: data.Fec_egreso, Peso: data.Peso, Estatura: data.Estatura, telefono_extra: data.telefono_extra)
     end
@@ -193,7 +206,11 @@ class AlumnosController < ApplicationController
           #VALIDAR TAMBIEN LOS DATOS DE CORREO Y DE FECHAS? Se van a sobreescribir y ocuparía hacer algo como lo de telefono
           if alumnoCA.No_control == alumnoE.No_control
             if !validate_number(alumnoE.Telefono)
-              alumnoNew.errorTelefono = 2
+              if alumnoNew.errorTelefono == 1
+                alumnoNew.errorTelefono = 3
+              else
+                alumnoNew.errorTelefono = 2
+              end
               @error=true
             end
             if !validate_weight(alumnoE.Peso)

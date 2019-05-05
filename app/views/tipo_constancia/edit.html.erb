@@ -1,0 +1,23 @@
+<div class = "container">
+  <h2 class="text-center">Editar Tipos de constancia</h2>
+  <%= simple_form_for @constancia, method: :patch do |f| %>
+    <%@constancia.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_Tipo_con, readonly: true %>
+    <%if @errores[0] == 1%>
+      <%= f.input :Nombre, error: false %>
+    <% else %>
+      <%= f.input :Nombre, readonly: true %>
+    <% end %>
+    <%if @errores[1] == 1%>
+      <%= f.input :Costo, error: false %>
+    <% else %>
+      <%= f.input :Costo, readonly: true %>
+    <% end %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", tipo_constancia_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

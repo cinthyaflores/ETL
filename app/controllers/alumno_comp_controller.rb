@@ -1,13 +1,32 @@
 # frozen_string_literal: true
 
 class AlumnoCompController < ApplicationController
-  def index
-    @alum_comp_data = Alumno_comp.using(:data_warehouse).all.order(:Id_Alumno)
+  
+  def init
     export
   end
+  
+  def empty
+    return Alumno_comp.using(:data_warehouse).all.empty?
+  end
+  
+  def index
+    @alum_comp_data = Alumno_comp.using(:data_warehouse).all.order(:Id_Alumno)
+  end
 
-  def edit 
-    @alumno_comp = Alumno.using(:data_warehouse).find_by(Id_Alumno: params[:id])
+  def export_to_sql
+    Alumno_comp.using(:data_warehouse_final).delete_all if !Alumno_comp.using(:data_warehouse_final).all.empty?
+
+    alum_comp_data = Alumno_comp.using(:data_warehouse).all
+    alum_comp_data.each do |data|
+      Alumno_comp.using(:data_warehouse_final).create(Id_Compet: data.Id_Compet,
+      Id_Alumno: data.Id_Alumno, Oportunidad: data.Oportunidad, 
+      Calificación: data.Calificación)
+    end
+  end
+  
+  def data 
+    actividades = Alumno_comp.using(:data_warehouse).all
   end
 
   private

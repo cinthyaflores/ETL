@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
   
     def validate_weight(peso)
-      !!(peso.to_s =~ /^\d+/) # Debe de tener puros numeros
+      !!(peso.to_s =~ /\A\d+/) # Debe de tener puros numeros
     end
   
     def validate_clave(clave)
@@ -54,6 +54,23 @@ class ApplicationController < ActionController::Base
     def validate_oportunidad(op)
       return false unless op.upcase == "PRIMERA" || op.upcase == "SEGUNDA" 
     end
+
+    def validate_calif(calif)
+      return true if calif.to_s=~ /\A0*(?:[1-9][0-9]?|100)\z/
+    end
+
+    def validate_ISBN(libro)
+      !!(libro.to_s =~ /[0-9]{3}\-[0-9]{2}\-[0-9]{5}\-[0-9]{2}\-[0-9]/)
+    end
+
+    def validate_clave_pais(clave)
+      puts !!(clave =~ /[A-Z]{3}/)
+      !!(clave =~ /\A[A-Z]{3}\z/)
+    end
+    
+    def validate_creditos(cred)
+      !!(cred.to_s =~ /\A[1-9]\z|\A0[1-9]\z|\A1[0-9]\z|\A20\z/)
+    end
   
     def find_id_alumno(no_ctrl)
       data = Alumno.using(:data_warehouse).all
@@ -75,10 +92,14 @@ class ApplicationController < ActionController::Base
     end
   
     def find_id_maestro(clave)
-      data = Maestro.using(:data_warehouse).all
-      data.each do |maestro|
-        return maestro.Id_maestro if maestro.Clave == clave
+      Maestro.using(:data_warehouse).new
+      maestros_data = Maestro.using(:data_warehouse).all
+      maestros_data.each do |maestro|
+        if maestro.Clave == clave
+          return maestro.Id_maestro 
+        end
       end
+      return nil
     end
   
     def find_nombre_alumno(id_alumno)
@@ -92,89 +113,126 @@ class ApplicationController < ActionController::Base
     end
 
     def get_numbers(string)
-      string.gsub(/[^\d]/, '')
+      string.gsub(/[^\d\.]/, '')
     end
 
-    def db_empty
+    def db_empty #Para saber si ya hay datos en el dwh (si ya se inició un proceso antes)
       return AlumnosController.new.empty
       return MaestrosController.new.empty
-      # return ActividadExtraescolarController.new.empty
-      # return ActividadesPorAlumnoController.new.empty
-      # return AdeudosController.new.empty
-      # return AlumnoCompController.new.empty
-      # return AlumnoGrupoController.new.empty
-      # return AlumnoGrupoActividadController.new.empty
-      # return AlumnoGrupoInglesController.new.empty
-      # return AlumnosExternosInglesController.new.empty
-      # return AreaMaestroController.new.empty
-      # return AreaRecreativaController.new.empty
-      # return AreasAdminController.new.empty
-      # return ArticulosController.new.empty
-      # return AsistenciaAlumnoController.new.empty
-      # return AsistenciaMaestroController.new.empty
-      # return AulaController.new.empty
-      # return BajasController.new.empty
-      # return CalificacionesAlumnoController.new.empty
-      # return CambioCarreraController.new.empty
-      # return CarreraController.new.empty
-      # return CompetenciasController.new.empty
-      # return ConstanciasController.new.empty
-      # return DetalleOrdenCompraController.new.empty
-      # return DetallePrestamoController.new.empty
-      # return DiasController.new.empty
-      # return EditorialesController.new.empty
-      # return EmpleadosController.new.empty
-      # return EscuelaDeInglesExternaController.new.empty
-      # return EstantesController.new.empty
-      # return EvaluacionesIngresoController.new.empty
-      # return EventosAlumnoController.new.empty
-      # return EventosController.new.empty
-      # return FormaTitulacionController.new.empty
-      # return GrupoActividadController.new.empty
-      # return GrupoController.new.empty
-      # return GrupoInglesController.new.empty
-      # return HardwareController.new.empty
-      # return HardwareMantenimientoController.new.empty
-      # return HoraController.new.empty
-      # return HorariosAreaController.new.empty
-      # return IdiomasController.new.empty
-      # return JustificanteController.new.empty
-      # return LibrosController.new.empty
-      # return MaestroGrupoActividadesController.new.empty
-      # return MaestroGrupoInglesController.new.empty
-      # return MateriaController.new.empty
-      # return MaterialesController.new.empty
-      # return MovilidadAlumnoPeriodoController.new.empty
-      # return Movilidad.new.init
-      # return NivelDeInglesController.new.empty
-      # return NivelInglesAlumnoController.new.empty
-      # return OrdenDeCompraController.new.empty
-      # return PaisesController.new.empty
-      # return PeliculasController.new.empty
-      # return PerdidasMaterialesController.new.empty
-      # return PeriodicosController.new.empty
-      # return PeriodoController.new.empty
-      # return PersonalAdmin.new.init
-      # return PrestamosController.new.empty
-      # return PrestamosMaterialController.new.empty
-      # return PrestamosSalaController.new.empty
-      # return ProductorasController.new.empty
-      # return RecursoMaterialController.new.empty
-      # return RevistasController.new.empty
-      # return SalaHardwareController.new.empty
-      # return SalaTrabajoController.new.empty
-      # return SeccionesController.new.empty
-      # return SoftwareController.new.empty
-      # return TipoBajaController.new.empty
-      # return TipoConstanciaController.new.empty
-      # return TipoContratoController.new.empty
-      # return TipoEvaluacionController.new.empty
-      # return TipoMttoController.new.empty
-      # return TipoPeliculaController.new.empty
-      # return TituladoController.new.empty
-      # return TurnosController.new.empty
-      # return UnidadesController.new.empty
+      return ActividadExtraescolarController.new.empty
+      return ActividadesPorAlumnoController.new.empty
+      return AdeudosController.new.empty
+      return AlumnoCompController.new.empty
+      return AlumnoGrupoController.new.empty
+      return AlumnoGrupoActividadController.new.empty
+      return AlumnoGrupoInglesController.new.empty
+      return AlumnosExternosInglesController.new.empty
+      return AreaMaestroController.new.empty
+      return AreaRecreativaController.new.empty
+
+      return AreasAdminController.new.empty
+
+      return ArticulosController.new.empty
+
+      return AsistenciaAlumnoController.new.empty
+      return AsistenciaMaestroController.new.empty
+      
+      return AulaController.new.empty
+
+      return BajasController.new.empty
+
+      return CalificacionesAlumnoController.new.empty
+
+      return CambioCarreraController.new.empty
+
+      return CarreraController.new.empty
+
+      return CompetenciasController.new.empty
+      return ConstanciasController.new.empty
+
+      return DetalleOrdenCompraController.new.empty
+
+      return DetallePrestamoController.new.empty
+
+      return DiasController.new.empty
+
+      return EditorialesController.new.empty
+      return EmpleadosController.new.empty
+
+      return EscuelaDeInglesExternaController.new.empty
+      return EstantesController.new.empty
+
+      return EvaluacionesIngresoController.new.empty
+
+      return EventosAlumnoController.new.empty
+      return EventosController.new.empty
+
+      return FormaTitulacionController.new.empty
+      return GrupoActividadController.new.empty
+      return GrupoController.new.empty
+      return GrupoInglesController.new.empty
+      return HardwareController.new.empty
+
+      return HardwareMantenimientoController.new.empty
+      return HoraController.new.empty
+      return HorariosAreaController.new.empty
+
+      return IdiomasController.new.empty
+
+      return JustificanteController.new.empty
+
+      return LibrosController.new.empty
+
+      return MaestroGrupoActividadesController.new.empty
+      return MaestroGrupoInglesController.new.empty
+
+      return MateriaController.new.empty
+      return MaterialesController.new.empty
+
+      return MovilidadAlumnoPeriodoController.new.empty
+
+      return Movilidad.new.init
+
+      return NivelDeInglesController.new.empty
+
+      return NivelInglesAlumnoController.new.empty
+      return OrdenDeCompraController.new.empty
+      return PaisesController.new.empty
+      return PeliculasController.new.empty
+      return PerdidasMaterialesController.new.empty
+      return PeriodicosController.new.empty
+
+      return PeriodoController.new.empty
+
+      return PersonalAdmin.new.init
+      return PrestamosController.new.empty
+
+      return PrestamosMaterialController.new.empty
+      return PrestamosSalaController.new.empty
+
+      return ProductorasController.new.empty
+      return RecursoMaterialController.new.empty
+      return RevistasController.new.empty
+      return SalaHardwareController.new.empty
+      return SalaTrabajoController.new.empty
+
+      return SeccionesController.new.empty
+
+      return SoftwareController.new.empty
+      return TipoBajaController.new.empty
+      return TipoConstanciaController.new.empty
+
+      return TipoContratoController.new.empty
+
+      return TipoEvaluacionController.new.empty
+      return TipoMttoController.new.empty
+      return TipoPeliculaController.new.empty
+      return TituladoController.new.empty
+      return TurnosController.new.empty
+      return UnidadesController.new.empty
+
       return true
+      
     end
 
 end

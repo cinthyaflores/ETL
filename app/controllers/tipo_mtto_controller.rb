@@ -1,7 +1,31 @@
 class TipoMttoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Tipo_mantenimiento.using(:data_warehouse).all.empty?
+  end
+
   def index
     @tipo_mtto_data = Tipo_mantenimiento.using(:data_warehouse).all
     export
+  end
+
+  def export_to_sql
+    Tipo_mantenimiento.using(:data_warehouse_final).delete_all if !Tipo_mantenimiento.using(:data_warehouse_final).all.empty?
+
+    mtto = Tipo_mantenimiento.using(:data_warehouse).all
+    mtto.each do |data|
+      Tipo_mantenimiento.using(:data_warehouse_final).create(
+        id_Tipo_Mtto: data.id_Tipo_Mtto, Nombre: data.Nombre, 
+        Costo: data.Costo)
+    end
+  end
+  
+  def data 
+    mtto = Tipo_mantenimiento.using(:data_warehouse).all
   end
 
   private

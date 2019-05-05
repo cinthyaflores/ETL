@@ -99,14 +99,11 @@
 }
 
 
-/* .botones_tablas {
-    width: 100px;
-    height: 100px;
-    background-color: aqua;
-} */
 
 
-/* .botones_tablas {
+
+
+ .botones_tablas {
     padding: .6rem 1rem;
     border: 1px solid #995309;
     border-radius: 4px;
@@ -132,5 +129,22 @@
     box-shadow: 0 2px 3px 0 rgba(0,0,0,.2) inset;
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
     background-image: linear-gradient(#f0a100 10%,#f70 100%);
-  } */
+  }
 
+.container {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.simple_form {
+    text-align: center;
+}
+
+.form-control {
+    width: 400px;
+}
+
+.form-control-label {
+    font-size: 16px;
+}

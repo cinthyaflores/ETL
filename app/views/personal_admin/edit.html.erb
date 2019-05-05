@@ -2,38 +2,27 @@
 <!---<p>Find me in app/views/personal_admin/edit.html.erb</p>---->
 <p class="text-center">EDITAR MOVILIDADES CON ERROR</p>
 <div>
-  <%= form_for @personal, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+  <%= simple_form_for @personal, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
       <%@personal.errors.each do |value, message|%> 
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
-    <div class = "field">
-      <%= f.text_field :Id_Pers, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
-      <%= f.text_field :Id_Area, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
+    
+      <%= f.input :Id_Pers, placeholder: "Id_Alumno", class:"form-control m-4", readonly: true%>
+      <%= f.input :Id_Area, placeholder: "Id_Alumno", class:"form-control m-4", readonly: true%>
       <%if @errores[0] == nil%>
-        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Nombre, placeholder: "Título", class:"form-control m-4", readonly: true%>
       <%else%>
-        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4"%>
+        <%= f.input :Nombre, placeholder: "Título", class:"form-control m-4", error: false%>
       <%end%>
-    </div>
-    <div class = "field">
-      <%= f.text_field :CorreoE, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div><div class = "field">
-      <%= f.text_field :Fecha_Cont, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
+      <%= f.input :CorreoE, placeholder: "Id_Alumno", class:"form-control m-4", readonly: true%>
       <%if @errores[1] == nil%>
-        <%= f.text_field :Estado, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+        <%= f.input :Estado, placeholder: "Título", class:"form-control m-4", readonly: true%>
       <%else%>
-        <%= f.text_field :Estado, placeholder: "Título", class:"form-control m-4"%>
+        <%= f.input :Estado, placeholder: "Título", class:"form-control m-4", error: false%>
       <%end%>
-    </div>
     <div class = "field">
       <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+      <%= link_to  "Regresar", personal_admin_index_path , class:"btn btn-primary m-2" %>
     </div>
-    <%= link_to  "Regresar", personal_admin_index_path , class:"btn btn-primary m-2" %>
   <% end %> 
 <div>

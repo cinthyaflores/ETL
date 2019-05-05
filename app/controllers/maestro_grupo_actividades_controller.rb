@@ -1,11 +1,29 @@
 class MaestroGrupoActividadesController < ApplicationController
+  
   def init
     export
+  end
+  
+  def empty
+    return Maestro_grupo_actividades.using(:data_warehouse).all.empty?
   end
 
   def index
     @maestros_data = Maestro_grupo_actividades.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Maestro_grupo_actividades.using(:data_warehouse_final).delete_all if !Maestro_grupo_actividades.using(:data_warehouse_final).all.empty?
+
+    maestros = Maestro_grupo_actividades.using(:data_warehouse).all
+    maestros.each do |data|
+      Maestro_grupo_actividades.using(:data_warehouse_final).create(Id_Maestro: data.Id_Maestro,
+        Id_grupo_Ac: data.Id_grupo_Ac, Id_periodo: data.Id_periodo)
+    end
+  end
+  
+  def data 
+    maestros = Maestro_grupo_actividades.using(:data_warehouse).all
   end
 
   private

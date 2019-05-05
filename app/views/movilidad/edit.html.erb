@@ -1,9 +1,9 @@
 <h1 class="text-center">Movilidad</h1>
 <!------<p>Find me in app/views/movilidad/edit.html.erb</p>----->
-<p class="text-center"EDITAR MOVILIDADES CON ERROR</p>
+<p class="text-center">EDITAR MOVILIDADES CON ERROR</p>
 <div>
   <%= form_for @movilidad, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
-      <%@movilidad.errors.each do |value, message|%> 
+      <%@movilidad.errors.each do |value, message|%>
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
     <div class = "field">
@@ -34,4 +34,4 @@
     </div>
     <%= link_to  "Regresar", movilidad_index_path , class:"btn btn-primary m-2" %>
   <% end %> 
-<div>
+</div>

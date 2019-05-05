@@ -1,7 +1,29 @@
 class EscuelaDeInglesExternaController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Escuela_de_ingles_externa.using(:data_warehouse).all.empty?
+  end
+  
   def index
     @escuelas_data = Escuela_de_ingles_externa.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Escuela_de_ingles_externa.using(:data_warehouse_final).delete_all if !Escuela_de_ingles_externa.using(:data_warehouse_final).all.empty?
+
+    escuelas = Escuela_de_ingles_externa.using(:data_warehouse).all
+    escuelas.each do |data|
+      Escuela_de_ingles_externa.using(:data_warehouse_final).create(Id_escuela: data.Id_escuela,
+        Nombre: data.Nombre)
+    end
+  end
+  
+  def data 
+    escuelas = Escuela_de_ingles_externa.using(:data_warehouse).all
   end
 
   private

@@ -1,7 +1,29 @@
 class AlumnoGrupoInglesController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Alumno_grupo_ingles.using(:data_warehouse).all.empty?
+  end
+
   def index
     @alumno_grupo_data = Alumno_grupo_ingles.using(:data_warehouse).all.order(:Id_Alumno)
-    export
+  end
+
+  def export_to_sql
+    Alumno_grupo_ingles.using(:data_warehouse_final).delete_all if !Alumno_grupo_ingles.using(:data_warehouse_final).all.empty?
+
+    alumno = Alumno_grupo_ingles.using(:data_warehouse).all
+    alumno.each do |data|
+      Alumno_grupo_ingles.using(:data_warehouse_final).create(Id_Alumno: data.Id_Alumno,
+      Id_grupo_Ing: data.Id_grupo_Ing, Id_periodo: data.Id_periodo)
+    end
+  end
+  
+  def data 
+    alumno = Alumno_grupo_ingles.using(:data_warehouse).all
   end
 
   private

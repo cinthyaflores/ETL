@@ -10,8 +10,8 @@
     <% @horas_data.each do |hora| %>
         <tr>
             <th><%= hora.Id_Hora %></th> 
-            <th><%= hora.Hora_inicio.strftime("%T") %></th> 
-            <th><%= hora.Hora_fin.strftime("%T") %></th> 
+            <th><%= hora.Hora_inicio %></th> 
+            <th><%= hora.Hora_fin%></th> 
         </tr>
     <%end%>
 </table>
@@ -25,8 +25,8 @@
     <% @horas_ca.each do |hora| %>
         <tr>
             <th><%= hora.Id_Hora %></th> 
-            <th><%= hora.Hora_inicio.strftime("%T") %></th> 
-            <th><%= hora.Hora_fin.strftime("%T") %></th> 
+            <th><%= hora.Hora_inicio%></th> 
+            <th><%= hora.Hora_fin%></th> 
         </tr>
     <%end%>
 </table>

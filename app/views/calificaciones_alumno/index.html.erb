@@ -1,21 +1,32 @@
-<h1 class="text-center">CalificacionesAlumno</h1>
-<!----<p>Find me in app/views/calificaciones_alumno/index.html.erb</p>---->
+<% if current_user.tipo == 1 || 3 %>
 <h2 class="text-center">CALIFICACIONES DE ALUMNOS DE INGLES EN DATA WAREHOUSE</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
+        <th>Id Calif/Alumno</th>
         <th>Id Alumno</th>
         <th>Id Nivel</th>
         <th>Id Periodo</th>
         <th>Calificación</th> 
         <th>Unidad</th>
+        <th>Opciones</th>
     </tr>
     <% @calificaciones_data.each do |calif| %>
+        <% if calif.errorCalif %>
         <tr>
+            <th><%= calif.id_calif_alu%></th>
             <th><%= calif.Id_Alumno%></th>
             <th><%= calif.Id_nivel %></th>  
             <th><%= calif.Id_Periodo %></th> 
-            <th><%= calif.Calificacion%></th> 
+            <th  class ='alert-danger' ><%= calif.Calificacion%></th> 
             <th><%= calif.Unidad%></th> 
+            <th><%= link_to "Editar", edit_calificaciones_alumno_path(calif.id_calif_alu) %>
+          <%= link_to "Eliminar", calif, method: :delete, data: {confirm: "Deseas eliminar el registro con ID: #{calif.id_calif_alu}?"} %></th> 
         </tr>
+        <%end%>
     <%end%>
 </table>
+<div class="text-center">
+  <%= link_to "Eliminar todo", eliminar_calif_alumno_path, data: { confirm: "Desea eliminar todos los registros de Adeudos?" }, class: 'btn btn-primary btn-lg' %>
+  <%= link_to "Regresar" , show_tables_path, method: :get , class: 'btn btn-primary btn-lg'%>
+</div>
+<%end%>

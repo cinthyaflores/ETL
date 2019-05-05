@@ -1,7 +1,31 @@
 class AsistenciaMaestroController < ApplicationController
-  def index
-    @asistencia_maestro_data = Asistencia_maestro.using(:data_warehouse).all
+
+  def init
     export
+  end
+  
+  def empty
+    return Asistencia_maestro.using(:data_warehouse).all.empty?
+  end
+
+  def index
+    @asistencia_m = Asistencia_maestro.using(:data_warehouse).all
+  end
+
+  def export_to_sql
+    Asistencia_maestro.using(:data_warehouse_final).delete_all if !Asistencia_maestro.using(:data_warehouse_final).all.empty?
+
+    asistencia_m = Asistencia_maestro.using(:data_warehouse).all
+    asistencia_m.each do |data|
+      Asistencia_maestro.using(:data_warehouse_final).create(
+        Id_maestro: data.Id_maestro, Id_Area_mtro: data.Id_Area_mtro, 
+        Asistencias: data.Asistencias, Id_periodo: data.Id_periodo, 
+        Faltas: data.Faltas, Retardos: data.Retardos)
+    end
+  end
+  
+  def data 
+    asistencia_m = Asistencia_maestro.using(:data_warehouse).all
   end
 
   private

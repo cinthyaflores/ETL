@@ -1,9 +1,33 @@
 # frozen_string_literal: true
 
 class PeriodoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Periodo.using(:data_warehouse).all.empty?
+  end
+
   def index
     @periodosData = Periodo.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Periodo.using(:data_warehouse_final).delete_all if !Periodo.using(:data_warehouse_final).all.empty?
+
+    periodos = Periodo.using(:data_warehouse).all
+    periodos.each do |data|
+      Periodo.using(:data_warehouse_final).create(Id_Periodo: data.Id_Periodo,
+        Nombre: data.Nombre, FechaIn: data.FechaIn, 
+        FechaFin: data.FechaFin, 
+        Abreviacion: data.Abreviacion)
+    end
+  end
+  
+  def data 
+    periodos = Periodo.using(:data_warehouse).all
   end
 
   private

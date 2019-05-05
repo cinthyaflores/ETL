@@ -1,7 +1,29 @@
 class DiasController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Dias.using(:data_warehouse).all.empty?
+  end
+
   def index
     @dias_data = Dias.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Dias.using(:data_warehouse_final).delete_all if !Dias.using(:data_warehouse_final).all.empty?
+
+    dias = Dias.using(:data_warehouse).all
+    dias.each do |data|
+      Dias.using(:data_warehouse_final).create(Id_dias: data.Id_dias,
+        Descripcion: data.Descripcion)
+    end
+  end
+  
+  def data 
+    dias = Dias.using(:data_warehouse).all
   end
 
   private

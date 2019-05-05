@@ -1,0 +1,18 @@
+<div class = "container">
+  <h2 class="text-center">Editar Calificaciones/Alumno</h2>
+  <%= simple_form_for @calificaciones, method: :patch do |f| %>
+    <%@calificaciones.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :id_calif_alu, readonly: true %>
+    <%= f.input :Id_Alumno, readonly: true %>
+    <%= f.input :Id_nivel, readonly: true %>
+    <%= f.input :Id_Periodo, readonly: true %>
+    <%= f.input :Unidad, readonly: true %>
+    <%= f.input :Calificacion, error: false %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", calificaciones_alumno_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

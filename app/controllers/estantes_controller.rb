@@ -1,7 +1,29 @@
 class EstantesController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Estante.using(:data_warehouse).all.empty?
+  end
+
   def index
     @estantes_data = Estante.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Estante.using(:data_warehouse_final).delete_all if !Estante.using(:data_warehouse_final).all.empty?
+
+    estantes = Estante.using(:data_warehouse).all
+    estantes.each do |data|
+      Estante.using(:data_warehouse_final).create(id_Estante: data.id_Estante,
+        Id_Seccion: data.Id_Seccion, Clave: data.Clave)
+    end
+  end
+  
+  def data 
+    estantes = Estante.using(:data_warehouse).all
   end
 
   private
