@@ -1,7 +1,30 @@
 class SoftwareController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Software.using(:data_warehouse).all.empty?
+  end
+
   def index
     @software_data = Software.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Software.using(:data_warehouse_final).delete_all if !Software.using(:data_warehouse_final).all.empty?
+
+    software = Software.using(:data_warehouse).all
+    software.each do |data|
+      Software.using(:data_warehouse_final).create(
+        idSoftware: data.idSoftware, version: data.version, 
+        ann_salida: data.ann_salida)
+    end
+  end
+  
+  def data 
+    actividades = Software.using(:data_warehouse).all
   end
 
   private

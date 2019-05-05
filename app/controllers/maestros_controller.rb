@@ -16,13 +16,23 @@ class MaestrosController < ApplicationController
 
   def edit
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
-    @errores = [@maestro.errorNombre, @maestro.errorTelefono]
+    @errores = [@maestro.errorNombre, @maestro.errorTelefono, @maestro.errorCorreo]
   end
 
   def update
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
-    @errores = [@maestro.errorNombre, @maestro.errorTelefono]
-    if @maestro.update_attributes(Id_maestro: params[:maestro][:Id_maestro], Nombre: params[:maestro][:Nombre], Telefono: params[:maestro][:Telefono], errorNombre: nil, errorTelefono: nil)
+    @errores = [@maestro.errorNombre, @maestro.errorTelefono, @maestro.errorCorreo]
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campos_modificados = Array.new
+    campos_modificados.push("Actualizó Alumno ID #{params[:id]}: Nombre") if @errores[0] != nil
+    campos_modificados.push("Actualizó Alumno ID #{params[:id]}: Teléfono") if @errores[1] != nil
+    campos_modificados.push("Actualizó Maestro ID #{params[:id]}: Correo") if @errores[2] != nil
+    if @maestro.update_attributes(Id_maestro: params[:maestro][:Id_maestro], Nombre: params[:maestro][:Nombre], Telefono: params[:maestro][:Telefono],CorreoElec: params[:maestro][:CorreoElec], errorNombre: nil, errorTelefono: nil, errorCorreo: nil)
+      User_logins.using(:data_warehouse).all
+      campos_modificados.each do |campo|
+        User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo)
+      end
       redirect_to "/maestros"
     else
       render :edit
@@ -31,13 +41,37 @@ class MaestrosController < ApplicationController
 
   def destroy
     @maestro = Maestro.using(:data_warehouse).find_by(Id_maestro: params[:id])
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó registró - Maestro ID: #{params[:id]}"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     @maestro.destroy
     redirect_to "/maestros"
   end
 
   def delete_table
-    Maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
-    Maestro.using(:data_warehouse).where(errorTelefono: 1).destroy_all
+    case current_user.tipo 
+    when 1
+      Maestro.using(:data_warehouse).where(errorNombre: 1).delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1).delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1).delete_all
+    when 2
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "c").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "c").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "c").delete_all
+    when 3
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "e").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "e").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "e").delete_all
+    when 4
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "b").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "b").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "b").delete_all
+    end
+    usuario = current_user.email
+    fecha = DateTime.now.strftime("%d/%m/%Y %T")
+    campo_modificado = "Eliminó todos los registros con errores - Maestro"
+    User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado) 
     redirect_to "/show_tables"
   end
 
@@ -46,29 +80,25 @@ class MaestrosController < ApplicationController
     case c_user
     when 1
       @maestrosData.each do |maestro|
-        if maestro.errorNombre || maestro.errorTelefono
-          @errores = true
+        if maestro.errorNombre || maestro.errorTelefono || maestro.errorCorreo
           return true
         end
       end
     when 2
       @maestrosData.each do |maestro|
-        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "c"
-          @errores = true
+        if (maestro.errorNombre || maestro.errorTelefono|| maestro.errorCorreo) && maestro.base == "c"
           return true
         end
       end
     when 3
       @maestrosData.each do |maestro|
-        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "e"
-          @errores = true
+        if (maestro.errorNombre || maestro.errorTelefono|| maestro.errorCorreo) && maestro.base == "e"
           return true
         end
       end
     when 4
       @maestrosData.each do |maestro|
-        if (maestro.errorNombre || maestro.errorTelefono) && maestro.base == "b"
-          @errores = true
+        if (maestro.errorNombre || maestro.errorTelefono|| maestro.errorCorreo) && maestro.base == "b"
           return true
         end
       end
@@ -77,23 +107,27 @@ class MaestrosController < ApplicationController
   end
 
   def export_to_sql
-    Maestro.using(:data_warehouse_final).destroy_all
+    Maestro.using(:data_warehouse_final).delete_all if !Maestro.using(:data_warehouse_final).all.empty?
+    
     maestros_bien = Maestro.using(:data_warehouse).all.order(:Id_maestro)
+    Maestro.using(:data_warehouse_final).new
     maestros_bien.each do |data|
       Maestro.using(:data_warehouse_final).create(Id_maestro: data.Id_maestro, Id_Area_mtro: data.Id_Area_mtro, Id_contrato: data.Id_contrato, Nombre: data.Nombre, CorreoElec: data.CorreoElec, Telefono: data.Telefono, Titulo: data.Titulo, Clave: data.Clave)
     end
   end
   
   def data 
+    Maestro.using(:data_warehouse).new
     maestros_bien = Maestro.using(:data_warehouse).all.order(:Id_maestro)
   end
 
   private
 
     def export
-      Maestro.using(:data_warehouse).destroy_all
+      Maestro.using(:data_warehouse).delete_all
       id_m = 0
 
+      Maestro.using(:data_warehouse).new
       @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
       @maestrosB = @biblio.sheet("Maestros")
       @maestrosCA = Maestro.using(:controlA).all
@@ -106,6 +140,9 @@ class MaestrosController < ApplicationController
         end
         if !validate_number(maestroCA.Telefono)
           maestroNew.errorTelefono = 1
+        end
+        if !validate_email(maestroCA.CorreoElec)
+          maestroNew.errorCorreo = 1
         end
         id_m += 1
         maestroNew.Id_maestro = maestroCA.Id_maestro
@@ -126,6 +163,9 @@ class MaestrosController < ApplicationController
         end
         if !validate_number(maestroE.Telefono)
           maestroNew.errorTelefono = 1
+        end
+        if !validate_email(maestroE.Correo)
+          maestroNew.errorCorreo = 1
         end
         id_m += 1
         maestroNew.Id_maestro = id_m

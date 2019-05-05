@@ -1,7 +1,30 @@
 class ActividadesPorAlumnoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Actividades_por_alumno.using(:data_warehouse).all.empty?
+  end
+
   def index
     @actividades_data = Actividades_por_alumno.using(:data_warehouse).all
-    export
+  end
+  
+  def export_to_sql
+    Actividades_por_alumno.using(:data_warehouse_final).delete_all if !Actividades_por_alumno.using(:data_warehouse_final).all.empty?
+
+    actividades = Actividades_por_alumno.using(:data_warehouse).all
+    actividades.each do |data|
+      Actividades_por_alumno.using(:data_warehouse_final).create(Id_Alumno: data.Id_Alumno,
+        Id_actividad: data.Id_actividad, Id_Periodo: data.Id_Periodo, 
+        Num_Credito_obtenido: data.Num_Credito_obtenido)
+    end
+  end
+  
+  def data 
+    actividades = Actividades_por_alumno.using(:data_warehouse).all
   end
 
   private

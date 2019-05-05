@@ -1,9 +1,40 @@
 # frozen_string_literal: true
 
 class TituladoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Titulado.using(:data_warehouse).all.empty?
+  end
+
+  def init
+    export
+  end
+  
+  def empty
+    return Titulado.using(:data_warehouse).all.empty?
+  end
+
   def index
     @titulado_data = Titulado.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Titulado.using(:data_warehouse_final).delete_all if !Titulado.using(:data_warehouse_final).all.empty?
+
+    titulado = Titulado.using(:data_warehouse).all
+    titulado.each do |data|
+      Titulado.using(:data_warehouse_final).create(Id_Titulado: data.Id_Titulado,
+        Id_Alumno: data.Id_Alumno, Id_Form_Titu: data.Id_Form_Titu, 
+        Fecha_Tit: data.Fecha_Tit)
+    end
+  end
+  
+  def data 
+    titulado = Titulado.using(:data_warehouse).all
   end
 
   private

@@ -1,5 +1,4 @@
-<h1 class="text-center">EvaluacionesIngreso</h1>
-<!-----<p>Find me in app/views/evaluaciones_ingreso/index.html.erb</p>---->
+
 <h2 class="text-center">EVALUACIONES DE INGRESO DEL ALUMNO EN DATA WAREHOUSE</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
@@ -11,27 +10,6 @@
         <th>Resultado</th>
     </tr>
     <% @evaluaciones_data.each do |evaluacion| %>
-        <tr>
-            <th><%= evaluacion.Id_Evalu %></th> 
-            <th><%= evaluacion.Id_Alumno %></th> 
-            <th><%= evaluacion.Id_Pers %></th> 
-            <th><%= evaluacion.Id_Tipo_eva %></th>  
-            <th><%= evaluacion.Fecha_apl %></th> 
-            <th><%= evaluacion.Resultado %></th> 
-        </tr>
-    <%end%>
-</table>
-<h2 class="text-center">EVALUACIONES DE INGRESO DEL ALUMNO EN CONTROL ACADEMICO</h2>
-<table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <tr>
-        <th>Id Evaluación</th>
-        <th>Id Alumno</th> 
-        <th>Id Personal</th>
-        <th>Id Tipo de Evaluación</th>
-        <th>Fecha aplicación</th>
-        <th>Resultado</th>
-    </tr>
-    <% @evaluaciones_ca.each do |evaluacion| %>
         <tr>
             <th><%= evaluacion.Id_Evalu %></th> 
             <th><%= evaluacion.Id_Alumno %></th> 

@@ -1,7 +1,32 @@
 class RevistasController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Revistas.using(:data_warehouse).all.empty?
+  end
+
   def index
     @revistas_data = Revistas.using(:data_warehouse).all
     export
+  end
+
+  def export_to_sql
+    Revistas.using(:data_warehouse_final).delete_all if !Revistas.using(:data_warehouse_final).all.empty?
+
+    revistas = Revistas.using(:data_warehouse).all
+    revistas.each do |data|
+      Revistas.using(:data_warehouse_final).create(
+        idRevista: data.idRevista, fecha_publicacion: data.fecha_publicacion, 
+        No_paginas: data.No_paginas, 
+        Id_editorial: data.Id_editorial)
+    end
+  end
+  
+  def data 
+    revistas = Revistas.using(:data_warehouse).all
   end
 
   private

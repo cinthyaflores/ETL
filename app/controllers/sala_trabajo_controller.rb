@@ -1,7 +1,31 @@
 class SalaTrabajoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Sala_trabajo.using(:data_warehouse).all.empty?
+  end
+
   def index
     @salas_data = Sala_trabajo.using(:data_warehouse).all
     export
+  end
+
+  def export_to_sql
+    Sala_trabajo.using(:data_warehouse_final).delete_all if !Sala_trabajo.using(:data_warehouse_final).all.empty?
+
+    salas = Sala_trabajo.using(:data_warehouse).all
+    salas.each do |data|
+      Sala_trabajo.using(:data_warehouse_final).create(
+        Id_salon: data.Id_salon, Clave: data.Clave, 
+        Capacidad: data.Capacidad)
+    end
+  end
+  
+  def data 
+    actividades = Sala_trabajo.using(:data_warehouse).all
   end
 
   private

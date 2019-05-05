@@ -1,7 +1,31 @@
 class SalaHardwareController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Sala_hardware.using(:data_warehouse).all.empty?
+  end
+
   def index
     @sala_hard_data = Sala_hardware.using(:data_warehouse).all
     export
+  end
+
+  def export_to_sql
+    Sala_hardware.using(:data_warehouse_final).delete_all if !Sala_hardware.using(:data_warehouse_final).all.empty?
+
+    salas = Sala_hardware.using(:data_warehouse).all
+    salas.each do |data|
+      Sala_hardware.using(:data_warehouse_final).create(
+        Id_salon: data.Id_salon, Id_Hardware: data.Id_Hardware, 
+        Cantidad: data.Cantidad)
+    end
+  end
+  
+  def data 
+    salas = Sala_hardware.using(:data_warehouse).all
   end
 
   private

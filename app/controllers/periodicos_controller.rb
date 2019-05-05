@@ -1,7 +1,30 @@
 class PeriodicosController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Periodico.using(:data_warehouse).all.empty?
+  end
+
   def index
     @periodicos_data = Periodico.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Periodico.using(:data_warehouse_final).delete_all if !Periodico.using(:data_warehouse_final).all.empty?
+
+    periodicos = Periodico.using(:data_warehouse).all
+    periodicos.each do |data|
+      Periodico.using(:data_warehouse_final).create(
+        idPeriodico: data.idPeriodico, No_Serie: data.No_Serie, 
+        fecha_publicado: data.fecha_publicado, Id_Editorial: data.Id_Editorial)
+    end
+  end
+  
+  def data 
+    actividades = Periodico.using(:data_warehouse).all
   end
 
   private

@@ -1,9 +1,32 @@
 # frozen_string_literal: true
 
 class AulaController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Aula.using(:data_warehouse).all.empty?
+  end
+  
   def index
     @aulas_data = Aula.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Aula.using(:data_warehouse_final).delete_all if !Aula.using(:data_warehouse_final).all.empty?
+
+    aulas = Aula.using(:data_warehouse).all
+    aulas.each do |data|
+      Aula.using(:data_warehouse_final).create(Id_Aula: data.Id_Aula,
+        Nombre: data.Nombre, Edificio: data.Edificio, 
+        Descripcion: data.Descripcion)
+    end
+  end
+  
+  def data 
+    aulas = Aula.using(:data_warehouse).all
   end
 
   private

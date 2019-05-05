@@ -1,8 +1,33 @@
 class PrestamosMaterialController < ApplicationController
 
+  def init
+    export
+  end
+  
+  def empty
+    return Prestamos_material.using(:data_warehouse).all.empty?
+  end
+
   def index
     @prestamo_mat = Prestamos_material.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Prestamos_material.using(:data_warehouse_final).delete_all if !Prestamos_material.using(:data_warehouse_final).all.empty?
+
+    prestamos = Prestamos_material.using(:data_warehouse).all
+    Prestamos_material.using(:data_warehouse_final).new
+    prestamos.each do |data|
+      Prestamos_material.using(:data_warehouse_final).create(Id_Prestamo_Mat: data.Id_Prestamo_Mat,
+        fec_salida: data.fec_salida, fec_entrega: data.fec_entrega, 
+        id_Material: data.id_Material, Id_Solicitante: data.Id_Solicitante,
+        Tipo_Solicitante: data.Tipo_Solicitante, id_Empleado: data.id_Empleado, 
+        tipo_prestamo: data.tipo_prestamo)
+    end
+  end
+  
+  def data 
+    prestamos = Prestamos_material.using(:data_warehouse).all
   end
 
   private

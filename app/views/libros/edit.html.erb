@@ -1,0 +1,17 @@
+<div class = "container">
+  <h2 class="text-center">Editar Libro</h2>
+  <%= simple_form_for @libro, url: libro_path, method: :patch do |f| %>
+    <%@libro.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :idLibro, readonly: true %>
+    <%= f.input :edicion, readonly: true %>
+    <%= f.input :aPublicacion, readonly: true %>
+    <%= f.input :ISBN, error: false %>
+    <%= f.input :id_Editorial, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", libros_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

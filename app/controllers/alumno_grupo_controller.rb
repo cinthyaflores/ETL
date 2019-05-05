@@ -1,9 +1,32 @@
 # frozen_string_literal: true
 
 class AlumnoGrupoController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Alumno_grupo.using(:data_warehouse).all.empty?
+  end
+
   def index
     @alumno_grupo_data = Alumno_grupo.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Alumno_grupo.using(:data_warehouse_final).delete_all if !Alumno_grupo.using(:data_warehouse_final).all.empty?
+
+    alumno = Alumno_grupo.using(:data_warehouse).all
+    alumno.each do |data|
+      Alumno_grupo.using(:data_warehouse_final).create(Id_Grupo: data.Id_Grupo,
+      Id_Alumno: data.Id_Alumno, Oportunidad: data.Oportunidad, 
+      Promedio: data.Promedio)
+    end
+  end
+
+  def data 
+    alumno = Alumno_grupo.using(:data_warehouse).all
   end
 
   private

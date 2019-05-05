@@ -85,10 +85,6 @@
 <%end%>
 <div class="text-center">
     <%= link_to "Eliminar todo", eliminar_empleados_path, data: { confirm: "Desea eliminar todos los registros de Empleados?" }, class: 'btn btn-primary btn-lg' %>
-    <%if @errores %>
-            <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
-    <%else%>
-            <%= link_to "Continuar" , '/', method: :get , class: 'btn btn-primary btn-lg'%>
-    <%end%>
+    <%= link_to "Regresar" , show_tables_path, method: :get , class: 'btn btn-primary btn-lg'%>
 </div>
 

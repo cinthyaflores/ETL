@@ -1,0 +1,30 @@
+<div class = "container">
+  <h2 class="text-center">Editar Asistencia de Alumno a Actividades Extraescolares </h2>
+  <%= simple_form_for @asistencia_alumno, url: asistencia_alumno_path, method: :patch do |f| %>
+    <%@asistencia_alumno.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :id_asistencia_alumno, readonly: true %>
+    <%= f.input :Id_alumno, readonly: true %>
+    <%= f.input :Id_Periodo, readonly: true %>
+    <%if @errores[0] == 1 %>
+      <%= f.input :Asistencias, error: false %>
+    <%else%>
+      <%= f.input :Asistencias, readonly: true %>
+    <%end%>
+    <%if @errores[1] == 1  %>
+      <%= f.input :Faltas, error: false %>
+    <%else%>
+      <%= f.input :Faltas, readonly: true %>
+    <%end%>
+    <%if @errores[2] == 1 %>
+      <%= f.input :Retardos, error: false %>
+    <%else%>
+      <%= f.input :Retardos, readonly: true %>
+    <%end%>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", asistencia_alumno_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

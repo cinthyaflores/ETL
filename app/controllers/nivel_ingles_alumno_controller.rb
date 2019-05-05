@@ -1,11 +1,30 @@
 class NivelInglesAlumnoController < ApplicationController
+
   def init
     export
+  end
+  
+  def empty
+    return Nivel_ingles_alumno.using(:data_warehouse).all.empty?
   end
 
   def index
     @niveles_alu_data = Nivel_ingles_alumno.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Nivel_ingles_alumno.using(:data_warehouse_final).delete_all if !Nivel_ingles_alumno.using(:data_warehouse_final).all.empty?
+
+    niveles = Nivel_ingles_alumno.using(:data_warehouse).all
+    niveles.each do |data|
+      Nivel_ingles_alumno.using(:data_warehouse_final).create(
+        Id_Periodo: data.Id_Periodo, Id_Alumno: data.Id_Alumno, 
+        Id_nivel: data.Id_nivel, Creditos: data.Creditos, Calificacion: data.Calificacion)
+    end
+  end
+  
+  def data 
+    niveles = Nivel_ingles_alumno.using(:data_warehouse).all
   end
 
   private

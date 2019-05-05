@@ -1,6 +1,5 @@
 <div class = "container">
-<h2 class="text-center">Alumnos</h2>
-<h2 class="text-center">EDITAR DATOS DEL ALUMNO</h2>
+<h3 class="text-center">Editar datos del alumno</h3>
 <%case current_user.tipo %>
 <%when 1 %>
   <%= simple_form_for @alumno, url: alumno_path, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
@@ -23,14 +22,10 @@
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", error: false%>
     <%when 2 %>
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-      <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", error: false %>
-    <%else%>
-      <%if @alumno.base.match('e')%>
-        <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-        <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", readonly: true %>
-      <%else%>
-        <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-      <%end%>
+      <%= f.input :telefono_extra, label: "Teléfono Extraescolares", error: false %>
+    <%when 3 %>
+      <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", error: false%>
+      <%= f.input :telefono_extra, label: "Teléfono Extraescolares", error: false %>
     <%end%>
     <%if @errores[3] == nil%>
       <%= f.input :Peso, placeholder: "Peso", readonly: true%>
@@ -38,19 +33,19 @@
       <%= f.input :Peso, placeholder: "Peso", error: false %>
     <%end%>
     <%if @errores[4] == nil%>
-      <%= f.input :CorreoElec, placeholder: "Curp", readonly: true %>
+      <%= f.input :CorreoElec, label: "E-mail", placeholder: "Curp", readonly: true %>
     <%else%>
-     <%= f.input :CorreoElec, placeholder: "Curp", error: false %>
+     <%= f.input :CorreoElec, label: "E-mail", placeholder: "Curp", error: false %>
     <%end%>
     <%if @errores[5] == nil%>
-      <%= f.input :Promedio_G, placeholder: "Curp", readonly: true %>
+      <%= f.input :Promedio_G, label: "Promedio General",placeholder: "Promedio General", readonly: true %>
     <%else%>
-     <%= f.input :Promedio_G, placeholder: "Curp", error: false %>
+     <%= f.input :Promedio_G, label: "Promedio General", placeholder: "Promedio General", error: false %>
     <%end%>
     <%if @errores[6] == nil%>
-      <%= f.input :Cre_acum, placeholder: "Curp", readonly: true %>
+      <%= f.input :Cre_acum, label: "Créditos acumulados", placeholder: "Créditos acumulados", readonly: true %>
     <%else%>
-     <%= f.input :Cre_acum, placeholder: "Curp", error: false %>
+     <%= f.input :Cre_acum, label: "Créditos acumulados", placeholder: "Curp", error: false %>
     <%end%>
     <%= f.submit 'Guardar', class: "btn btn-primary" %>
     <%= link_to  "Regresar", alumnos_path, class: "btn btn-primary" %>
@@ -77,19 +72,19 @@
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
     <%end%>
     <%if @errores[4] == 1%>
-      <%= f.input :CorreoElec, placeholder: "Curp", error: false %>
+      <%= f.input :CorreoElec, label: "E-mail", placeholder: "Curp", error: false %>
     <%else%>
-     <%= f.input :CorreoElec, placeholder: "Curp", readonly: true %>
+     <%= f.input :CorreoElec, label: "E-mail", placeholder: "Curp", readonly: true %>
     <%end%>
     <%if @errores[5] == 1%>
-      <%= f.input :Promedio_G, placeholder: "Curp", error: false %>
+      <%= f.input :Promedio_G,label: "Promedio General", placeholder: "Curp", error: false %>
     <%else%>
-     <%= f.input :Promedio_G, placeholder: "Curp", readonly: true %>
+     <%= f.input :Promedio_G,label: "Promedio General", placeholder: "Curp", readonly: true %>
     <%end%>
     <%if @errores[6] == 1%>
-      <%= f.input :Cre_acum, placeholder: "Curp", error: false %>
+      <%= f.input :Cre_acum, label: "Créditos acumulados", placeholder: "Curp", error: false %>
     <%else%>
-     <%= f.input :Cre_acum, placeholder: "Curp", readonly: true %>
+     <%= f.input :Cre_acum, label: "Créditos acumulados", placeholder: "Curp", readonly: true %>
     <%end%>
     <div class = "text-center">
       <%= f.submit "Guardar", class:"btn btn-primary" %> 
@@ -119,11 +114,11 @@
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", error: false  %>
     <%when 2 %>
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
-      <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", error: false  %>
+      <%= f.input :telefono_extra, label: "Teléfono Extraescolares", placeholder: "Teléfono Extraescolares", error: false  %>
     <%else%>
       <%if @alumno.base.match('e')%>
         <%= f.input :Telefono, placeholder: "Teléfono Control Académico", readonly: true %>
-        <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", readonly: true %>
+        <%= f.input :telefono_extra, label: "Teléfono Extraescolares", placeholder: "Teléfono Extraescolares", readonly: true %>
       <%else%>
         <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true%>
       <%end%>
@@ -135,12 +130,12 @@
     <%end%>
     <%if @alumno.base.match('c')%> <!-- Campo con error que coincide en las 2 bases -->
       <%if @errores[4]%>
-        <%= f.input :CorreoElec, placeholder: "E-mail", error: false %>
+        <%= f.input :CorreoElec, label: "E-mail", placeholder: "E-mail", error: false %>
       <%else%>
-      <%= f.input :CorreoElec, placeholder: "E-mail", readonly: true %>
+      <%= f.input :CorreoElec, label: "E-mail", placeholder: "E-mail", readonly: true %>
       <%end%>
     <%else%>
-        <%= f.input :CorreoElec, placeholder: "E-mail", readonly: true%>
+        <%= f.input :CorreoElec, label: "E-mail", placeholder: "E-mail", readonly: true%>
     <%end%>
     <div class = "text-center">
       <%= f.submit "Guardar", class:"btn btn-primary" %> 

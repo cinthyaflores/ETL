@@ -1,0 +1,28 @@
+<div class = "container">
+  <h2 class="text-center">Editar Material con error</h2>
+  <%= simple_form_for @material, method: :patch do |f| %>
+    <%@material.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :id_Material, readonly: true %>
+    <%= f.input :nombre, readonly: true %>
+    <% if @errores[0] == 1 %>
+      <%= f.input :autor, error: false %>
+    <% else %>
+      <%= f.input :autor, readonly: true %>
+    <% end %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :existencia, error: false %>
+    <% else %>
+      <%= f.input :existencia, readonly: true %>
+    <% end %>
+    <%= f.input :id_Pais, readonly: true %>
+    <%= f.input :Id_idioma, readonly: true %>
+    <%= f.input :Tipo_Material, readonly: true %>
+    <%= f.input :Id_Estante, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", materiales_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

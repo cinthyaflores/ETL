@@ -4,9 +4,12 @@ class AdeudosController < ApplicationController
     export 
   end
 
+  def empty
+    return Adeudos.using(:data_warehouse).all.empty?
+  end
+
   def index
     @adeudos_data = Adeudos.using(:data_warehouse).all
-    verify
   end
 
   def edit 
@@ -18,16 +21,15 @@ class AdeudosController < ApplicationController
     @error = @adeudo.errorCargo
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
-    campo_modificado = "Actualizó - Adeudos ID #{params[:id]}: #{@adeudo.Cargo_Dia} --> #{params[:adeudos][:Cargo_Dia]}" if @error != nil
+    campo_modificado = "Actualizó - Adeudos ID #{params[:id]}: Cargo Día" if @error != nil
 
     if @adeudo.update_attributes(Cargo_Dia: params[:adeudos][:Cargo_Dia], errorCargo: nil)
       User_logins.using(:data_warehouse).all
       User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
-      redirect_to "/"
+      redirect_to "/adeudos"
     else
       render :edit
     end
-  
   end
 
   def destroy 
@@ -37,27 +39,54 @@ class AdeudosController < ApplicationController
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó registró - Adeudos ID: #{params[:id]}"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
-    redirect_to "/"
+    redirect_to "/adeudos"
   end
 
   def delete_table 
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
-    campo_modificado = "Eliminó todos los registros con errores - Adeudos"
+    campo_modificado = "Eliminó todos los registros - Adeudos"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     Adeudos.using(:data_warehouse).where(errorCargo: 1).destroy_all
-    redirect_to "/"
+    redirect_to "/show_tables"
   end
 
-  private
-
-  def verify
-    @adeudos_data.each do |adeudo|
-      if adeudo.errorCargo
-        @errores = true
+  def verify(c_user)
+    @adeudos_data = Adeudos.using(:data_warehouse).all
+    case c_user
+    when 1
+      @adeudos_data.each do |adeudo|
+        if adeudo.errorCargo
+          return true
+        end
+      end
+    when 4
+      @adeudos_data.each do |adeudo|
+        if adeudo.errorCargo
+          return true
+        end
       end
     end
+    return false
   end
+
+  def export_to_sql
+    Adeudos.using(:data_warehouse_final).delete_all if !Adeudos.using(:data_warehouse_final).all.empty?
+
+    adeudos = Adeudos.using(:data_warehouse).all
+    Adeudos.using(:data_warehouse_final).new
+    adeudos.each do |data|
+      Adeudos.using(:data_warehouse_final).create(id_Adeudos: data.id_Adeudos,
+      id_Prestamo: data.id_Prestamo, Cargo_Dia: data.Cargo_Dia)
+    end
+  end
+  
+  def data 
+    actividades = Adeudos.using(:data_warehouse).all
+  end
+
+
+  private
 
   def export
     Adeudos.using(:data_warehouse).delete_all if !Adeudos.using(:data_warehouse).all.empty?

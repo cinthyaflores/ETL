@@ -1,5 +1,4 @@
-<h1 class="text-center">FormaTitulacion</h1>
-<!------<p>Find me in app/views/forma_titulacion/index.html.erb</p>---->
+
 <h2 class="text-center">FORMA DE TITULACIÓN EN DATA WAREHOUSE</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
@@ -7,19 +6,6 @@
         <th>Nombre</th> 
     </tr>
     <% @forma_titu_data.each do |forma| %>
-        <tr>
-            <th><%= forma.Id_Form_Titu%></th> 
-            <th><%= forma.Nombre %></th> 
-        </tr>
-    <%end%>
-</table>
-<h2 class="text-center">FORMA DE TITULACIÓN EN CONTROL ACADEMICO</h2>
-<table style="width:100%", class= "table table-striped table-bordered table-sm">
-    <tr>
-        <th>Id Forma de Titulación</th>
-        <th>Nombre</th> 
-    </tr>
-    <% @forma_titu_ca.each do |forma| %>
         <tr>
             <th><%= forma.Id_Form_Titu%></th> 
             <th><%= forma.Nombre %></th> 

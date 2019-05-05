@@ -1,32 +1,26 @@
-<h1 class="text-center">Carrera</h1>
-<p class="text-center">EDITAR LAS CARRERAS CON ERROR</p>
-<div>
-  <%= form_for @carrera, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
+<div class = "container">
+<h2 class="text-center">Editar las carreras con error</h2>
+  <%= simple_form_for @carrera, method: :patch do |f| %> <!-- CREA UN FORMULARIO PARA LA VARIABLE @alumno -->
       <%@carrera.errors.each do |value, message|%> 
         <h5 class= "alert alert-danger"><%=message%></h5>
       <%end%>
-    <div class = "field">
-      <%= f.text_field :Id_Carrera, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
-      <%if @error == nil%>
-        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4", readonly: "true"%>
+      <%= f.input :Id_Carrera, readonly: true%>
+      <%if @errores[0]== nil%>
+        <%= f.input :Nombre, placeholder: "Título", readonly: true%>
       <%else%>
-        <%= f.text_field :Nombre, placeholder: "Título", class:"form-control m-4"%>
+        <%= f.input :Nombre, placeholder: "Título"%>
       <%end%>
-    </div>
-    <div class = "field">
-      <%= f.text_field :Descripción, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
-      <%= f.text_field :Creditos, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
-      <%= f.text_field :Acreditada, placeholder: "Id_Alumno", class:"form-control m-4", readonly: "true"%>
-    </div>
-    <div class = "field">
+      <% if current_user.tipo == 1 || current_user.tipo == 2 %>
+        <%= f.input :Descripción, placeholder: "Descripción", readonly: true%>
+        <%if @errores[1]== nil%>
+          <%= f.input :Creditos, placeholder: "Créditos", readonly: true%>
+        <%else%>
+          <%= f.input :Creditos, placeholder: "Créditos"%>
+        <%end%>
+      <%end%>
+      <div class = "text-center">
       <%= f.submit "Guardar", class:"btn btn-primary m-2" %> 
+      <%= link_to  "Regresar", carrera_index_path , class:"btn btn-primary m-2" %>
     </div>
-    <%= link_to  "Regresar", carrera_index_path , class:"btn btn-primary m-2" %>
   <% end %> 
 <div>

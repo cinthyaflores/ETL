@@ -1,7 +1,32 @@
 class PrestamosSalaController < ApplicationController
+  
+  def init
+    export
+  end
+  
+  def empty
+    return Prestamos_sala.using(:data_warehouse).all.empty?
+  end
+
   def index
     @prestamos_data = Prestamos_sala.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Prestamos_sala.using(:data_warehouse_final).delete_all if !Prestamos_sala.using(:data_warehouse_final).all.empty?
+
+    prestamos = Prestamos_sala.using(:data_warehouse).all
+    Prestamos_sala.using(:data_warehouse_final).new
+    prestamos.each do |data|
+      Prestamos_sala.using(:data_warehouse_final).create(id_Prestamo_Sala: data.id_Prestamo_Sala,
+        Fecha: data.Fecha, Hora_Entrada: data.Hora_Entrada, 
+        Hora_Salida: data.Hora_Salida, id_Sala: data.id_Sala,Id_Solicitante: data.Id_Solicitante,
+        Tipo_Solicitante: data.Tipo_Solicitante, id_Empleado: data.id_Empleado)
+    end
+  end
+  
+  def data 
+    prestamos = Prestamos_sala.using(:data_warehouse).all
   end
 
   private
