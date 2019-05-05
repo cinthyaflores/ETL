@@ -42,7 +42,7 @@
     <%end%>
 </table>
 <%when 2 %>
-<h2 class="text-center">MAESTROS CON ERRORES EN CONTROL ACADEMICO</h2>
+<h2 class="text-center">MAESTROS EN CONTROL ACADEMICO CON ERRORES</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
         <th>Id</th>
@@ -81,7 +81,46 @@
     <%end%>
 </table>
 <%when 3 %>
-<h2 class="text-center">MAESTROS EN EXTRAESCOLARES</h2>
+<h2 class="text-center">MAESTROS EN EXTRAESCOLARES CON ERRORES</h2>
+<table style="width:100%", class= "table table-striped table-bordered table-sm">
+    <tr>
+        <th>Id</th>
+        <th>Id Área</th>
+        <th>Clave</th>
+        <th>Nombre</th> 
+        <th>E-mail</th>
+        <th>Teléfono</th>
+        <th>Opciones</th>
+    </tr>
+    <% @maestrosData.each do |maestro| %>
+        <%if (maestro.errorNombre || maestro.errorTelefono || maestro.errorCorreo) && maestro.base == 'e' %>
+            <tr>
+                <th><%= maestro.Id_maestro %></th>
+                <th><%= maestro.Id_Area_mtro %></th>
+                <th><%= maestro.Clave %></th>
+                <%if maestro.errorNombre%>
+                    <th class ='alert alert-danger'><%= maestro.Nombre %></th>
+                <%else%>
+                    <th><%= maestro.Nombre %></th>
+                <%end%>
+                <%if maestro.errorCorreo%>
+                    <th class ='alert-danger'><%= maestro.CorreoElec %></th>
+                <%else%>
+                    <th><%= maestro.CorreoElec %></th>
+                <%end%>
+                <%if maestro.errorTelefono%>
+                    <th class ='alert alert-danger'><%= maestro.Telefono %></th>
+                <%else%>
+                    <th><%= maestro.Telefono %></th>
+                <%end%>
+                <th><%= link_to "Editar", edit_maestro_path(id: maestro.Id_maestro) %>
+                <%= link_to "Eliminar", maestro, method: :delete, data: { confirm: "¿Desea eliminar a #{maestro.Nombre}?"} %></th>
+            </tr>
+        <%end%>
+    <%end%>
+</table>
+<%when 4 %>
+<h2 class="text-center">MAESTROS EN BIBLIOTECA CON ERRORES</h2>
 <table style="width:100%", class= "table table-striped table-bordered table-sm">
     <tr>
         <th>Id</th>

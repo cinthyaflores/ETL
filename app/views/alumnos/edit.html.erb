@@ -22,14 +22,10 @@
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", error: false%>
     <%when 2 %>
       <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-      <%= f.input :telefono_extra, placeholder: "Teléfono Extraescolares", label: "Teléfono Extraescolares", error: false %>
-    <%else%>
-      <%if @alumno.base.match('e')%>
-        <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-        <%= f.input :telefono_extra, label: "Teléfono Extraescolares", placeholder: "Teléfono Extraescolares", readonly: true %>
-      <%else%>
-        <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", readonly: true %>
-      <%end%>
+      <%= f.input :telefono_extra, label: "Teléfono Extraescolares", error: false %>
+    <%when 3 %>
+      <%= f.input :Telefono, placeholder: "Teléfono Contro Académico", error: false%>
+      <%= f.input :telefono_extra, label: "Teléfono Extraescolares", error: false %>
     <%end%>
     <%if @errores[3] == nil%>
       <%= f.input :Peso, placeholder: "Peso", readonly: true%>

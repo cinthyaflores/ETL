@@ -1,0 +1,29 @@
+<div class = "container">
+  <h2 class="text-center">Editar Recurso Material</h2>
+  <%= simple_form_for @recurso, url: recurso_material_path, method: :patch do |f| %>
+    <%@recurso.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_recurso, readonly: true %>
+    <%= f.input :Area_pertenece, readonly: true %>
+    <% if @errores[0] == 1 %>
+      <%= f.input :Nombre, error: false %>
+    <% else %>
+      <%= f.input :Nombre, readonly: true %>
+    <% end %>
+    <% if @errores[2] == 1 %>
+      <%= f.input :Cantidad, error: false %>
+    <% else %>
+      <%= f.input :Cantidad, readonly: true %>
+    <% end %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :Costo, error: false %>
+    <% else %>
+      <%= f.input :Costo, readonly: true %>
+    <% end %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", recurso_material_index_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

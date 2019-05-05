@@ -47,8 +47,15 @@ class AreaMaestroController < ApplicationController
   end
 
   def delete_table(c_email=current_user.email)
-    Area_maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
-    Area_maestro.using(:data_warehouse).where(errorNombre: 2).destroy_all
+    case current_user.tipo
+    when 1
+      Area_maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
+      Area_maestro.using(:data_warehouse).where(errorNombre: 2).destroy_all
+    when 2
+      Area_maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
+    when 4
+      Area_maestro.using(:data_warehouse).where(errorNombre: 2).destroy_all
+    end
     usuario = c_email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó todos los registros con errores - Area Maestro"

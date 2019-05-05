@@ -1,0 +1,25 @@
+<div class = "container">
+  <h2 class="text-center">Editar Perdida Material</h2>
+  <%= simple_form_for @perdida, method: :patch do |f| %>
+    <%@perdida.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_perdida, readonly: true %>
+    <%= f.input :Id_recurso, readonly: true %>
+    <%= f.input :Id_prestamo, readonly: true %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :Cantidad, error: false %>
+    <% else %>
+      <%= f.input :Cantidad, readonly: true %>
+    <% end %>
+    <% if @errores[0] == 1 %>
+      <%= f.input :Costo_total, error: false %>
+    <% else %>
+      <%= f.input :Costo_total, readonly: true %>
+    <% end %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", perdidas_materiales_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

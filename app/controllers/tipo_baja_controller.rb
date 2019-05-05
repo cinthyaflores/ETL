@@ -1,9 +1,32 @@
 # frozen_string_literal: true
 
 class TipoBajaController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Tipo_baja.using(:data_warehouse).all.empty?
+  end
+
   def index
     @tipo_data = Tipo_baja.using(:data_warehouse).all
     export
+  end
+
+  def export_to_sql
+    Tipo_baja.using(:data_warehouse_final).delete_all if !Tipo_baja.using(:data_warehouse_final).all.empty?
+
+    tipo = Tipo_baja.using(:data_warehouse).all
+    tipo.each do |data|
+      Tipo_baja.using(:data_warehouse_final).create(
+        Id_Baja: data.Id_Baja, Nombre: data.Nombre)
+    end
+  end
+  
+  def data 
+    actividades = Tipo_baja.using(:data_warehouse).all
   end
 
   private

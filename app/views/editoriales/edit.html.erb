@@ -1,0 +1,26 @@
+<div class = "container">
+  <h2 class="text-center">Editar Editorial con error</h2>
+  <%= simple_form_for @editorial, url: editoriale_path, method: :patch do |f| %>
+    <%@editorial.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_Editorial, readonly: true %>
+    <% if @errores[0] == 1 %>
+      <%= f.input :Nombre, error: false %>
+    <% else %>
+      <%= f.input :Nombre, readonly: true %>
+    <% end %>
+    <%= f.input :CP, readonly: true %>
+    <%= f.input :Direccion, readonly: true %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :Telefono, error: false %>
+    <% else %>
+      <%= f.input :Telefono, readonly: true %>
+    <% end %>
+    <%= f.input :Id_Pais, readonly: true %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", editoriales_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

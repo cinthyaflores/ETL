@@ -4,10 +4,12 @@ class TipoEvaluacionController < ApplicationController
     export
   end
 
+  def empty
+    return Tipo_evaluacion.using(:data_warehouse).all.empty?
+  end
+
   def index
     @tipo_eva_data = Tipo_evaluacion.using(:data_warehouse).all
-    export
-    verify
   end
 
   def edit 
@@ -25,7 +27,7 @@ class TipoEvaluacionController < ApplicationController
     if @tipo_eva.update_attributes(Nombre: params[:tipo_evaluacion][:Nombre], errorNombre: nil)
       User_logins.using(:data_warehouse).all
       User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
-      redirect_to "/"
+      redirect_to "/tipo_evaluacion"
     else
       render :edit
     end
@@ -39,7 +41,7 @@ class TipoEvaluacionController < ApplicationController
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó registró - Tipo Evaluación ID: #{params[:id]}"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
-    redirect_to "/"
+    redirect_to "/tipo_evaluacion"
   end
 
   def delete_table 
@@ -49,18 +51,44 @@ class TipoEvaluacionController < ApplicationController
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó todos los registros con errores - Tipo Evaluación"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
-    redirect_to "/"
+    redirect_to "/show_tables"
   end
 
-  private
-
-    def verify
-      @tipo_eva_data.each do |tipo|
-        if tipo.errorNombre
-          @errores = true
+  def verify(c_user)
+    @evaluacion = Tipo_evaluacion.using(:data_warehouse).all
+    case c_user
+    when 1
+      @evaluacion.each do |eva|
+        if eva.errorNombre
+          return true
+        end
+      end
+    when 2
+      @evaluacion.each do |eva|
+        if eva.errorNombre 
+          return true
         end
       end
     end
+    return false
+  end
+
+  def export_to_sql
+    Tipo_evaluacion.using(:data_warehouse_final).delete_all if !Tipo_evaluacion.using(:data_warehouse_final).all.empty?
+
+    const = Tipo_evaluacion.using(:data_warehouse).all
+    Tipo_evaluacion.using(:data_warehouse_final).new
+    const.each do |data|
+      Tipo_evaluacion.using(:data_warehouse_final).create(Id_Tipo_Eva: data.Id_Tipo_Eva,
+        Nombre: data.Nombre, Descripción: data.Descripción)
+    end
+  end
+
+  def data
+    actividades = Tipo_evaluacion.using(:data_warehouse).all
+  end
+
+  private
 
     def export
       Tipo_evaluacion.using(:data_warehouse).delete_all if !Tipo_evaluacion.using(:data_warehouse).all.empty?

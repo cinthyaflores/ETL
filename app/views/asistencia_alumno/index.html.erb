@@ -15,11 +15,11 @@
             <tr>
                 <th><%= alumno.Id_alumno%></th> 
                 <th><%= alumno.Id_Periodo %></th> 
-                <th <%= "class ='alert-danger'" if alumno.errorAsistencias == 1 %> ><%= alumno.Asistencias%></th> 
-                <th <%= "class ='alert-danger'" if alumno.errorFaltas == 1 %> ><%= alumno.Faltas%></th> 
-                <th <%= "class ='alert-danger'" if alumno.errorRetardos == 1 %> ><%= alumno.Retardos%></th> 
-                <th><%= link_to "Editar", edit_asistencia_alumno_path(alumno.Id_asistencia_alumno) %>
-                <%= link_to "Eliminar", alumno_url(alumno.Id_alumno), method: :delete, data: {confirm: "Deseas eliminar los registros del alumno con ID: #{alumno.Id_alumno}?"} %></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorAsistencias == 1 %>"  ><%= alumno.Asistencias%></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorFaltas == 1 %>"> <%= alumno.Faltas%></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorRetardos == 1 %>"><%= alumno.Retardos%></th> 
+                <th><%= link_to "Editar", edit_asistencia_alumno_path(alumno.id_asistencia_alumno) %>
+                <%= link_to "Eliminar", alumno, method: :delete, data: {confirm: "Deseas eliminar los registros del alumno con ID: #{alumno.Id_alumno}?"} %></th> 
             </tr>
             <%end%>
         <%end%>
@@ -36,29 +36,17 @@
             <th>Opciones</th>
         </tr>
         <% @asistencia_alumno_data.each do |alumno| %>
-            <% if alumno.errorAsistencias ||alumno.errorFaltas ||alumno.errorRetardos %>
+             <% if alumno.errorAsistencias ||alumno.errorFaltas ||alumno.errorRetardos %>
             <tr>
                 <th><%= alumno.Id_alumno%></th> 
                 <th><%= alumno.Id_Periodo %></th> 
-                <%if @errores[0] == 1 %>
-                    <th class ='alert-danger'><%= alumno.Asistencias%></th> 
-                <%else%>
-                    <th><%= alumno.Asistencias%></th> 
-                <%end%>
-                <%if @errores[1] == 1 %>
-                    <th class ='alert-danger'><%= alumno.Faltas%></th> 
-                <%else%>
-                    <th><%= alumno.Faltas%></th> 
-                <%end%>
-                <%if @errores[2] == 1  %>
-                    <th class ='alert-danger'><%= alumno.Retardos%></th> 
-                <%else%>
-                    <th><%= alumno.Retardos%></th> 
-                <%end%> 
-                <th><%= link_to "Editar", edit_asistencia_alumno_path(alumno.Id_asistencia_alumno) %>
-                <%= link_to "Eliminar", alumno_url, method: :delete, data: {confirm: "Deseas eliminar los registros del alumno con ID: #{alumno.Id_alumno}?"} %></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorAsistencias == 1 %>"  ><%= alumno.Asistencias%></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorFaltas == 1 %>"> <%= alumno.Faltas%></th> 
+                <th class ="<%= 'alert-danger' if alumno.errorRetardos == 1 %>"><%= alumno.Retardos%></th> 
+                <th><%= link_to "Editar", edit_asistencia_alumno_path(alumno.id_asistencia_alumno) %>
+                <%= link_to "Eliminar", alumno, method: :delete, data: {confirm: "Deseas eliminar los registros del alumno con ID: #{alumno.Id_alumno}?"} %></th> 
             </tr>
-             <%end%>
+            <%end%>
         <%end%>
     </table>
 <%end%>

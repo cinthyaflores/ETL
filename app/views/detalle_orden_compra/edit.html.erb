@@ -1,0 +1,25 @@
+<div class = "container">
+  <h2 class="text-center">Editar Áreas Administrativas</h2>
+  <%= simple_form_for @detalle_ord, url: detalle_orden_compra_path, method: :patch do |f| %>
+    <%@detalle_ord.errors.each do |value, message|%> 
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :id_detalle_orden, readonly: true %>
+    <%= f.input :Id_orden_compra, readonly: true %>
+    <%= f.input :Id_recurso, readonly: true %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :Cantidad, error: false %>
+    <%else%>
+      <%= f.input :Cantidad, readonly: true %>
+    <%end%>
+    <% if @errores[0] == 1 %>
+      <%= f.input :Costo_unitario, error: false %>
+    <%else%>
+      <%= f.input :Costo_unitario, readonly: true %>
+    <%end%>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", detalle_orden_compra_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

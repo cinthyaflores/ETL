@@ -1,0 +1,23 @@
+<div class = "container">
+  <h2 class="text-center">Editar Orden de compras</h2>
+  <%= simple_form_for @orden, method: :patch do |f| %>
+    <%@orden.errors.each do |value, message|%>
+      <h5 class= "alert alert-danger"><%=message%></h5>
+    <%end%>
+    <%= f.input :Id_orden_compra, readonly: true %>
+    <% if @errores[0] == 1 %>
+      <%= f.input :Costo, error: false %>
+    <% else %>
+      <%= f.input :Costo, readonly: true %>
+    <% end %>
+    <% if @errores[1] == 1 %>
+      <%= f.input :Estado, error: false %>
+    <% else %>
+      <%= f.input :Estado, readonly: true %>
+    <% end %>
+    <div class= "text-center">
+      <%= f.submit 'Guardar', class: "btn btn-primary"%>
+      <%= link_to  "Regresar", orden_de_compra_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

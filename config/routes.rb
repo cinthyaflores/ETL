@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resources :horarios_area, only: [:index]
   resources :idiomas, except: [:delete, :show] 
   resources :justificante, only: [:index]
-  resources :libros, only: [:index]
+  resources :libros, except: [:delete, :show]
   resources :maestros, except: [:delete, :show]
   resources :materia, except: [:delete, :show]
   resources :materiales, except: [:delete, :show]
@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   resources :tipo_pelicula, except: [:delete, :show]
   resources :turnos, only: [:index]
   resources :unidades, only: [:index]
+  resources :control, only: [:index]
   
   get '/etl', to: 'admin_user#init', as: 'etl'
   get '/etl_errores', to: 'admin_user#errors', as: 'etl_errores'
@@ -101,6 +102,18 @@ Rails.application.routes.draw do
   get '/delete_tipo_eva', to: 'tipo_evaluacion#delete_table', as: 'eliminar_tipo_eva'
   get '/delete_areas_admin', to: 'areas_admin#delete_table', as: 'eliminar_areas_admin'
   get '/delete_asistencias_alumno', to: 'asistencia_alumno#delete_table', as: 'eliminar_asistencia_alumnos'
+  get '/delete_calif_alumnos', to: 'calificaciones_alumno#delete_table', as: 'eliminar_calif_alumno'
+  get '/delete_detalle', to: 'detalle_orden_compra#delete_table', as: 'eliminar_detalle_orden'
+  get '/delete_libros', to: 'libros#delete_table', as: 'eliminar_libros'
+  get '/delete_tipo_constancia', to: 'tipo_constancia#delete_table', as: 'eliminar_tipo_constancia'
+  get '/delete_recurso_material', to: 'recurso_material#delete_table', as: 'eliminar_recurso_material'
+  get '/delete_prestamos', to: 'prestamos#delete_table', as: 'eliminar_prestamos'
+  get '/delete_perdidas_materiales', to: 'perdidas_materiales#delete_table', as: 'eliminar_perdidas_materiales'
+  get '/delete_paises', to: 'paises#delete_table', as: 'eliminar_paises'
+  get '/delete_orden_de_compra', to: 'orden_de_compra#delete_table', as: 'eliminar_orden_de_compra'
+  get '/delete_materiales', to: 'materiales#delete_table', as: 'eliminar_materiales'
+  get '/delete_materia', to: 'materia#delete_table', as: 'eliminar_materias'
+  get '/delete_editoriales', to: 'editoriales#delete_table', as: 'eliminar_editoriales'
 
   get '/delete_all', to: 'show_tables#delete_all', as: 'eliminar_errores'
   

@@ -10,6 +10,7 @@
             <th>Nombre</th> 
             <th>Curp</th> 
             <th>Teléfono</th>
+            <th>Teléfono Extraesc.</th>
             <th>Fecha Nac.</th> 
             <th>E-mail</th>
             <th>Créditos</th>
@@ -32,20 +33,20 @@
                         <th class ='alert-danger'><%= alumno.Curp %></th> 
                     <%else%>
                         <th><%= alumno.Curp %></th> 
-                    <%end%>
-                    <%if alumno.base.match('e')%> 
-                        <%if alumno.errorTelefono%>
-                            <th class ='alert-danger'><%= alumno.telefono_extra %></th>
-                        <%else%>
-                            <th><%= alumno.telefono_extra %></th>
-                        <%end%>
                     <%end%> 
-                    <%if alumno.base=="c"%>
-                        <%if alumno.errorTelefono%>
-                            <th class ='alert-danger'><%= alumno.Telefono %></th>
-                        <%else%>
-                            <th><%= alumno.Telefono %></th>
-                        <%end%>
+                    <% case alumno.errorTelefono%>
+                    <% when 1%>
+                        <th class = 'alert-danger'><%= alumno.Telefono %></th>
+                        <th><%= alumno.telefono_extra %></th>
+                    <% when 2%>
+                        <th><%= alumno.Telefono %></th>
+                        <th class = 'alert-danger'><%= alumno.telefono_extra %></th>
+                    <% when 3 %>
+                        <th class = 'alert-danger'><%= alumno.Telefono %></th>
+                        <th class = 'alert-danger'><%= alumno.telefono_extra %></th>  
+                    <%else%>    
+                        <th><%= alumno.Telefono %></th>
+                        <th><%= alumno.telefono_extra %></th> 
                     <%end%>
                     <th><%= alumno.Fecha_nac %></th>
                     <%if alumno.errorCorreo %>
@@ -92,7 +93,7 @@
         <th>Opciones</th>
     </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if alumno.errorNombre == 1 || alumno.errorCurp == 1 || alumno.errorTelefono == 1|| alumno.errorCorreo == 1 || alumno.errorCreditos == 1|| alumno.errorPromedio == 1 %>
+            <%if alumno.errorNombre == 1 || alumno.errorCurp == 1 || alumno.errorTelefono == 1|| alumno.errorTelefono == 3 || alumno.errorCorreo == 1 || alumno.errorCreditos == 1|| alumno.errorPromedio == 1 %>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -106,7 +107,7 @@
                     <%else%>
                         <th><%= alumno.Curp %></th> 
                     <%end%>
-                    <%if alumno.errorTelefono == 1 %> 
+                    <%if alumno.errorTelefono == 1 || alumno.errorTelefono == 3 %> 
                         <th class ='alert-danger'><%= alumno.Telefono %></th>
                     <%else%>
                         <th><%= alumno.Telefono %></th>
@@ -149,7 +150,7 @@
             <th>Opciones</th>
         </tr>
         <% @alumnosData.each do |alumno| %>
-            <%if alumno.errorNombre == 2 || alumno.errorPeso ==2 || alumno.errorTelefono == 2 || alumno.errorCorreo == 2 %>
+            <%if alumno.errorNombre == 2 || alumno.errorPeso == 2 || alumno.errorTelefono == 2 || alumno.errorTelefono == 3 || alumno.errorCorreo == 2 %>
                 <tr>
                     <th><%= alumno.Id_Alumno %></th>
                     <th><%= alumno.No_control %></th> 
@@ -163,7 +164,7 @@
                         <th><%= alumno.Nombre %></th>
                     <%end%>
                     <th><%= alumno.Id_Carrera %></th> 
-                    <%if alumno.errorTelefono == 2%>
+                    <%if alumno.errorTelefono == 2 || alumno.errorTelefono == 3 %>
                         <th class ='alert-danger'><%= alumno.telefono_extra %></th>
                     <%else%>
                         <th><%= alumno.telefono_extra %></th>

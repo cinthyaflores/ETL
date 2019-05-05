@@ -23,8 +23,10 @@
                     <th><%= grupo.Id_Periodo %></th>
                     <th><%= grupo.Id_Aula %></th>
                     <th class ='alert alert-danger'><%= grupo.Clave %></th>
-                    <th><%= link_to "Editar", edit_grupo_path(id: grupo.Id_Grupo) %>
-                    <%= link_to "Eliminar", grupo, method: :delete, data: { confirm: "Desea eliminar #{grupo.Clave}?"} %></th>
+                    <th>
+                      <%= link_to "Editar", edit_grupo_path(id: grupo.Id_Grupo) %>
+                      <%= link_to "Eliminar", grupo, method: :delete, data: { confirm: "Desea eliminar #{grupo.Clave}?"} %>
+                    </th>
                 </tr>
             <%end%>
         <%end%>
@@ -60,10 +62,6 @@
 </table>
 <%end%>
 <div class="text-center">
-    <%= link_to "Eliminar todo", eliminar_grupo_path, data: { confirm: "Desea eliminar todos los registros de grupo?" }, class: 'btn btn-primary btn-lg' %>
-    <%if @errores %>
-            <%= link_to "Continuar" ,'', data: { confirm: "Hijole, no puedes continuar si no has quitado los errores :(" }, class: 'btn btn-primary btn-lg' %>
-    <%else%>
-            <%= link_to "Continuar" , maestros_path, method: :get , class: 'btn btn-primary btn-lg'%>
-    <%end%>
+  <%= link_to "Eliminar todo", eliminar_grupo_path, data: { confirm: "Desea eliminar todos los registros de grupo?" }, class: 'btn btn-primary btn-lg' %>
+  <%= link_to "Regresar" , show_tables_path, method: :get , class: 'btn btn-primary btn-lg'%>
 </div>

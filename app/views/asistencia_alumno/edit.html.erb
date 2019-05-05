@@ -1,10 +1,10 @@
 <div class = "container">
   <h2 class="text-center">Editar Asistencia de Alumno a Actividades Extraescolares </h2>
-  <%= simple_form_for @asistencias, method: :patch do |f| %>
-    <%@asistencias.errors.each do |value, message|%> 
+  <%= simple_form_for @asistencia_alumno, url: asistencia_alumno_path, method: :patch do |f| %>
+    <%@asistencia_alumno.errors.each do |value, message|%> 
       <h5 class= "alert alert-danger"><%=message%></h5>
     <%end%>
-    <%= f.input :Id_asistencia_alumno, readonly: true %>
+    <%= f.input :id_asistencia_alumno, readonly: true %>
     <%= f.input :Id_alumno, readonly: true %>
     <%= f.input :Id_Periodo, readonly: true %>
     <%if @errores[0] == 1 %>
@@ -12,7 +12,7 @@
     <%else%>
       <%= f.input :Asistencias, readonly: true %>
     <%end%>
-    <%if @errores[1] == 1 %>
+    <%if @errores[1] == 1  %>
       <%= f.input :Faltas, error: false %>
     <%else%>
       <%= f.input :Faltas, readonly: true %>

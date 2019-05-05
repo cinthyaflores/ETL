@@ -21,7 +21,7 @@ class AdeudosController < ApplicationController
     @error = @adeudo.errorCargo
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
-    campo_modificado = "Actualizó - Adeudos ID #{params[:id]}: #{@adeudo.Cargo_Dia} --> #{params[:adeudos][:Cargo_Dia]}" if @error != nil
+    campo_modificado = "Actualizó - Adeudos ID #{params[:id]}: Cargo Día" if @error != nil
 
     if @adeudo.update_attributes(Cargo_Dia: params[:adeudos][:Cargo_Dia], errorCargo: nil)
       User_logins.using(:data_warehouse).all
@@ -45,7 +45,7 @@ class AdeudosController < ApplicationController
   def delete_table 
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
-    campo_modificado = "Eliminó todos los registros con errores - Adeudos"
+    campo_modificado = "Eliminó todos los registros - Adeudos"
     User_logins.using(:data_warehouse).create(usuario: usuario, fecha: fecha, modificacion: campo_modificado)
     Adeudos.using(:data_warehouse).where(errorCargo: 1).destroy_all
     redirect_to "/show_tables"

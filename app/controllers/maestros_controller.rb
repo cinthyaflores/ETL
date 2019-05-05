@@ -12,7 +12,6 @@ class MaestrosController < ApplicationController
 
   def index
     @maestrosData = Maestro.using(:data_warehouse).all
-    export
   end
 
   def edit
@@ -51,9 +50,24 @@ class MaestrosController < ApplicationController
   end
 
   def delete_table
-    Maestro.using(:data_warehouse).where(errorNombre: 1).destroy_all
-    Maestro.using(:data_warehouse).where(errorTelefono: 1).destroy_all
-    Maestro.using(:data_warehouse).where(errorCorreo: 1).destroy_all
+    case current_user.tipo 
+    when 1
+      Maestro.using(:data_warehouse).where(errorNombre: 1).delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1).delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1).delete_all
+    when 2
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "c").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "c").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "c").delete_all
+    when 3
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "e").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "e").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "e").delete_all
+    when 4
+      Maestro.using(:data_warehouse).where(errorNombre: 1, base: "b").delete_all
+      Maestro.using(:data_warehouse).where(errorTelefono: 1, base: "b").delete_all
+      Maestro.using(:data_warehouse).where(errorCorreo: 1, base: "b").delete_all
+    end
     usuario = current_user.email
     fecha = DateTime.now.strftime("%d/%m/%Y %T")
     campo_modificado = "Eliminó todos los registros con errores - Maestro"
@@ -103,15 +117,17 @@ class MaestrosController < ApplicationController
   end
   
   def data 
+    Maestro.using(:data_warehouse).new
     maestros_bien = Maestro.using(:data_warehouse).all.order(:Id_maestro)
   end
 
   private
 
     def export
-      Maestro.using(:data_warehouse).destroy_all
+      Maestro.using(:data_warehouse).delete_all
       id_m = 0
 
+      Maestro.using(:data_warehouse).new
       @biblio = Roo::Spreadsheet.open("./public/Biblioteca.xlsx")
       @maestrosB = @biblio.sheet("Maestros")
       @maestrosCA = Maestro.using(:controlA).all

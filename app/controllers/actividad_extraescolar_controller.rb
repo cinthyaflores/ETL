@@ -34,6 +34,7 @@ class ActividadExtraescolarController < ApplicationController
 
       @actividad_extra = Actividad_extraescolar.using(:extra).all
 
+      Actividad_extraescolar.using(:data_warehouse).new
       @actividad_extra.each do |actividad|
         actividad_new = Actividad_extraescolar.using(:data_warehouse).new
         actividad_new.Id_actividad = actividad.Id_actividad

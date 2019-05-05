@@ -1,7 +1,30 @@
 class ProductorasController < ApplicationController
+
+  def init
+    export
+  end
+  
+  def empty
+    return Productora.using(:data_warehouse).all.empty?
+  end
+
   def index
     @productoras_data = Productora.using(:data_warehouse).all
-    export
+  end
+
+  def export_to_sql
+    Productora.using(:data_warehouse_final).delete_all if !Productora.using(:data_warehouse_final).all.empty?
+
+    productoras = Productora.using(:data_warehouse).all
+    productoras.each do |data|
+      Productora.using(:data_warehouse_final).create(
+        idProductora: data.idProductora, Nombre: data.Nombre, 
+        Ano_Fund: data.Ano_Fund,Id_Pais: data.Id_Pais)
+    end
+  end
+  
+  def data 
+    productoras = Productora.using(:data_warehouse).all
   end
 
   private
