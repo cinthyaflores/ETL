@@ -1,5 +1,5 @@
 <br>
-<body class="Backgruond">
+<body>
 <br>
 <h1 class="text-center">Registrar nuevo usuario</h1>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {class: 'shadow p-3 mb-5 bg-white rounded'}) do |f| %>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="form-group text-center">
-    <%= f.submit 'Registrarse', class: 'btn btn-primary btn-lg btn-form' %>
+    <%= f.submit 'Registrarse', class: 'btn btn-primary' %>
   </div>
 <% end %>
 <div class="text-center">

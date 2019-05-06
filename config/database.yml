@@ -8,7 +8,7 @@
 default: &default
   adapter: postgresql
   username: postgres
-  password: root #"admin"  
+  password: "admin" #root 
   host: localhost
   port: 5432
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -16,7 +16,7 @@ default: &default
 
 development:
   <<: *default
-  database: dwh_school2
+  database: dwh_school #dwh_school2
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

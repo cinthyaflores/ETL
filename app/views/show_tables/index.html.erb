@@ -11,7 +11,7 @@
   <h1 class="text-center">Tablas con errores</h1>
 <%end%>
 
-<div class="text-center">
+<div class="botones_container">
 <%if !@all_empty %>
   <% case current_user.tipo %>
   <% when 1 %>
@@ -28,10 +28,10 @@
       <%= link_to "Áreas Admin", areas_admin_index_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @asis_alu != true %>
-      <%= link_to "Asistencia Alumno a Act. Extrescolares", asistencia_alumno_index_path, class: "btn botones_tablas"%>
+      <%= link_to "Asistencia Alumno Extrescolares", asistencia_alumno_index_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @calif_alu != true %>
-      <%= link_to "Calificaciones/Alumno", calificaciones_alumno_index_path, class: "btn botones_tablas"%>
+      <%= link_to "Calificaciones / Alumno", calificaciones_alumno_index_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @carreras != true %>
       <%= link_to "Carreras", carrera_index_path, class: "btn botones_tablas"%>
@@ -43,7 +43,7 @@
       <%= link_to "Editorial", editoriales_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @empleados != true %>
-      <%= link_to "empleado", empleados_path, class: "btn botones_tablas"%>
+      <%= link_to "Empleado", empleados_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @grupo_act != true %>
       <%= link_to "Grupo Actividad", grupo_actividad_index_path, class: "btn botones_tablas"%>
@@ -129,10 +129,10 @@
       <%= link_to "Alumnos" , alumnos_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @asis_alu != true %>
-      <%= link_to "Asistencia Alumno a Act. Extrescolares", asistencia_alumno_index_path, class: "btn botones_tablas"%>
+      <%= link_to "Asistencia Alumno Extrescolares", asistencia_alumno_index_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @calif_alu != true %>
-      <%= link_to "Calificaciones/Alumno", calificaciones_alumno_index_path, class: "btn botones_tablas"%>
+      <%= link_to "Calificaciones / Alumno", calificaciones_alumno_index_path, class: "btn botones_tablas"%>
     <%end%>
     <% if !Carrera.using(:data_warehouse).where(errorNombre: 1, base: "e").empty? || !Carrera.using(:data_warehouse).where(errorCreditos: 1, base: "e").empty? %>
       <%= link_to "Carreras", carrera_index_path, class: "btn botones_tablas"%>
@@ -172,7 +172,7 @@
       <%= link_to "Editorial", editoriales_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @empleados != true %>
-      <%= link_to "empleado", empleados_path, class: "btn botones_tablas"%>
+      <%= link_to "Empleado", empleados_path, class: "btn botones_tablas"%>
     <%end%>
     <%if @libros != true %>
       <%= link_to "Libros", libros_path, class: "btn botones_tablas"%>
@@ -188,9 +188,12 @@
     <%end%>
   <%end%>
 <%end%>
+</div>
 
+<div class= "text-center">
 <%if !@all_empty%>
   <%= link_to "Eliminar todos los datos", eliminar_errores_path, class: "btn btn-primary"%>
 <%end%>
 </div>
+
 

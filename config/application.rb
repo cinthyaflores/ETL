@@ -1,6 +1,6 @@
 require_relative 'boot'
 
-require 'devkit'
+#require 'devkit'
 require 'tiny_tds'
 require 'rails/all'
 
