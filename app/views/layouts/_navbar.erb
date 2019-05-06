@@ -4,6 +4,8 @@
     <%= image_tag("Logo_escuela.png", size: "40x40") %>
   <%end%> 
   </a>
+  <br>
+  <div class="text-right">
   <%if user_signed_in?%>
     <% case current_user.tipo %>
     <% when 1 %>
@@ -17,5 +19,6 @@
     <% end %>
     <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
   <%end%> 
+  </div>
 </nav>
 <br>
