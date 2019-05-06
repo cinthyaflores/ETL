@@ -75,8 +75,6 @@ class PersonalAdminController < ApplicationController
   end
 
   def export_to_sql
-    Personal_Admin.using(:data_warehouse_final).delete_all if !Personal_Admin.using(:data_warehouse_final).all.empty?
-
     personal = Personal_Admin.using(:data_warehouse).all
     Personal_Admin.using(:data_warehouse_final).new
     personal.each do |data|

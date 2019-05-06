@@ -1,9 +1,11 @@
-<nav class="d-flex bd-highlight mb-3 Backgruond">
+<nav class="d-flex bd-highlight mb-3">
   <a class="navbar-brand" href="/welcome/index">
   <%if user_signed_in?%>
-    <%= image_tag("Logo_escuela.png", size: "40x40") %>
+    <%= image_tag("pancho.png", size: "40x40") %>
   <%end%> 
   </a>
+  <br>
+  <div class="text-right">
   <%if user_signed_in?%>
     <% case current_user.tipo %>
     <% when 1 %>
@@ -17,5 +19,6 @@
     <% end %>
     <%= link_to "Cerrar Sesión", destroy_user_session_path, class: "btn btn-primary btn-menu"%>
   <%end%> 
+  </div>
 </nav>
 <br>

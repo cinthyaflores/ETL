@@ -22,114 +22,85 @@
     justify-content: center;
 }
 
-
-.botones_tablas{
-  width: 95px;
-  height: 95px;
-  background-color:rgb(25, 98, 182);
-  display:inline-block;
-  padding:0.3em 1.2em;
-  margin:0 0.1em 0.1em 0;
-  border:0.16em solid rgba(255,255,255,0);
-  border-radius:2em;
-  box-sizing: border-box;
-  line-height:95px;
-  text-decoration:none;
-  font-family:'Roboto',sans-serif;
-  font-weight:300;
-  color:rgb(255, 255, 255);
-  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-  text-align:center;
-  transition: all 0.2s; 
+.botones_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 200px;
 }
 
-.botones_tablas:hover{
-  background-color: rgb(20, 139, 194);
-  border-color: rgb(5, 176, 255);
-  width: 100px;
-  height: 100px;
-}
-@media all and (max-width:30em){
-.botones_tablas{
-  display:block;
-  margin:0.2em auto;
-}
+.botones_tablas {
+    width: 98px;
+    height: 98px;
+    background-color: rgb(25, 98, 182);
+    margin: 10px;
+    border-radius: 2em;
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    white-space: pre-wrap;
+    justify-content: center;
 }
 
-.btn-init{
-  width:250px;
+.botones_tablas:hover {
+    background-color: rgb(20, 139, 194);
+    border-color: rgb(5, 176, 255);
+    width: 100px;
+    height: 100px;
+    color: rgb(255, 255, 255);
+}
+
+@media all and (max-width:30em) {
+    .botones_tablas {
+        display: block;
+        margin: 0.2em auto;
+    }
+}
+
+.btn-init {
+    width: 250px;
 }
 
 .btn-init:hover {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
 }
 
 @keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
 
-.btn-form{
-  width: 100px;
+.btn-form {
+    width: 100px;
 }
 
-.btn-form:hover{
-  width: 110px;
+.btn-form:hover {
+    width: 110px;
 }
 
-.btn-menu{
-  margin-left: 2px;
-  margin-right: 2px;
+.btn-menu {
+    margin-left: 2px;
+    margin-right: 2px;
 }
-
-
-
-
-
-
- .botones_tablas {
-    padding: .6rem 1rem;
-    border: 1px solid #995309;
-    border-radius: 4px;
-    background-color: #d9750b;
-    color: #fff;
-  
-    font-size: 1.5rem;
-    text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-    box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,
-      0 1px 3px rgba(0,0,0,.2);
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f90),to(#e76a00));
-    background-image: linear-gradient(#f90 10%,#e76a00 100%);
-  }
-  
-  .botones_tablas:hover, .botones_tablas:focus {
-    background-color: #e0811b;
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
-    background-image: linear-gradient(#f0a100 10%,#f70 100%);
-  }
-  
-  .botones_tablas:active {
-    background-color: #cf6a00;
-    box-shadow: 0 2px 3px 0 rgba(0,0,0,.2) inset;
-    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
-    background-image: linear-gradient(#f0a100 10%,#f70 100%);
-  }
 
 .container {
     margin-top: 30px;

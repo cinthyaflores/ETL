@@ -4,26 +4,26 @@ octopus:
 
   development:
     controlA:
-      port: 3308 #3306
+      port: 3306 #3308
       adapter: mysql2
       database: ControlAcademico
       username: root
-      password: root
+      password: #root
 
     data_warehouse:
       port: 5432
       adapter: postgresql
       host: localhost
       username: postgres
-      password: root #"admin"
-      database: dwh_school2
+      password: "admin" #root
+      database: dwh_school #dwh_school2
 
     extra:
       port: 5432
       adapter: postgresql
       host: localhost
       username: postgres #SI NO LE PONGO USUARIO Y CONTRASEÑA NO SE HACE LA CONEXION!
-      password: root #"admin"
+      password: "admin" #root
       database: Extraescolares
 
     data_warehouse_final:
@@ -31,9 +31,8 @@ octopus:
       mode: dblib
       host: localhost
       port: 1433
-      username: sa #admin
-      password: admon #admin
-      #username: DESKTOP-E84MTHS\MSSQLSERVER2016
+      username: admin #sa 
+      password: admin #admon 
       database: DataWareHouse
 
 
